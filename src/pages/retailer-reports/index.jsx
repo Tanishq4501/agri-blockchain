@@ -4,15 +4,18 @@ import { motion } from 'framer-motion';
 import RoleBasedSidebar from '../../components/ui/RoleBasedSidebar';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import NotificationIndicator from '../../components/ui/NotificationIndicator';
+import LanguageToggle from '../../components/ui/LanguageToggle';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
+import { useLanguage } from '../../utils/translations';
 import { 
   BarChart3, 
   TrendingUp, 
   TrendingDown,
   DollarSign, 
+  IndianRupee,
   Package, 
   Users,
   Calendar,
@@ -28,6 +31,7 @@ import {
 
 const RetailerReports = () => {
   const navigate = useNavigate();
+  const { isHindi, toggleLanguage, t } = useLanguage();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [dateRange, setDateRange] = useState('30');
   const [reportType, setReportType] = useState('sales');
@@ -37,8 +41,8 @@ const RetailerReports = () => {
 
   // Mock user data
   const userData = {
-    name: "Sarah Johnson",
-    email: "sarah@freshmart.com",
+    name: "Priya Sharma (प्रिया शर्मा)",
+    email: "priya@freshbazar.com",
     role: "retailer",
     avatar: "/api/placeholder/40/40"
   };
@@ -46,9 +50,9 @@ const RetailerReports = () => {
   // Mock sales data
   useEffect(() => {
     setSalesData({
-      totalRevenue: 125400,
+      totalRevenue: 1254000,
       totalOrders: 1847,
-      avgOrderValue: 67.89,
+      avgOrderValue: 678.90,
       totalCustomers: 892,
       revenueChange: 12.5,
       ordersChange: 8.3,
@@ -59,51 +63,51 @@ const RetailerReports = () => {
     setTopProducts([
       {
         id: 1,
-        name: "Organic Tomatoes",
-        category: "Vegetables",
+        name: "Organic Tomatoes (जैविक टमाटर)",
+        category: "Vegetables (सब्जियां)",
         sold: 245,
-        revenue: 1225.50,
-        profit: 367.65,
+        revenue: 12255.00,
+        profit: 3676.50,
         margin: 30,
         trend: "up"
       },
       {
         id: 2,
-        name: "Red Apples",
-        category: "Fruits",
+        name: "Red Apples (लाल सेब)",
+        category: "Fruits (फल)",
         sold: 189,
-        revenue: 945.00,
-        profit: 283.50,
+        revenue: 9450.00,
+        profit: 2835.00,
         margin: 30,
         trend: "up"
       },
       {
         id: 3,
-        name: "Baby Carrots",
-        category: "Vegetables",
+        name: "Baby Carrots (छोटी गाजर)",
+        category: "Vegetables (सब्जियां)",
         sold: 156,
-        revenue: 624.00,
-        profit: 156.00,
+        revenue: 6240.00,
+        profit: 1560.00,
         margin: 25,
         trend: "down"
       },
       {
         id: 4,
-        name: "Romaine Lettuce",
-        category: "Vegetables",
+        name: "Spinach (पालक)",
+        category: "Vegetables (सब्जियां)",
         sold: 134,
-        revenue: 536.00,
-        profit: 134.00,
+        revenue: 5360.00,
+        profit: 1340.00,
         margin: 25,
         trend: "up"
       },
       {
         id: 5,
-        name: "Bananas",
-        category: "Fruits",
+        name: "Bananas (केले)",
+        category: "Fruits (फल)",
         sold: 298,
-        revenue: 447.00,
-        profit: 89.40,
+        revenue: 4470.00,
+        profit: 894.00,
         margin: 20,
         trend: "stable"
       }
@@ -113,19 +117,19 @@ const RetailerReports = () => {
       {
         id: 1,
         orderId: "ORD-2024-001",
-        customer: "John Smith",
+        customer: "Rajesh Kumar (राजेश कुमार)",
         items: 5,
-        total: 89.50,
+        total: 895.00,
         status: "completed",
         date: "2024-01-18 14:30",
-        paymentMethod: "Credit Card"
+        paymentMethod: "UPI"
       },
       {
         id: 2,
         orderId: "ORD-2024-002",
-        customer: "Emily Davis",
+        customer: "Sunita Devi (सुनीता देवी)",
         items: 3,
-        total: 45.75,
+        total: 457.50,
         status: "completed",
         date: "2024-01-18 13:15",
         paymentMethod: "Cash"
@@ -133,9 +137,9 @@ const RetailerReports = () => {
       {
         id: 3,
         orderId: "ORD-2024-003",
-        customer: "Michael Brown",
+        customer: "Amit Patel (अमित पटेल)",
         items: 8,
-        total: 156.20,
+        total: 1562.00,
         status: "processing",
         date: "2024-01-18 12:45",
         paymentMethod: "Debit Card"
@@ -143,9 +147,9 @@ const RetailerReports = () => {
       {
         id: 4,
         orderId: "ORD-2024-004",
-        customer: "Lisa Wilson",
+        customer: "Meera Singh (मीरा सिंह)",
         items: 2,
-        total: 23.40,
+        total: 234.00,
         status: "completed",
         date: "2024-01-18 11:20",
         paymentMethod: "Credit Card"
@@ -155,15 +159,15 @@ const RetailerReports = () => {
 
   const salesMetrics = [
     {
-      title: "Total Revenue",
-      value: `$${salesData.totalRevenue?.toLocaleString() || '0'}`,
+      title: isHindi ? "कुल आय" : "Total Revenue",
+      value: `₹${salesData.totalRevenue?.toLocaleString() || '0'}`,
       change: salesData.revenueChange,
       changeType: salesData.revenueChange > 0 ? "positive" : "negative",
-      icon: DollarSign,
+      icon: IndianRupee,
       color: "text-green-600"
     },
     {
-      title: "Total Orders",
+      title: isHindi ? "कुल ऑर्डर" : "Total Orders",
       value: salesData.totalOrders?.toLocaleString() || '0',
       change: salesData.ordersChange,
       changeType: salesData.ordersChange > 0 ? "positive" : "negative",
@@ -171,15 +175,15 @@ const RetailerReports = () => {
       color: "text-blue-600"
     },
     {
-      title: "Avg Order Value",
-      value: `$${salesData.avgOrderValue || '0'}`,
+      title: isHindi ? "औसत ऑर्डर मूल्य" : "Avg Order Value",
+      value: `₹${salesData.avgOrderValue || '0'}`,
       change: salesData.avgOrderChange,
       changeType: salesData.avgOrderChange > 0 ? "positive" : "negative",
       icon: BarChart3,
       color: "text-purple-600"
     },
     {
-      title: "Total Customers",
+      title: isHindi ? "कुल ग्राहक" : "Total Customers",
       value: salesData.totalCustomers?.toLocaleString() || '0',
       change: salesData.customersChange,
       changeType: salesData.customersChange > 0 ? "positive" : "negative",
@@ -218,10 +222,14 @@ const RetailerReports = () => {
         <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Sales Reports</h1>
-              <p className="text-gray-600">Analyze sales performance and business metrics</p>
+              <h1 className="text-2xl font-bold text-gray-900">{isHindi ? 'बिक्री रिपोर्ट' : 'Sales Reports'}</h1>
+              <p className="text-gray-600">{isHindi ? 'बिक्री प्रदर्शन और व्यावसायिक मेट्रिक्स का विश्लेषण करें' : 'Analyze sales performance and business metrics'}</p>
             </div>
             <div className="flex items-center space-x-4">
+              <LanguageToggle
+                isHindi={isHindi}
+                onToggle={toggleLanguage}
+              />
               <NotificationIndicator count={3} />
               <ProfileDropdown user={userData} />
             </div>
@@ -242,24 +250,24 @@ const RetailerReports = () => {
                 onChange={(e) => setReportType(e.target.value)}
                 className="sm:w-48"
               >
-                <option value="sales">Sales Report</option>
-                <option value="inventory">Inventory Report</option>
-                <option value="customer">Customer Report</option>
-                <option value="profit">Profit Analysis</option>
+                <option value="sales">{isHindi ? 'बिक्री रिपोर्ट' : 'Sales Report'}</option>
+                <option value="inventory">{isHindi ? 'इन्वेंटरी रिपोर्ट' : 'Inventory Report'}</option>
+                <option value="customer">{isHindi ? 'ग्राहक रिपोर्ट' : 'Customer Report'}</option>
+                <option value="profit">{isHindi ? 'लाभ विश्लेषण' : 'Profit Analysis'}</option>
               </Select>
               <Select
                 value={dateRange}
                 onChange={(e) => setDateRange(e.target.value)}
                 className="sm:w-48"
               >
-                <option value="7">Last 7 days</option>
-                <option value="30">Last 30 days</option>
-                <option value="90">Last 3 months</option>
-                <option value="365">Last year</option>
+                <option value="7">{isHindi ? 'पिछले 7 दिन' : 'Last 7 days'}</option>
+                <option value="30">{isHindi ? 'पिछले 30 दिन' : 'Last 30 days'}</option>
+                <option value="90">{isHindi ? 'पिछले 3 महीने' : 'Last 3 months'}</option>
+                <option value="365">{isHindi ? 'पिछला साल' : 'Last year'}</option>
               </Select>
               <Button variant="outline" className="flex items-center space-x-2">
                 <Download className="w-4 h-4" />
-                <span>Export Report</span>
+                <span>{isHindi ? 'रिपोर्ट निर्यात करें' : 'Export Report'}</span>
               </Button>
             </div>
           </motion.div>
@@ -271,7 +279,7 @@ const RetailerReports = () => {
             transition={{ delay: 0.1 }}
             className="space-y-3"
           >
-            <h2 className="text-lg font-semibold text-gray-900">Key Metrics</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{isHindi ? 'मुख्य मेट्रिक्स' : 'Key Metrics'}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {salesMetrics.map((metric, index) => (
                 <div
@@ -311,21 +319,21 @@ const RetailerReports = () => {
           >
             <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-gray-200">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Revenue Trend</h3>
+                <h3 className="text-lg font-semibold text-gray-900">{isHindi ? 'आय रुझान' : 'Revenue Trend'}</h3>
                 <LineChart className="w-5 h-5 text-gray-500" />
               </div>
               <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-                <p className="text-gray-500">Revenue chart visualization would go here</p>
+                <p className="text-gray-500">{isHindi ? 'आय चार्ट विज़ुअलाइज़ेशन यहाँ होगा' : 'Revenue chart visualization would go here'}</p>
               </div>
             </div>
 
             <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-gray-200">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Sales by Category</h3>
+                <h3 className="text-lg font-semibold text-gray-900">{isHindi ? 'श्रेणी के अनुसार बिक्री' : 'Sales by Category'}</h3>
                 <PieChart className="w-5 h-5 text-gray-500" />
               </div>
               <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-                <p className="text-gray-500">Category breakdown chart would go here</p>
+                <p className="text-gray-500">{isHindi ? 'श्रेणी विभाजन चार्ट यहाँ होगा' : 'Category breakdown chart would go here'}</p>
               </div>
             </div>
           </motion.div>
@@ -337,32 +345,32 @@ const RetailerReports = () => {
             transition={{ delay: 0.3 }}
             className="space-y-3"
           >
-            <h2 className="text-lg font-semibold text-gray-900">Top Performing Products</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{isHindi ? 'शीर्ष प्रदर्शन करने वाले उत्पाद' : 'Top Performing Products'}</h2>
             <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-gray-200 overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead className="bg-gray-50/50">
                     <tr>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Product
+                        {isHindi ? 'उत्पाद' : 'Product'}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Category
+                        {isHindi ? 'श्रेणी' : 'Category'}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Units Sold
+                        {isHindi ? 'बेचे गए यूनिट' : 'Units Sold'}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Revenue
+                        {isHindi ? 'आय' : 'Revenue'}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Profit
+                        {isHindi ? 'लाभ' : 'Profit'}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Margin
+                        {isHindi ? 'मार्जिन' : 'Margin'}
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Trend
+                        {isHindi ? 'रुझान' : 'Trend'}
                       </th>
                     </tr>
                   </thead>
@@ -386,10 +394,10 @@ const RetailerReports = () => {
                           {product.sold}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          ${product.revenue.toFixed(2)}
+                          ₹{product.revenue.toFixed(2)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
-                          ${product.profit.toFixed(2)}
+                          ₹{product.profit.toFixed(2)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                           {product.margin}%
@@ -428,7 +436,7 @@ const RetailerReports = () => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-medium text-gray-900">${transaction.total}</p>
+                        <p className="text-sm font-medium text-gray-900">₹{transaction.total}</p>
                         <p className="text-xs text-gray-500">{transaction.items} items</p>
                       </div>
                       <div className="text-right">

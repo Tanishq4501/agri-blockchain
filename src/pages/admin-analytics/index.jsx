@@ -7,16 +7,22 @@ import NotificationIndicator from '../../components/ui/NotificationIndicator';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Select from '../../components/ui/Select';
+import LanguageToggle from '../../components/ui/LanguageToggle';
+import GeminiToggle from '../../components/ui/GeminiToggle';
+import { useLanguage } from '../../utils/translations';
+import { useGeminiTranslation } from '../../hooks/useGeminiTranslation';
 
 const AdminAnalytics = () => {
   const navigate = useNavigate();
+  const { isHindi, toggleLanguage, t } = useLanguage();
+  const { translateText, isGeminiEnabled, toggleGemini, isTranslating } = useGeminiTranslation();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [timeRange, setTimeRange] = useState('30d');
   const [selectedMetric, setSelectedMetric] = useState('overview');
 
   const userData = {
-    name: 'Admin User',
-    email: 'admin@agritrace.com',
+    name: 'Priya Gupta (प्रिया गुप्ता) - Analytics Admin',
+    email: 'priya@agritrace.in',
     role: 'admin',
     avatar: null
   };
@@ -25,14 +31,14 @@ const AdminAnalytics = () => {
     {
       id: 1,
       type: 'info',
-      message: 'Weekly analytics report generated successfully',
+      message: 'Weekly analytics report generated successfully for Indian markets (साप्ताहिक रिपोर्ट तैयार)',
       timestamp: '2024-01-15T10:30:00Z',
       read: false
     },
     {
       id: 2,
       type: 'warning',
-      message: 'Unusual spike in scan activity detected',
+      message: 'Unusual spike in scan activity detected during harvest season in Punjab',
       timestamp: '2024-01-15T09:15:00Z',
       read: false
     }
@@ -65,18 +71,18 @@ const AdminAnalytics = () => {
       errorRate: 0.8
     },
     geographicData: [
-      { region: 'California', users: 3247, scans: 587432, growth: 18.5 },
-      { region: 'Oregon', users: 1892, scans: 324567, growth: 22.1 },
-      { region: 'Washington', users: 1456, scans: 234891, growth: 15.7 },
-      { region: 'Nevada', users: 892, scans: 156743, growth: 28.3 },
-      { region: 'Arizona', users: 734, scans: 123456, growth: 12.9 }
+      { region: 'Maharashtra (महाराष्ट्र)', users: 3247, scans: 587432, growth: 18.5 },
+      { region: 'Punjab (पंजाब)', users: 1892, scans: 324567, growth: 22.1 },
+      { region: 'Uttar Pradesh (उत्तर प्रदेश)', users: 1456, scans: 234891, growth: 15.7 },
+      { region: 'Gujarat (गुजरात)', users: 892, scans: 156743, growth: 28.3 },
+      { region: 'Karnataka (कर्नाटक)', users: 734, scans: 123456, growth: 12.9 }
     ],
     topProducts: [
-      { name: 'Organic Tomatoes', scans: 45672, verification: 96.8, farms: 234 },
-      { name: 'Free-Range Eggs', scans: 38291, verification: 94.2, farms: 189 },
-      { name: 'Organic Carrots', scans: 32847, verification: 97.1, farms: 156 },
-      { name: 'Fresh Lettuce', scans: 29384, verification: 93.5, farms: 198 },
-      { name: 'Organic Milk', scans: 25673, verification: 95.7, farms: 87 }
+      { name: 'Organic Basmati Rice (जैविक बासमती चावल)', scans: 45672, verification: 96.8, farms: 234 },
+      { name: 'Fresh Mangoes (ताज़े आम)', scans: 38291, verification: 94.2, farms: 189 },
+      { name: 'Organic Turmeric (जैविक हल्दी)', scans: 32847, verification: 97.1, farms: 156 },
+      { name: 'Fresh Spinach (ताज़ा पालक)', scans: 29384, verification: 93.5, farms: 198 },
+      { name: 'Organic Milk (जैविक दूध)', scans: 25673, verification: 95.7, farms: 87 }
     ],
     sustainabilityMetrics: {
       carbonReduction: 1247,

@@ -15,8 +15,8 @@ const FarmerHarvest = () => {
   const [harvestRecords, setHarvestRecords] = useState([]);
 
   const userData = {
-    name: 'John Mitchell',
-    email: 'john.mitchell@greenfarm.com',
+    name: 'Ramesh Patel (रमेश पटेल)',
+    email: 'ramesh.patel@organicfarm.com',
     role: 'farmer',
     avatar: null
   };
@@ -25,8 +25,8 @@ const FarmerHarvest = () => {
     {
       id: 1,
       type: 'info',
-      title: 'Harvest Reminder',
-      message: 'Tomatoes in Greenhouse A are ready for harvest',
+      title: 'Harvest Reminder (फसल काटने की याददिलानी)',
+      message: 'Alphonso mangoes in Orchard A are ready for harvest (बाग A में आम फसल काटने के लिए तैयार)',
       timestamp: new Date(Date.now() - 30 * 60 * 1000),
       read: false
     }
@@ -35,51 +35,51 @@ const FarmerHarvest = () => {
   const mockHarvestRecords = [
     {
       id: 'HR-2025-001',
-      cropName: 'Organic Tomatoes',
-      fieldLocation: 'Greenhouse A',
+      cropName: 'Organic Alphonso Mangoes (जैविक आम)',
+      fieldLocation: 'Orchard A (बाग A)',
       harvestDate: '2025-01-10',
       quantity: 500,
       unit: 'kg',
-      quality: 'Premium',
-      weather: 'Sunny, 22°C',
+      quality: 'Premium (प्रीमियम)',
+      weather: 'Sunny, 28°C (धूप)',
       laborHours: 24,
-      equipment: ['Harvesting Baskets', 'Sorting Tables'],
-      notes: 'Excellent quality harvest. No pest damage observed.',
-      batchNumber: 'TOM-B001',
-      inspector: 'Sarah Wilson',
-      certificationStatus: 'Organic Certified'
+      equipment: ['Harvesting Baskets (फसल टोकरी)', 'Sorting Tables (छँटाई मेज)'],
+      notes: 'Excellent quality harvest. Perfect ripeness achieved (उत्कृष्ट गुणवत्ता की फसल)',
+      batchNumber: 'MAN-B001',
+      inspector: 'Priya Sharma (प्रिया शर्मा)',
+      certificationStatus: 'FSSAI Organic + GI Tag'
     },
     {
       id: 'HR-2025-002',
-      cropName: 'Fresh Carrots',
-      fieldLocation: 'Field B',
+      cropName: 'Organic Basmati Rice (जैविक बासमती)',
+      fieldLocation: 'Field B (खेत B)',
       harvestDate: '2025-01-08',
-      quantity: 300,
+      quantity: 1000,
       unit: 'kg',
-      quality: 'Good',
-      weather: 'Cloudy, 18°C',
-      laborHours: 16,
-      equipment: ['Mechanical Harvester', 'Washing Station'],
-      notes: 'Good harvest yield. Some minor soil residue requiring extra washing.',
-      batchNumber: 'CAR-B002',
-      inspector: 'Mike Johnson',
-      certificationStatus: 'Organic Certified'
+      quality: 'Good (अच्छा)',
+      weather: 'Clear, 25°C (साफ)',
+      laborHours: 32,
+      equipment: ['Mechanical Harvester (मशीन)', 'Threshing Machine (दाँवनी)'],
+      notes: 'Good harvest yield. Aromatic long grain rice (अच्छी फसल, सुगंधित चावल)',
+      batchNumber: 'RIC-B002',
+      inspector: 'Gurpreet Singh (गुरप्रीत सिंह)',
+      certificationStatus: 'FSSAI Organic Certified'
     },
     {
       id: 'HR-2025-003',
-      cropName: 'Organic Lettuce',
-      fieldLocation: 'Greenhouse C',
+      cropName: 'Organic Turmeric (जैविक हल्दी)',
+      fieldLocation: 'Field C (खेत C)',
       harvestDate: '2025-01-12',
-      quantity: 150,
+      quantity: 200,
       unit: 'kg',
-      quality: 'Premium',
-      weather: 'Controlled Environment',
-      laborHours: 12,
-      equipment: ['Hand Tools', 'Cooling System'],
-      notes: 'Perfect harvest conditions. High quality leafy greens.',
-      batchNumber: 'LET-B003',
-      inspector: 'Emily Davis',
-      certificationStatus: 'Organic + Fair Trade'
+      quality: 'Premium (प्रीमियम)',
+      weather: 'Dry, 30°C (सूखा)',
+      laborHours: 18,
+      equipment: ['Hand Tools (हाथ के उपकरण)', 'Drying Racks (सुखाने के रैक)'],
+      notes: 'Perfect harvest conditions. High curcumin content achieved (उच्च करकयूमिन)',
+      batchNumber: 'TUR-B003',
+      inspector: 'Lakshmi Devi (लक्ष्मी देवी)',
+      certificationStatus: 'FSSAI Organic + Ayurvedic Grade'
     }
   ];
 
@@ -145,7 +145,7 @@ const FarmerHarvest = () => {
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center space-x-4">
-                <h1 className="text-2xl font-bold text-text-primary">Harvest Records</h1>
+                <h1 className="text-2xl font-bold text-text-primary">Harvest Records (फसल रिकॉर्ड)</h1>
               </div>
 
               <div className="flex items-center space-x-4">
@@ -175,7 +175,7 @@ const FarmerHarvest = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-primary/5 to-success/5 border border-primary/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Total Harvests</p>
+                    <p className="text-sm font-medium text-text-secondary">Total Harvests (कुल फसल)</p>
                     <p className="text-3xl font-bold text-primary">{harvestRecords.length}</p>
                   </div>
                   <Icon name="Calendar" size={24} className="text-primary" />
@@ -185,7 +185,7 @@ const FarmerHarvest = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-success/5 to-primary/5 border border-success/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Total Quantity</p>
+                    <p className="text-sm font-medium text-text-secondary">Total Quantity (कुल मात्रा)</p>
                     <p className="text-3xl font-bold text-success">{totalQuantity} kg</p>
                   </div>
                   <Icon name="Package" size={24} className="text-success" />
@@ -195,7 +195,7 @@ const FarmerHarvest = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-secondary/5 to-accent/5 border border-secondary/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Premium Quality</p>
+                    <p className="text-sm font-medium text-text-secondary">Premium Quality (प्रीमियम गुणवत्ता)</p>
                     <p className="text-3xl font-bold text-secondary">{Math.round(averageQuality)}%</p>
                   </div>
                   <Icon name="Award" size={24} className="text-secondary" />
@@ -205,7 +205,7 @@ const FarmerHarvest = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-accent/5 to-warning/5 border border-accent/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">This Month</p>
+                    <p className="text-sm font-medium text-text-secondary">This Month (इस महीने)</p>
                     <p className="text-3xl font-bold text-accent">{harvestRecords.length}</p>
                   </div>
                   <Icon name="TrendingUp" size={24} className="text-accent" />

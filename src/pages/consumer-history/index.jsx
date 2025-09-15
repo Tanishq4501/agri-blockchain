@@ -17,8 +17,8 @@ const ConsumerHistory = () => {
   const [sortBy, setSortBy] = useState('newest');
 
   const userData = {
-    name: 'Sarah Johnson',
-    email: 'sarah.johnson@email.com',
+    name: 'Priya Sharma (प्रिया शर्मा)',
+    email: 'priya.sharma@email.com',
     role: 'consumer',
     avatar: null
   };
@@ -27,7 +27,7 @@ const ConsumerHistory = () => {
     {
       id: 1,
       type: 'info',
-      message: 'New organic certification available for your favorite products',
+      message: 'New FSSAI organic certification available for your favorite products (आपके पसंदीदा उत्पादों के लिए नया जैविक प्रमाणन)',
       timestamp: '2024-01-15T10:30:00Z',
       read: false
     }
@@ -36,78 +36,78 @@ const ConsumerHistory = () => {
   const mockScanHistory = [
     {
       id: 'SCAN001',
-      productName: 'Organic Tomatoes',
-      brand: 'Green Valley Farm',
+      productName: 'Organic Alphonso Mangoes (जैविक आम)',
+      brand: 'Patel Organic Farm',
       scanDate: '2024-01-15T14:30:00Z',
-      location: 'Whole Foods Market, Downtown',
+      location: 'Reliance Fresh, Bandra',
       qrCode: 'QR123456789',
       verificationStatus: 'verified',
-      certifications: ['USDA Organic', 'Non-GMO'],
-      origin: 'California, USA',
+      certifications: ['FSSAI Organic', 'GI Tag'],
+      origin: 'Ratnagiri, Maharashtra',
       harvestDate: '2024-01-10',
       expiryDate: '2024-01-20',
-      price: '$4.99/lb',
-      carbonFootprint: '0.5 kg CO2',
+      price: '₹450/kg',
+      carbonFootprint: '0.3 kg CO2',
       journey: [
-        { stage: 'Harvested', date: '2024-01-10', location: 'Green Valley Farm, CA' },
-        { stage: 'Processed', date: '2024-01-11', location: 'Processing Center, CA' },
-        { stage: 'Shipped', date: '2024-01-12', location: 'Distribution Hub, CA' },
-        { stage: 'Received', date: '2024-01-14', location: 'Whole Foods Market' }
+        { stage: 'Harvested (फसल काटी)', date: '2024-01-10', location: 'Patel Farm, Ratnagiri' },
+        { stage: 'Processed (प्रसंस्करण)', date: '2024-01-11', location: 'Maharashtra Processing Center' },
+        { stage: 'Shipped (भेजा गया)', date: '2024-01-12', location: 'Mumbai Distribution Hub' },
+        { stage: 'Received (प्राप्त)', date: '2024-01-14', location: 'Reliance Fresh Bandra' }
       ]
     },
     {
       id: 'SCAN002',
-      productName: 'Free-Range Eggs',
-      brand: 'Happy Hen Farm',
+      productName: 'Organic Basmati Rice (जैविक बासमती चावल)',
+      brand: 'Singh Organic Mills',
       scanDate: '2024-01-14T09:15:00Z',
-      location: 'Local Grocery Store',
+      location: 'Big Bazaar, Andheri',
       qrCode: 'QR987654321',
       verificationStatus: 'verified',
-      certifications: ['Free-Range', 'Cage-Free'],
-      origin: 'Oregon, USA',
+      certifications: ['FSSAI Organic', 'Export Grade'],
+      origin: 'Amritsar, Punjab',
       harvestDate: '2024-01-12',
-      expiryDate: '2024-01-28',
-      price: '$6.99/dozen',
-      carbonFootprint: '1.2 kg CO2',
+      expiryDate: '2025-01-12',
+      price: '₹180/kg',
+      carbonFootprint: '0.8 kg CO2',
       journey: [
-        { stage: 'Collected', date: '2024-01-12', location: 'Happy Hen Farm, OR' },
-        { stage: 'Packaged', date: '2024-01-12', location: 'Farm Packaging, OR' },
-        { stage: 'Shipped', date: '2024-01-13', location: 'Regional Hub, OR' },
-        { stage: 'Delivered', date: '2024-01-14', location: 'Local Grocery Store' }
+        { stage: 'Harvested (फसल काटी)', date: '2024-01-12', location: 'Singh Farm, Amritsar' },
+        { stage: 'Processed (प्रसंस्करण)', date: '2024-01-12', location: 'Punjab Rice Mill' },
+        { stage: 'Packaged (पैकेजिंग)', date: '2024-01-13', location: 'Punjab Processing Hub' },
+        { stage: 'Delivered (वितरित)', date: '2024-01-14', location: 'Big Bazaar Andheri' }
       ]
     },
     {
       id: 'SCAN003',
-      productName: 'Artisan Bread',
-      brand: 'Baker\'s Corner',
+      productName: 'Organic Turmeric Powder (जैविक हल्दी पाउडर)',
+      brand: 'Devi Spices',
       scanDate: '2024-01-13T16:45:00Z',
-      location: 'Farmer\'s Market',
+      location: 'Nature\'s Basket, Powai',
       qrCode: 'QR456789123',
       verificationStatus: 'pending',
-      certifications: ['Artisan Made'],
-      origin: 'Local Bakery',
+      certifications: ['FSSAI Organic'],
+      origin: 'Erode, Tamil Nadu',
       harvestDate: '2024-01-13',
-      expiryDate: '2024-01-16',
-      price: '$5.50',
-      carbonFootprint: '0.3 kg CO2',
+      expiryDate: '2025-01-13',
+      price: '₹120/100g',
+      carbonFootprint: '0.2 kg CO2',
       journey: [
-        { stage: 'Baked', date: '2024-01-13', location: 'Baker\'s Corner, Local' },
-        { stage: 'Delivered', date: '2024-01-13', location: 'Farmer\'s Market' }
+        { stage: 'Harvested (फसल काटी)', date: '2024-01-13', location: 'Devi Farm, Erode' },
+        { stage: 'Processed (प्रसंस्करण)', date: '2024-01-13', location: 'Tamil Nadu Spice Mill' }
       ]
     },
     {
       id: 'SCAN004',
-      productName: 'Organic Carrots',
-      brand: 'Sunshine Farms',
+      productName: 'Darjeeling Tea (दार्जिलिंग चाय)',
+      brand: 'Mountain Tea Estate',
       scanDate: '2024-01-12T11:20:00Z',
-      location: 'Supermarket Chain',
+      location: 'Spencer\'s, Kolkata',
       qrCode: 'QR789123456',
       verificationStatus: 'failed',
       certifications: [],
       origin: 'Unknown',
       harvestDate: 'Unknown',
-      expiryDate: '2024-01-18',
-      price: '$3.99/lb',
+      expiryDate: '2025-01-12',
+      price: '₹350/250g',
       carbonFootprint: 'Unknown',
       journey: []
     }
@@ -284,7 +284,7 @@ const ConsumerHistory = () => {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Avg. CO2 Saved</p>
+                    <p className="text-sm font-medium text-text-secondary">Avg. CO2 Saved (औसत CO2 बचत)</p>
                     <p className="text-2xl font-bold text-accent">2.1kg</p>
                   </div>
                   <div className="p-3 bg-accent/10 rounded-full">

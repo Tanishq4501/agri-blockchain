@@ -8,7 +8,7 @@ import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
-import Checkbox from '../../components/ui/Checkbox';
+import {Checkbox} from '../../components/ui/Checkbox';
 
 const DistributorProfile = () => {
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ const DistributorProfile = () => {
   const [profileData, setProfileData] = useState({});
 
   const userData = {
-    name: 'Mike Rodriguez',
-    email: 'mike.rodriguez@fastlogistics.com',
+    name: 'Rajesh Kumar (राजेश कुमार)',
+    email: 'rajesh@bharatlogistics.com',
     role: 'distributor',
     avatar: null
   };
@@ -42,45 +42,45 @@ const DistributorProfile = () => {
 
   const mockProfileData = {
     personalInfo: {
-      firstName: 'Mike',
-      lastName: 'Rodriguez',
-      email: 'mike.rodriguez@fastlogistics.com',
-      phone: '+1 (555) 234-5678',
+      firstName: 'Rajesh (राजेश)',
+      lastName: 'Kumar (कुमार)',
+      email: 'rajesh@bharatlogistics.com',
+      phone: '+91 98765 43210',
       dateOfBirth: '1985-09-12',
-      address: '789 Logistics Way, Oakland, CA 94607'
+      address: '123 Transport Nagar, Mumbai, Maharashtra 400001'
     },
     companyInfo: {
-      companyName: 'Fast Logistics Solutions',
-      businessType: 'Cold Chain Distribution',
-      licenseNumber: 'DOT-123456789',
+      companyName: 'Bharat Logistics Solutions (भारत लॉजिस्टिक्स सोल्यूशन्स)',
+      businessType: 'Cold Chain Distribution (कोल्ड चेन वितरण)',
+      licenseNumber: 'MH-DOT-123456789',
       establishedYear: '2015',
       employeeCount: '25-50',
-      serviceAreas: ['California', 'Oregon', 'Nevada'],
-      specializations: ['Refrigerated Transport', 'Organic Products', 'Fresh Produce']
+      serviceAreas: ['Maharashtra (महाराष्ट्र)', 'Gujarat (गुजरात)', 'Karnataka (कर्नाटक)', 'Delhi (दिल्ली)'],
+      specializations: ['Refrigerated Transport (रेफ्रिजरेटेड ट्रांसपोर्ट)', 'Organic Products (जैविक उत्पाद)', 'Fresh Produce (ताजा उत्पाद)']
     },
     certifications: [
       {
-        name: 'DOT Commercial License',
-        issuedBy: 'Department of Transportation',
+        name: 'Commercial Vehicle License (वाणिज्यिक वाहन लाइसेंस)',
+        issuedBy: 'Ministry of Road Transport & Highways',
         issueDate: '2023-01-15',
         expiryDate: '2025-01-15',
-        certificateNumber: 'DOT-123456789',
+        certificateNumber: 'MH-DOT-123456789',
         status: 'active'
       },
       {
-        name: 'HACCP Certification',
-        issuedBy: 'Food Safety Authority',
+        name: 'FSSAI License (एफएसएसएआई लाइसेंस)',
+        issuedBy: 'Food Safety and Standards Authority of India',
         issueDate: '2023-06-20',
         expiryDate: '2025-06-20',
-        certificateNumber: 'HACCP-2023-456',
+        certificateNumber: 'FSSAI-2023-456',
         status: 'active'
       },
       {
-        name: 'Cold Chain Certification',
-        issuedBy: 'International Cold Chain Association',
+        name: 'Cold Chain Certification (कोल्ड चेन प्रमाणपत्र)',
+        issuedBy: 'Indian Cold Chain Association',
         issueDate: '2023-03-10',
         expiryDate: '2024-03-10',
-        certificateNumber: 'CCC-2023-789',
+        certificateNumber: 'ICCA-2023-789',
         status: 'expiring-soon'
       }
     ],
@@ -196,8 +196,8 @@ const DistributorProfile = () => {
     });
   };
 
-  const serviceAreaOptions = ['California', 'Oregon', 'Nevada', 'Washington', 'Arizona', 'Utah'];
-  const specializationOptions = ['Refrigerated Transport', 'Organic Products', 'Fresh Produce', 'Dairy Products', 'Frozen Foods', 'Pharmaceuticals'];
+  const serviceAreaOptions = ['Maharashtra (महाराष्ट्र)', 'Gujarat (गुजरात)', 'Karnataka (कर्नाटक)', 'Delhi (दिल्ली)', 'Punjab (पंजाब)', 'Haryana (हरियाणा)'];
+  const specializationOptions = ['Refrigerated Transport (रेफ्रिजरेटेड ट्रांसपोर्ट)', 'Organic Products (जैविक उत्पाद)', 'Fresh Produce (ताजा उत्पाद)', 'Dairy Products (डेयरी उत्पाद)', 'Frozen Foods (जमे हुए खाद्य पदार्थ)', 'Pharmaceuticals (दवाइयां)'];
 
   return (
     <div className="min-h-screen bg-background">

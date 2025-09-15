@@ -3,8 +3,10 @@ import Icon from '../../../components/AppIcon';
 import Input from '../../../components/ui/Input';
 import Button from '../../../components/ui/Button';
 import { Checkbox } from '../../../components/ui/Checkbox';
+import { useLanguage } from '../../../utils/translations';
 
 const StockTable = ({ onVerifyProduct, onViewDetails }) => {
+  const { isHindi, t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const [selectedItems, setSelectedItems] = useState([]);
@@ -12,63 +14,87 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
   const stockData = [
     {
       id: 1,
-      productName: "Organic Tomatoes",
-      originFarm: "Green Valley Farm",
+      productName: "Organic Tomatoes (जैविक टमाटर)",
+      originFarm: "Hariyali Krishi Farm (हरियाली कृषि फार्म)",
       quantity: "150 kg",
       expirationDate: "2025-01-20",
       verificationStatus: "verified",
       authenticity: "authentic",
       batchId: "TOM-2025-001",
       lastVerified: "2025-01-13",
-      price: "$4.50/kg"
+      price: "₹45.00/kg"
     },
     {
       id: 2,
-      productName: "Fresh Spinach",
-      originFarm: "Sunrise Organics",
+      productName: "Fresh Spinach (ताजा पालक)",
+      originFarm: "Suryodaya Organic (सूर्योदय ऑर्गेनिक)",
       quantity: "75 kg",
       expirationDate: "2025-01-16",
       verificationStatus: "pending",
       authenticity: "pending",
       batchId: "SPN-2025-002",
       lastVerified: "2025-01-10",
-      price: "$6.20/kg"
+      price: "₹62.00/kg"
     },
     {
       id: 3,
-      productName: "Bell Peppers",
-      originFarm: "Mountain View Farm",
+      productName: "Bell Peppers (शिमला मिर्च)",
+      originFarm: "Parvat Drishya Farm (पर्वत दृश्य फार्म)",
       quantity: "200 kg",
       expirationDate: "2025-01-25",
       verificationStatus: "verified",
       authenticity: "suspicious",
       batchId: "PEP-2025-003",
       lastVerified: "2025-01-12",
-      price: "$5.80/kg"
+      price: "₹58.00/kg"
     },
     {
       id: 4,
-      productName: "Organic Carrots",
-      originFarm: "Harvest Moon Farm",
+      productName: "Organic Carrots (जैविक गाजर)",
+      originFarm: "Fasal Chandra Farm (फसल चंद्र फार्म)",
       quantity: "120 kg",
       expirationDate: "2025-02-01",
       verificationStatus: "verified",
       authenticity: "authentic",
       batchId: "CAR-2025-004",
       lastVerified: "2025-01-13",
-      price: "$3.90/kg"
+      price: "₹39.00/kg"
     },
     {
       id: 5,
-      productName: "Fresh Lettuce",
-      originFarm: "Green Valley Farm",
+      productName: "Fresh Cabbage (ताजा पत्ता गोभी)",
+      originFarm: "Hariyali Krishi Farm (हरियाली कृषि फार्म)",
       quantity: "85 kg",
       expirationDate: "2025-01-18",
       verificationStatus: "failed",
       authenticity: "invalid",
-      batchId: "LET-2025-005",
+      batchId: "CAB-2025-005",
       lastVerified: "2025-01-11",
-      price: "$4.10/kg"
+      price: "₹41.00/kg"
+    },
+    {
+      id: 6,
+      productName: "Onions (प्याज)",
+      originFarm: "Nashik Kisan Sahakari (नासिक किसान सहकारी)",
+      quantity: "300 kg",
+      expirationDate: "2025-02-15",
+      verificationStatus: "verified",
+      authenticity: "authentic",
+      batchId: "ONI-2025-006",
+      lastVerified: "2025-01-14",
+      price: "₹28.00/kg"
+    },
+    {
+      id: 7,
+      productName: "Potatoes (आलू)",
+      originFarm: "Punjab Aloo Utpadak (पंजाब आलू उत्पादक)",
+      quantity: "250 kg",
+      expirationDate: "2025-03-01",
+      verificationStatus: "verified",
+      authenticity: "authentic",
+      batchId: "POT-2025-007",
+      lastVerified: "2025-01-15",
+      price: "₹22.00/kg"
     }
   ];
 
@@ -181,16 +207,16 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
       <div className="p-6 border-b border-gray-200">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h2 className="text-xl font-semibold text-text-primary">Stock Inventory</h2>
+            <h2 className="text-xl font-semibold text-text-primary">{isHindi ? 'स्टॉक इन्वेंटरी' : 'Stock Inventory'}</h2>
             <p className="text-sm text-text-secondary mt-1">
-              {filteredData?.length} products • {selectedItems?.length} selected
+              {filteredData?.length} {isHindi ? 'उत्पाद' : 'products'} • {selectedItems?.length} {isHindi ? 'चयनित' : 'selected'}
             </p>
           </div>
           
           <div className="flex items-center space-x-4">
             <Input
               type="search"
-              placeholder="Search products, farms, or batch IDs..."
+              placeholder={isHindi ? 'उत्पाद, फार्म या बैच आईडी खोजें...' : 'Search products, farms, or batch IDs...'}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e?.target?.value)}
               className="w-full sm:w-80"
@@ -205,7 +231,7 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
                 iconSize={16}
                 onClick={() => onVerifyProduct(selectedItems)}
               >
-                Verify Selected ({selectedItems?.length})
+                {isHindi ? `चयनित सत्यापित करें (${selectedItems?.length})` : `Verify Selected (${selectedItems?.length})`}
               </Button>
             )}
           </div>
@@ -227,7 +253,7 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
                   onClick={() => handleSort('productName')}
                   className="flex items-center space-x-1 hover:text-primary transition-colors"
                 >
-                  <span>Product</span>
+                  <span>{isHindi ? 'उत्पाद' : 'Product'}</span>
                   <SortIcon column="productName" />
                 </button>
               </th>
@@ -236,7 +262,7 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
                   onClick={() => handleSort('originFarm')}
                   className="flex items-center space-x-1 hover:text-primary transition-colors"
                 >
-                  <span>Origin Farm</span>
+                  <span>{isHindi ? 'मूल फार्म' : 'Origin Farm'}</span>
                   <SortIcon column="originFarm" />
                 </button>
               </th>
@@ -245,7 +271,7 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
                   onClick={() => handleSort('quantity')}
                   className="flex items-center space-x-1 hover:text-primary transition-colors"
                 >
-                  <span>Quantity</span>
+                  <span>{isHindi ? 'मात्रा' : 'Quantity'}</span>
                   <SortIcon column="quantity" />
                 </button>
               </th>
@@ -254,18 +280,18 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
                   onClick={() => handleSort('expirationDate')}
                   className="flex items-center space-x-1 hover:text-primary transition-colors"
                 >
-                  <span>Expiration</span>
+                  <span>{isHindi ? 'समाप्ति' : 'Expiration'}</span>
                   <SortIcon column="expirationDate" />
                 </button>
               </th>
               <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Verification
+                {isHindi ? 'सत्यापन' : 'Verification'}
               </th>
               <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Authenticity
+                {isHindi ? 'प्रामाणिकता' : 'Authenticity'}
               </th>
               <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
+                {isHindi ? 'कार्य' : 'Actions'}
               </th>
             </tr>
           </thead>

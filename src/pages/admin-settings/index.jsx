@@ -8,17 +8,23 @@ import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
-import Checkbox from '../../components/ui/Checkbox';
+import { Checkbox } from '../../components/ui/Checkbox';
+import LanguageToggle from '../../components/ui/LanguageToggle';
+import GeminiToggle from '../../components/ui/GeminiToggle';
+import { useLanguage } from '../../utils/translations';
+import { useGeminiTranslation } from '../../hooks/useGeminiTranslation';
 
 const AdminSettings = () => {
   const navigate = useNavigate();
+  const { isHindi, toggleLanguage, t } = useLanguage();
+  const { translateText, isGeminiEnabled, toggleGemini, isTranslating } = useGeminiTranslation();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState('general');
   const [settings, setSettings] = useState({});
 
   const userData = {
-    name: 'Admin User',
-    email: 'admin@agritrace.com',
+    name: 'Kavita Singh (कविता सिंह) - Settings Admin',
+    email: 'kavita@agritrace.in',
     role: 'admin',
     avatar: null
   };
@@ -113,10 +119,12 @@ const AdminSettings = () => {
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center space-x-4">
-                <h1 className="text-2xl font-bold text-text-primary">System Settings</h1>
+                <h1 className="text-2xl font-bold text-text-primary">{isHindi ? (isGeminiEnabled ? translateText('सिस्टम सेटिंग्स') : 'सिस्टम सेटिंग्स') : (isGeminiEnabled ? translateText('System Settings') : 'System Settings')}</h1>
               </div>
 
               <div className="flex items-center space-x-4">
+                <LanguageToggle isHindi={isHindi} onToggle={toggleLanguage} />
+                <GeminiToggle isEnabled={isGeminiEnabled} onToggle={toggleGemini} isTranslating={isTranslating} />
                 <NotificationIndicator
                   notifications={notifications}
                   unreadCount={0}
@@ -206,17 +214,17 @@ const AdminSettings = () => {
                     <div className="space-y-4">
                       <Checkbox
                         checked={settings.general?.maintenanceMode || false}
-                        onChange={(checked) => handleSettingChange('general', 'maintenanceMode', checked)}
+                        onChange={(e) => handleSettingChange('general', 'maintenanceMode', e.target.checked)}
                         label="Maintenance Mode"
                       />
                       <Checkbox
                         checked={settings.general?.allowRegistrations || false}
-                        onChange={(checked) => handleSettingChange('general', 'allowRegistrations', checked)}
+                        onChange={(e) => handleSettingChange('general', 'allowRegistrations', e.target.checked)}
                         label="Allow New User Registrations"
                       />
                       <Checkbox
                         checked={settings.general?.requireEmailVerification || false}
-                        onChange={(checked) => handleSettingChange('general', 'requireEmailVerification', checked)}
+                        onChange={(e) => handleSettingChange('general', 'requireEmailVerification', e.target.checked)}
                         label="Require Email Verification"
                       />
                     </div>
@@ -253,22 +261,22 @@ const AdminSettings = () => {
                     <div className="space-y-4">
                       <Checkbox
                         checked={settings.security?.twoFactorAuth || false}
-                        onChange={(checked) => handleSettingChange('security', 'twoFactorAuth', checked)}
+                        onChange={(e) => handleSettingChange('security', 'twoFactorAuth', e.target.checked)}
                         label="Enable Two-Factor Authentication"
                       />
                       <Checkbox
                         checked={settings.security?.passwordComplexity || false}
-                        onChange={(checked) => handleSettingChange('security', 'passwordComplexity', checked)}
+                        onChange={(e) => handleSettingChange('security', 'passwordComplexity', e.target.checked)}
                         label="Enforce Password Complexity"
                       />
                       <Checkbox
                         checked={settings.security?.sessionEncryption || false}
-                        onChange={(checked) => handleSettingChange('security', 'sessionEncryption', checked)}
+                        onChange={(e) => handleSettingChange('security', 'sessionEncryption', e.target.checked)}
                         label="Session Encryption"
                       />
                       <Checkbox
                         checked={settings.security?.auditLogging || false}
-                        onChange={(checked) => handleSettingChange('security', 'auditLogging', checked)}
+                        onChange={(e) => handleSettingChange('security', 'auditLogging', e.target.checked)}
                         label="Enable Audit Logging"
                       />
                     </div>
@@ -308,17 +316,17 @@ const AdminSettings = () => {
                     <div className="space-y-4">
                       <Checkbox
                         checked={settings.notifications?.emailEnabled || false}
-                        onChange={(checked) => handleSettingChange('notifications', 'emailEnabled', checked)}
+                        onChange={(e) => handleSettingChange('notifications', 'emailEnabled', e.target.checked)}
                         label="Enable Email Notifications"
                       />
                       <Checkbox
                         checked={settings.notifications?.smsEnabled || false}
-                        onChange={(checked) => handleSettingChange('notifications', 'smsEnabled', checked)}
+                        onChange={(e) => handleSettingChange('notifications', 'smsEnabled', e.target.checked)}
                         label="Enable SMS Notifications"
                       />
                       <Checkbox
                         checked={settings.notifications?.pushEnabled || false}
-                        onChange={(checked) => handleSettingChange('notifications', 'pushEnabled', checked)}
+                        onChange={(e) => handleSettingChange('notifications', 'pushEnabled', e.target.checked)}
                         label="Enable Push Notifications"
                       />
                     </div>
@@ -362,6 +370,8 @@ const AdminSettings = () => {
                           <option value="aws">Amazon S3</option>
                           <option value="gcp">Google Cloud</option>
                           <option value="azure">Azure Storage</option>
+                          <option value="digitalocean">DigitalOcean Spaces</option>
+                          <option value="local">Local Storage (Mumbai)</option>
                         </Select>
                       </div>
                     </div>
@@ -369,12 +379,12 @@ const AdminSettings = () => {
                     <div className="space-y-4">
                       <Checkbox
                         checked={settings.integrations?.webhookEnabled || false}
-                        onChange={(checked) => handleSettingChange('integrations', 'webhookEnabled', checked)}
+                        onChange={(e) => handleSettingChange('integrations', 'webhookEnabled', e.target.checked)}
                         label="Enable Webhook Integration"
                       />
                       <Checkbox
                         checked={settings.integrations?.thirdPartySync || false}
-                        onChange={(checked) => handleSettingChange('integrations', 'thirdPartySync', checked)}
+                        onChange={(e) => handleSettingChange('integrations', 'thirdPartySync', e.target.checked)}
                         label="Third-Party Data Synchronization"
                       />
                     </div>

@@ -30,6 +30,11 @@ import AdminDashboard from "pages/admin-dashboard";
 import RetailerVerify from "pages/retailer-verify";
 import RetailerReports from "pages/retailer-reports";
 import RetailerDashboard from "pages/retailer-dashboard";
+import RetailerProfile from "pages/retailer-profile";
+import { ConstructionIcon } from "lucide-react";
+import ConsumerProfile from "pages/consumer-profile";
+import DistributorProfile from "pages/distributor-profile";
+import AdminSettings from "pages/admin-settings";
 
 // Consumer Dashboard Pages
 
@@ -62,6 +67,7 @@ const Routes = () => {
         <Route path="/retailer-dashboard" element={<RetailerDashboard/>}/>
         <Route path="/retailer-verify" element={<RetailerVerify/>}/>
         <Route path="/retailer-reports" element={<RetailerReports/>}/>
+        <Route path="/retailer-profile" element={<RetailerProfile/>}/>
 
         {/* Farmer Dashboard Pages */}
         <Route path="/farmer-products" element={<FarmerProducts />} />
@@ -72,11 +78,12 @@ const Routes = () => {
         {/* Consumer Dashboard Pages */}
         <Route path="/consumer-history" element={<ConsumerHistory />}/>
         <Route path="/consumer-favorites" element={<ConsumerFavorites/>}/>
-
+        <Route path="/consumer-profile" element={<ConsumerProfile/>}/>
         {/* Distributor Dashboard Pages */}
         <Route path="/distributor-shipments" element={<DistributorShipments/>} />
         <Route path="/distributor-scan" element={<DistributorScan/>}/>
         <Route path="/distributor-routes" element={<DistributorRoutes/>}/>
+        <Route path="/distributor-profile" element={<DistributorProfile/>}/>
 
 
         {/* Admin Control Pages */}
@@ -84,7 +91,7 @@ const Routes = () => {
         <Route path="/admin-users" element={<AdminUsers/>}/>
         <Route path="/admin-analytics" element={<AdminAnalytics/>}/>
         <Route path="/admin-compliance" element={<AdminCompliance/>}/>
-
+        <Route path="/admin-settings" element={<AdminSettings/>}/>
 
         <Route path="*" element={<NotFound />} />
       </RouterRoutes>

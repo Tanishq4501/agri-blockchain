@@ -35,25 +35,14 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8 animate-slide-up">
-              <Button
-                variant="default"
-                size="lg"
-                iconName="UserPlus"
-                iconPosition="left"
-                iconSize={20}
-                className="hover-lift"
-                asChild
-              >
-                <Link to="/user-registration">Get Started Free</Link>
-              </Button>
-              
+            
               <Button
                 variant="outline"
                 size="lg"
                 iconName="QrCode"
                 iconPosition="left"
                 iconSize={20}
-                className="hover-lift"
+                className="hover:bg-green-600 hover:text-white border-2xl px-[13rem]"
                 asChild
               >
                 <Link to="/consumer-verification">Verify Product</Link>

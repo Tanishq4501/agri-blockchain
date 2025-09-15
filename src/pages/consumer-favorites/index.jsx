@@ -17,8 +17,8 @@ const ConsumerFavorites = () => {
   const [sortBy, setSortBy] = useState('recent');
 
   const userData = {
-    name: 'Sarah Johnson',
-    email: 'sarah.johnson@email.com',
+    name: 'Priya Sharma (प्रिया शर्मा)',
+    email: 'priya.sharma@email.com',
     role: 'consumer',
     avatar: null
   };
@@ -27,7 +27,7 @@ const ConsumerFavorites = () => {
     {
       id: 1,
       type: 'info',
-      message: 'New organic certification available for your favorite products',
+      message: 'New FSSAI organic certification available for your favorite products (आपके पसंदीदा उत्पादों के लिए नया जैविक प्रमाणन)',
       timestamp: '2024-01-15T10:30:00Z',
       read: false
     }
@@ -36,81 +36,81 @@ const ConsumerFavorites = () => {
   const mockFavorites = [
     {
       id: 'FAV001',
-      productName: 'Organic Tomatoes',
-      brand: 'Green Valley Farm',
-      category: 'Vegetables',
+      productName: 'Organic Alphonso Mangoes (जैविक आम)',
+      brand: 'Patel Organic Farm',
+      category: 'Fruits (फल)',
       addedDate: '2024-01-10T14:30:00Z',
       lastScanned: '2024-01-15T14:30:00Z',
       scanCount: 5,
-      averagePrice: '$4.99/lb',
+      averagePrice: '₹450/kg',
       availability: 'in-stock',
-      certifications: ['USDA Organic', 'Non-GMO'],
-      sustainabilityScore: 95,
-      carbonFootprint: '0.5 kg CO2',
-      origin: 'California, USA',
-      seasonality: 'Year-round',
-      nutritionHighlights: ['High in Vitamin C', 'Rich in Lycopene'],
+      certifications: ['FSSAI Organic', 'GI Tag'],
+      sustainabilityScore: 96,
+      carbonFootprint: '0.3 kg CO2',
+      origin: 'Ratnagiri, Maharashtra',
+      seasonality: 'March-June (seasonal)',
+      nutritionHighlights: ['High in Vitamin A (विटामिन A)', 'Rich in Fiber (फाइबर)'],
       alerts: [
-        { type: 'price', message: 'Price dropped by 15%' },
-        { type: 'availability', message: 'Back in stock at 3 nearby stores' }
+        { type: 'price', message: 'Price dropped by 12% - seasonal discount (मौसमी छूट)' },
+        { type: 'availability', message: 'Back in stock at 3 nearby stores (नजदीकी दुकानों में उपलब्ध)' }
       ]
     },
     {
       id: 'FAV002',
-      productName: 'Free-Range Eggs',
-      brand: 'Happy Hen Farm',
-      category: 'Dairy & Eggs',
+      productName: 'Organic Basmati Rice (जैविक बासमती चावल)',
+      brand: 'Singh Organic Mills',
+      category: 'Grains (अनाज)',
       addedDate: '2024-01-08T09:15:00Z',
       lastScanned: '2024-01-14T09:15:00Z',
       scanCount: 8,
-      averagePrice: '$6.99/dozen',
+      averagePrice: '₹180/kg',
       availability: 'in-stock',
-      certifications: ['Free-Range', 'Cage-Free'],
-      sustainabilityScore: 88,
-      carbonFootprint: '1.2 kg CO2',
-      origin: 'Oregon, USA',
-      seasonality: 'Year-round',
-      nutritionHighlights: ['High Protein', 'Omega-3 Enriched'],
+      certifications: ['FSSAI Organic', 'Export Grade'],
+      sustainabilityScore: 92,
+      carbonFootprint: '0.8 kg CO2',
+      origin: 'Amritsar, Punjab',
+      seasonality: 'Year-round (साल भर)',
+      nutritionHighlights: ['High Protein (उच्च प्रोटीन)', 'Aromatic Long Grain (सुगंधित)'],
       alerts: []
     },
     {
       id: 'FAV003',
-      productName: 'Artisan Sourdough Bread',
-      brand: 'Baker\'s Corner',
-      category: 'Bakery',
+      productName: 'Organic Turmeric Powder (जैविक हल्दी पाउडर)',
+      brand: 'Devi Spices',
+      category: 'Spices (मसाले)',
       addedDate: '2024-01-05T16:45:00Z',
       lastScanned: '2024-01-13T16:45:00Z',
       scanCount: 3,
-      averagePrice: '$5.50',
+      averagePrice: '₹120/100g',
       availability: 'limited',
-      certifications: ['Artisan Made'],
-      sustainabilityScore: 75,
-      carbonFootprint: '0.3 kg CO2',
-      origin: 'Local Bakery',
-      seasonality: 'Available weekends',
-      nutritionHighlights: ['Natural Fermentation', 'No Preservatives'],
+      certifications: ['FSSAI Organic', 'Ayurvedic Grade'],
+      sustainabilityScore: 89,
+      carbonFootprint: '0.2 kg CO2',
+      origin: 'Erode, Tamil Nadu',
+      seasonality: 'Harvest season Oct-Feb (अक्टूबर-फरवरी)',
+      nutritionHighlights: ['High Curcumin (करकयूमिन)', 'Anti-inflammatory (सूजन रोधी)'],
       alerts: [
-        { type: 'availability', message: 'Limited stock - only weekends' }
+        { type: 'availability', message: 'Limited stock - harvest season ending (सीमित स्टॉक)' }
       ]
     },
     {
       id: 'FAV004',
-      productName: 'Organic Honey',
-      brand: 'Bee Pure',
-      category: 'Pantry',
+      productName: 'Organic Darjeeling Tea (जैविक दार्जिलिंग चाय)',
+      brand: 'Sherpa Tea Estate',
+      category: 'Beverages (पेय)',
       addedDate: '2024-01-02T11:20:00Z',
       lastScanned: '2024-01-12T11:20:00Z',
       scanCount: 2,
-      averagePrice: '$12.99',
+      averagePrice: '₹350/250g',
       availability: 'out-of-stock',
-      certifications: ['USDA Organic', 'Raw Honey'],
-      sustainabilityScore: 92,
-      carbonFootprint: '0.2 kg CO2',
-      origin: 'Montana, USA',
-      seasonality: 'Seasonal harvest',
-      nutritionHighlights: ['Raw & Unfiltered', 'Natural Enzymes'],
+      certifications: ['FSSAI Organic', 'GI Tag', 'Fair Trade'],
+      sustainabilityScore: 94,
+      carbonFootprint: '0.1 kg CO2',
+      origin: 'Darjeeling, West Bengal',
+      seasonality: 'First flush Mar-Apr (पहली पत्ती)',
+      nutritionHighlights: ['High Antioxidants (एंटीऑक्सीडेंट)', 'Natural Caffeine (प्राकृतिक कैफीन)'],
       alerts: [
-        { type: 'availability', message: 'Out of stock - expected back Jan 20' }
+        { type: 'availability', message: 'Out of stock - new harvest expected Mar 15 (नई फसल 15 मार्च को)' }
       ]
     }
   ];
@@ -278,7 +278,7 @@ const ConsumerFavorites = () => {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Avg. Sustainability</p>
+                    <p className="text-sm font-medium text-text-secondary">Avg. Sustainability (औसत स्थिरता)</p>
                     <p className="text-2xl font-bold text-accent">
                       {Math.round(mockFavorites.reduce((sum, f) => sum + f.sustainabilityScore, 0) / mockFavorites.length)}
                     </p>
@@ -297,7 +297,7 @@ const ConsumerFavorites = () => {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Active Alerts</p>
+                    <p className="text-sm font-medium text-text-secondary">Active Alerts (सक्रिय अलर्ट)</p>
                     <p className="text-2xl font-bold text-secondary">
                       {mockFavorites.reduce((sum, f) => sum + f.alerts.length, 0)}
                     </p>

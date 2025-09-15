@@ -5,7 +5,7 @@ const SummaryMetrics = () => {
   const metricsData = [
     {
       id: 1,
-      title: 'Total Registered Produce',
+      title: 'Total Registered Produce (कुल पंजीकृत उत्पाद)',
       value: '247',
       unit: 'items',
       change: '+18',
@@ -16,7 +16,7 @@ const SummaryMetrics = () => {
     },
     {
       id: 2,
-      title: 'Active Listings',
+      title: 'Active Listings (सक्रिय सूची)',
       value: '34',
       unit: 'listings',
       change: '+5',
@@ -27,9 +27,9 @@ const SummaryMetrics = () => {
     },
     {
       id: 3,
-      title: 'Monthly Revenue',
-      value: '$8,900',
-      unit: 'USD',
+      title: 'Monthly Revenue (मासिक आय)',
+      value: '₹89,000',
+      unit: 'Rupees',
       change: '+12.5%',
       changeType: 'increase',
       icon: 'TrendingUp',
@@ -38,7 +38,7 @@ const SummaryMetrics = () => {
     },
     {
       id: 4,
-      title: 'Quality Score',
+      title: 'Quality Score (गुणवत्ता स्कोर)',
       value: '4.8',
       unit: '/5.0',
       change: '+0.2',
@@ -49,7 +49,7 @@ const SummaryMetrics = () => {
     },
     {
       id: 5,
-      title: 'Verified Buyers',
+      title: 'Verified Buyers (सत्यापित खरीदार)',
       value: '89',
       unit: 'buyers',
       change: '+12',
@@ -60,7 +60,7 @@ const SummaryMetrics = () => {
     },
     {
       id: 6,
-      title: 'Compliance Rate',
+      title: 'Compliance Rate (अनुपालन दर)',
       value: '98.5%',
       unit: 'compliance',
       change: '+1.2%',
@@ -171,7 +171,7 @@ const SummaryMetrics = () => {
               <span className="text-sm font-medium text-success">Growth Opportunity</span>
             </div>
             <p className="text-sm text-text-secondary">
-              Your organic produce has 23% higher demand. Consider increasing organic crop allocation.
+              Your organic produce (जैविक उत्पाद) has 23% higher demand. Consider increasing organic crop allocation.
             </p>
           </div>
 
@@ -181,7 +181,7 @@ const SummaryMetrics = () => {
               <span className="text-sm font-medium text-warning">Action Required</span>
             </div>
             <p className="text-sm text-text-secondary">
-              3 quality certifications expire within 60 days. Schedule renewal to maintain premium pricing.
+              3 quality certifications (गुणवत्ता प्रमाणपत्र) expire within 60 days. Schedule renewal to maintain premium pricing.
             </p>
           </div>
         </div>

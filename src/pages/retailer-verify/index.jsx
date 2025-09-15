@@ -36,8 +36,8 @@ const RetailerVerify = () => {
 
   // Mock user data
   const userData = {
-    name: "Sarah Johnson",
-    email: "sarah@freshmart.com",
+    name: "Priya Sharma (प्रिया शर्मा)",
+    email: "priya@freshbazar.com",
     role: "retailer",
     avatar: "/api/placeholder/40/40"
   };
@@ -48,15 +48,15 @@ const RetailerVerify = () => {
       {
         id: 1,
         productCode: "AGT-TOM-001234",
-        productName: "Organic Tomatoes",
+        productName: "Organic Tomatoes (जैविक टमाटर)",
         batch: "BT-2024-001",
-        supplier: "Green Valley Farms",
-        farmer: "John Smith",
+        supplier: "Hariyali Krishi Farm (हरियाली कृषि फार्म)",
+        farmer: "Ramesh Patel (रमेश पटेल)",
         harvestDate: "2024-01-15",
         expiryDate: "2024-01-25",
-        location: "California, USA",
+        location: "Maharashtra, India",
         status: "verified",
-        certifications: ["Organic", "Non-GMO"],
+        certifications: ["Organic (जैविक)", "Non-GMO"],
         verifiedAt: "2024-01-18 10:30 AM",
         quantity: "50 kg",
         temperature: "4°C",
@@ -65,15 +65,15 @@ const RetailerVerify = () => {
       {
         id: 2,
         productCode: "AGT-APP-005678",
-        productName: "Red Apples",
+        productName: "Red Apples (लाल सेब)",
         batch: "BT-2024-002",
-        supplier: "Mountain Orchards",
-        farmer: "Emily Davis",
+        supplier: "Kashmir Apple Orchards (कश्मीर सेब बागान)",
+        farmer: "Suresh Kumar (सुरेश कुमार)",
         harvestDate: "2024-01-12",
         expiryDate: "2024-02-12",
-        location: "Washington, USA",
+        location: "Kashmir, India",
         status: "verified",
-        certifications: ["Organic"],
+        certifications: ["Organic (जैविक)"],
         verifiedAt: "2024-01-18 09:15 AM",
         quantity: "100 kg",
         temperature: "2°C",
@@ -82,33 +82,33 @@ const RetailerVerify = () => {
       {
         id: 3,
         productCode: "AGT-CAR-009876",
-        productName: "Baby Carrots",
+        productName: "Baby Carrots (छोटी गाजर)",
         batch: "BT-2024-003",
-        supplier: "Fresh Fields Co.",
-        farmer: "Michael Brown",
+        supplier: "Fresh Fields Cooperative (फ्रेश फील्ड्स सहकारी)",
+        farmer: "Vikram Singh (विक्रम सिंह)",
         harvestDate: "2024-01-10",
         expiryDate: "2024-01-30",
-        location: "Oregon, USA",
+        location: "Punjab, India",
         status: "warning",
-        certifications: ["Organic", "Pesticide-Free"],
+        certifications: ["Organic (जैविक)", "Pesticide-Free (कीटनाशक मुक्त)"],
         verifiedAt: "2024-01-18 11:45 AM",
         quantity: "25 kg",
         temperature: "3°C",
         humidity: "88%",
-        warning: "Approaching expiry date"
+        warning: "Approaching expiry date (समाप्ति तिथि निकट)"
       },
       {
         id: 4,
         productCode: "AGT-LET-112233",
-        productName: "Romaine Lettuce",
+        productName: "Romaine Lettuce (रोमेन सलाद)",
         batch: "BT-2024-004",
-        supplier: "Sunny Greens",
-        farmer: "Lisa Wilson",
+        supplier: "Sunny Greens India (सनी ग्रीन्स इंडिया)",
+        farmer: "Anjali Devi (अंजली देवी)",
         harvestDate: "2024-01-16",
         expiryDate: "2024-01-22",
-        location: "Arizona, USA",
+        location: "Haryana, India",
         status: "pending",
-        certifications: ["Organic"],
+        certifications: ["Organic (जैविक)"],
         verifiedAt: "2024-01-18 12:00 PM",
         quantity: "30 kg",
         temperature: "1°C",
@@ -199,7 +199,7 @@ const RetailerVerify = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1">
                 <Input
-                  placeholder="Enter product code or scan QR code"
+                  placeholder="उत्पाद कोड दर्ज करें या QR कोड स्कैन करें"
                   value={scannedCode}
                   onChange={(e) => setScannedCode(e.target.value)}
                   className="w-full"
@@ -233,7 +233,7 @@ const RetailerVerify = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1">
                 <Input
-                  placeholder="Search by product name, code, or supplier..."
+                  placeholder="उत्पाद नाम, कोड या आपूर्तिकर्ता द्वारा खोजें..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   icon={Search}

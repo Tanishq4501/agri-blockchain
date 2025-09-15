@@ -22,16 +22,21 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
   const [errors, setErrors] = useState({});
 
   const cropOptions = [
-    { value: 'tomatoes', label: 'Tomatoes' },
-    { value: 'potatoes', label: 'Potatoes' },
-    { value: 'onions', label: 'Onions' },
-    { value: 'carrots', label: 'Carrots' },
-    { value: 'wheat', label: 'Wheat' },
-    { value: 'rice', label: 'Rice' },
-    { value: 'corn', label: 'Corn' },
-    { value: 'soybeans', label: 'Soybeans' },
-    { value: 'apples', label: 'Apples' },
-    { value: 'oranges', label: 'Oranges' }
+    { value: 'tomatoes', label: 'Tomatoes (टमाटर)' },
+    { value: 'potatoes', label: 'Potatoes (आलू)' },
+    { value: 'onions', label: 'Onions (प्याज)' },
+    { value: 'carrots', label: 'Carrots (गाजर)' },
+    { value: 'wheat', label: 'Wheat (गेहूं)' },
+    { value: 'rice', label: 'Rice (चावल)' },
+    { value: 'corn', label: 'Corn (मक्का)' },
+    { value: 'soybeans', label: 'Soybeans (सोयाबीन)' },
+    { value: 'apples', label: 'Apples (सेब)' },
+    { value: 'oranges', label: 'Oranges (संतरा)' },
+    { value: 'spinach', label: 'Spinach (पालक)' },
+    { value: 'cabbage', label: 'Cabbage (पत्ता गोभी)' },
+    { value: 'cauliflower', label: 'Cauliflower (फूल गोभी)' },
+    { value: 'okra', label: 'Okra (भिंडी)' },
+    { value: 'eggplant', label: 'Eggplant (बैंगन)' }
   ];
 
   const unitOptions = [
@@ -165,10 +170,10 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
 
           {/* Expected Price */}
           <Input
-            label="Expected Price (USD)"
+            label="Expected Price (प्रति किलो कीमत ₹)"
             type="number"
             name="expectedPrice"
-            placeholder="Price per unit"
+            placeholder="Price per kg in Rupees"
             value={formData?.expectedPrice}
             onChange={handleInputChange}
             error={errors?.expectedPrice}
@@ -180,10 +185,10 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
 
         {/* Location */}
         <Input
-          label="Farm Location"
+          label="Farm Location (फार्म का स्थान)"
           type="text"
           name="location"
-          placeholder="City, State/Province, Country"
+          placeholder="Village, District, State, India"
           value={formData?.location}
           onChange={handleInputChange}
           error={errors?.location}
@@ -193,10 +198,10 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
 
         {/* Farm Size */}
         <Input
-          label="Farm Size (acres)"
+          label="Farm Size (फार्म का आकार - एकड़)"
           type="number"
           name="farmSize"
-          placeholder="Total farm area"
+          placeholder="Total farm area in acres"
           value={formData?.farmSize}
           onChange={handleInputChange}
           min="0"

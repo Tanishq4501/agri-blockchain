@@ -6,6 +6,8 @@ import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import NotificationIndicator from '../../components/ui/NotificationIndicator';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
+import LanguageToggle from '../../components/ui/LanguageToggle';
+import { useLanguage } from '../../utils/translations';
 import { 
   Users, 
   TrendingUp, 
@@ -23,6 +25,7 @@ import {
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const { isHindi, toggleLanguage, t } = useLanguage();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [systemStats, setSystemStats] = useState({});
   const [recentActivity, setRecentActivity] = useState([]);
@@ -30,8 +33,8 @@ const AdminDashboard = () => {
 
   // Mock admin user data
   const userData = {
-    name: "System Administrator",
-    email: "admin@agritrace.com",
+    name: "Amit Sharma (अमित शर्मा) - System Administrator",
+    email: "amit@agritrace.in",
     role: "admin",
     avatar: "/api/placeholder/40/40"
   };
@@ -53,7 +56,7 @@ const AdminDashboard = () => {
       {
         id: 1,
         type: "user_registration",
-        description: "New farmer registered: John Smith",
+        description: "New farmer registered: Ramesh Patel (रमेश पटेल) from Maharashtra",
         timestamp: "2 minutes ago",
         icon: Users,
         status: "success"
@@ -61,7 +64,7 @@ const AdminDashboard = () => {
       {
         id: 2,
         type: "compliance_alert",
-        description: "Compliance violation detected in Region 5",
+        description: "Compliance violation detected in Maharashtra region - FSSAI license expired",
         timestamp: "15 minutes ago",
         icon: AlertTriangle,
         status: "warning"
@@ -69,7 +72,7 @@ const AdminDashboard = () => {
       {
         id: 3,
         type: "system_update",
-        description: "Database backup completed successfully",
+        description: "Database backup completed successfully - Mumbai data center",
         timestamp: "1 hour ago",
         icon: Database,
         status: "success"
@@ -77,7 +80,7 @@ const AdminDashboard = () => {
       {
         id: 4,
         type: "product_verification",
-        description: "1,234 products verified today",
+        description: "1,234 products verified today across Indian markets",
         timestamp: "2 hours ago",
         icon: CheckCircle,
         status: "info"
@@ -85,7 +88,7 @@ const AdminDashboard = () => {
       {
         id: 5,
         type: "api_usage",
-        description: "API usage spike detected - 150% of normal",
+        description: "API usage spike detected during harvest season - 150% of normal",
         timestamp: "3 hours ago",
         icon: TrendingUp,
         status: "warning"
@@ -96,22 +99,22 @@ const AdminDashboard = () => {
       {
         id: 1,
         type: "critical",
-        title: "System Maintenance Required",
-        description: "Database optimization scheduled for tonight",
+        title: "System Maintenance Required (सिस्टम रखरखाव आवश्यक)",
+        description: "Database optimization scheduled for tonight - Mumbai server",
         action: "View Details"
       },
       {
         id: 2,
         type: "warning",
-        title: "High API Usage",
-        description: "API calls exceeded 80% of daily limit",
+        title: "High API Usage (उच्च API उपयोग)",
+        description: "API calls exceeded 80% of daily limit during peak harvest season",
         action: "Monitor Usage"
       },
       {
         id: 3,
         type: "info",
-        title: "New Feature Available",
-        description: "Blockchain integration module is ready for deployment",
+        title: "New Feature Available (नई सुविधा उपलब्ध)",
+        description: "Digital India blockchain integration module is ready for deployment",
         action: "Learn More"
       }
     ]);
@@ -119,29 +122,29 @@ const AdminDashboard = () => {
 
   const quickActions = [
     {
-      title: "User Management",
-      description: "Manage user accounts and permissions",
+      title: isHindi ? "उपयोगकर्ता प्रबंधन" : "User Management",
+      description: isHindi ? "उपयोगकर्ता खाते और अनुमतियों का प्रबंधन करें" : "Manage user accounts and permissions",
       icon: Users,
       color: "bg-blue-500",
       path: "/admin-users"
     },
     {
-      title: "System Analytics",
-      description: "View detailed system performance metrics",
+      title: isHindi ? "सिस्टम एनालिटिक्स" : "System Analytics",
+      description: isHindi ? "विस्तृत सिस्टम प्रदर्शन मेट्रिक्स देखें" : "View detailed system performance metrics",
       icon: TrendingUp,
       color: "bg-green-500",
       path: "/admin-analytics"
     },
     {
-      title: "Compliance Monitor",
-      description: "Track compliance status and violations",
+      title: isHindi ? "अनुपालन मॉनिटर" : "Compliance Monitor",
+      description: isHindi ? "अनुपालन स्थिति और उल्लंघनों को ट्रैक करें" : "Track compliance status and violations",
       icon: Shield,
       color: "bg-amber-500",
       path: "/admin-compliance"
     },
     {
-      title: "System Settings",
-      description: "Configure system parameters and integrations",
+      title: isHindi ? "सिस्टम सेटिंग्स" : "System Settings",
+      description: isHindi ? "सिस्टम पैरामीटर और एकीकरण कॉन्फ़िगर करें" : "Configure system parameters and integrations",
       icon: Settings,
       color: "bg-purple-500",
       path: "/admin-settings"
@@ -150,7 +153,7 @@ const AdminDashboard = () => {
 
   const systemMetrics = [
     {
-      title: "Total Users",
+      title: isHindi ? "कुल उपयोगकर्ता" : "Total Users",
       value: systemStats.totalUsers?.toLocaleString() || "0",
       change: "+12%",
       changeType: "positive",
@@ -158,7 +161,7 @@ const AdminDashboard = () => {
       color: "text-blue-600"
     },
     {
-      title: "Active Products",
+      title: isHindi ? "सक्रिय उत्पाद" : "Active Products",
       value: systemStats.totalProducts?.toLocaleString() || "0",
       change: "+8%",
       changeType: "positive",
@@ -166,7 +169,7 @@ const AdminDashboard = () => {
       color: "text-green-600"
     },
     {
-      title: "Transactions",
+      title: isHindi ? "लेनदेन" : "Transactions",
       value: systemStats.totalTransactions?.toLocaleString() || "0",
       change: "+15%",
       changeType: "positive",
@@ -174,9 +177,9 @@ const AdminDashboard = () => {
       color: "text-amber-600"
     },
     {
-      title: "System Uptime",
+      title: isHindi ? "सिस्टम अपटाइम" : "System Uptime",
       value: systemStats.systemUptime || "0%",
-      change: "Excellent",
+      change: isHindi ? "उत्कृष्ट" : "Excellent",
       changeType: "positive",
       icon: Activity,
       color: "text-purple-600"
@@ -213,10 +216,11 @@ const AdminDashboard = () => {
         <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
-              <p className="text-gray-600">System overview and management center</p>
+              <h1 className="text-2xl font-bold text-gray-900">{isHindi ? 'एडमिन डैशबोर्ड' : 'Admin Dashboard'}</h1>
+              <p className="text-gray-600">{isHindi ? 'सिस्टम अवलोकन और प्रबंधन केंद्र' : 'System overview and management center'}</p>
             </div>
             <div className="flex items-center space-x-4">
+              <LanguageToggle isHindi={isHindi} onToggle={toggleLanguage} />
               <NotificationIndicator count={3} />
               <ProfileDropdown user={userData} />
             </div>
@@ -232,7 +236,7 @@ const AdminDashboard = () => {
               animate={{ opacity: 1, y: 0 }}
               className="space-y-3"
             >
-              <h2 className="text-lg font-semibold text-gray-900">System Alerts</h2>
+              <h2 className="text-lg font-semibold text-gray-900">{isHindi ? 'सिस्टम अलर्ट' : 'System Alerts'}</h2>
               <div className="grid gap-3">
                 {alerts.map((alert) => (
                   <div

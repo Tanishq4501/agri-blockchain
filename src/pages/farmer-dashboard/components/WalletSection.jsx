@@ -6,57 +6,57 @@ const WalletSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const walletData = {
-    currentBalance: 12450.75,
-    pendingPayments: 3250.00,
-    monthlyEarnings: 8900.25,
-    totalEarnings: 45670.50
+    currentBalance: 124507.50,
+    pendingPayments: 32500.00,
+    monthlyEarnings: 89002.50,
+    totalEarnings: 456705.00
   };
 
   const transactions = [
     {
       id: 'TXN-2025-001',
       date: '2025-01-12',
-      buyer: 'Fresh Market Co.',
-      product: 'Organic Tomatoes - 500kg',
-      amount: 1250.00,
+      buyer: 'Fresh Bazar Company (फ्रेश बाजार कंपनी)',
+      product: 'Organic Tomatoes (जैविक टमाटर) - 500kg',
+      amount: 12500.00,
       status: 'completed',
       paymentMethod: 'Bank Transfer'
     },
     {
       id: 'TXN-2025-002',
       date: '2025-01-11',
-      buyer: 'Green Valley Distributors',
-      product: 'Sweet Corn - 300kg',
-      amount: 750.50,
+      buyer: 'Hariyali Distributors (हरियाली डिस्ट्रिब्यूटर्स)',
+      product: 'Sweet Corn (मीठा मक्का) - 300kg',
+      amount: 7505.00,
       status: 'pending',
-      paymentMethod: 'Digital Wallet'
+      paymentMethod: 'UPI'
     },
     {
       id: 'TXN-2025-003',
       date: '2025-01-10',
-      buyer: 'City Supermarket Chain',
-      product: 'Organic Potatoes - 800kg',
-      amount: 2100.25,
+      buyer: 'Mumbai Supermarket Chain (मुंबई सुपरमार्केट चेन)',
+      product: 'Organic Potatoes (जैविक आलू) - 800kg',
+      amount: 21002.50,
       status: 'completed',
       paymentMethod: 'Bank Transfer'
     },
     {
       id: 'TXN-2025-004',
       date: '2025-01-09',
-      buyer: 'Local Food Hub',
-      product: 'Mixed Vegetables - 200kg',
-      amount: 450.00,
+      buyer: 'Local Sabzi Mandi (स्थानीय सब्जी मंडी)',
+      product: 'Mixed Vegetables (मिश्रित सब्जियां) - 200kg',
+      amount: 4500.00,
       status: 'disputed',
       paymentMethod: 'Cash'
     },
     {
       id: 'TXN-2025-005',
       date: '2025-01-08',
-      buyer: 'Organic Foods Ltd.',
-      product: 'Carrots - 400kg',
-      amount: 680.75,
+      buyer: 'Organic Foods Ltd. (ऑर्गेनिक फूड्स लिमिटेड)',
+      product: 'Carrots (गाजर) - 400kg',
+      amount: 6807.50,
       status: 'completed',
-      paymentMethod: 'Digital Wallet'
+      paymentMethod: 'UPI'
     }
   ];
 
@@ -78,10 +78,12 @@ const WalletSection = () => {
   };
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD'
-    })?.format(amount);
+      currency: 'INR',
+      minimumFractionDigits: 2, 
+      maximumFractionDigits: 2  
+    }).format(amount);
   };
 
   const formatDate = (dateString) => {

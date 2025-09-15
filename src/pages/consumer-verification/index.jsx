@@ -8,8 +8,11 @@ import TrustIndicators from './components/TrustIndicators';
 import ShareModal from './components/ShareModal';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
+import LanguageToggle from '../../components/ui/LanguageToggle';
+import { useLanguage } from '../../utils/translations';
 
 const ConsumerVerification = () => {
+  const { isHindi, toggleLanguage, t } = useLanguage();
   const [searchParams] = useSearchParams();
   const [scannedProduct, setScannedProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,9 +21,9 @@ const ConsumerVerification = () => {
 
   // Mock product database
   const mockProducts = {
-    'AGT-TOM-2025-001': {
-      code: 'AGT-TOM-2025-001',
-      name: 'Organic Cherry Tomatoes',
+    'AGT-MAN-2025-001': {
+      code: 'AGT-MAN-2025-001',
+      name: 'Organic Alphonso Mangoes (जैविक आम)',
       status: 'verified',
       image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400',
       gallery: [
@@ -29,25 +32,25 @@ const ConsumerVerification = () => {
         'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=100'
       ],
       farmer: {
-        name: 'Maria Rodriguez',
-        location: 'Salinas Valley, California',
-        farmSize: '25 acres'
+        name: 'Ramesh Patel (रमेश पटेल)',
+        location: 'Ratnagiri, Maharashtra',
+        farmSize: '15 acres'
       },
       harvestDate: 'January 8, 2025',
       bestBefore: 'January 22, 2025',
-      storageTemp: '2-4°C',
-      batchSize: '500 lbs',
-      certifications: ['Organic', 'Non-GMO', 'Fair Trade', 'Sustainable'],
+      storageTemp: '12-15°C',
+      batchSize: '200 kg',
+      certifications: ['FSSAI Organic', 'GI Tag', 'Export Quality', 'Fair Trade'],
       nutrition: {
-        calories: '18 per 100g',
-        vitamin_c: '13.7mg',
-        fiber: '1.2g',
-        potassium: '237mg'
+        calories: '60 per 100g',
+        vitamin_c: '36.4mg',
+        fiber: '1.6g',
+        vitamin_a: '54μg'
       }
     },
-    'AGT-CAR-2025-002': {
-      code: 'AGT-CAR-2025-002',
-      name: 'Fresh Organic Carrots',
+    'AGT-RIC-2025-002': {
+      code: 'AGT-RIC-2025-002',
+      name: 'Organic Basmati Rice (जैविक बासमती)',
       status: 'verified',
       image: 'https://images.unsplash.com/photo-1445282768818-728615cc910a?w=400',
       gallery: [
@@ -55,25 +58,25 @@ const ConsumerVerification = () => {
         'https://images.unsplash.com/photo-1582515073490-39981397c445?w=100'
       ],
       farmer: {
-        name: 'John Thompson',
-        location: 'Bakersfield, California',
-        farmSize: '40 acres'
+        name: 'Gurpreet Singh (गुरप्रीत सिंह)',
+        location: 'Amritsar, Punjab',
+        farmSize: '25 acres'
       },
       harvestDate: 'January 5, 2025',
-      bestBefore: 'February 5, 2025',
-      storageTemp: '0-2°C',
-      batchSize: '800 lbs',
-      certifications: ['Organic', 'Non-GMO', 'Sustainable'],
+      bestBefore: 'January 5, 2026',
+      storageTemp: '15-20°C',
+      batchSize: '500 kg',
+      certifications: ['FSSAI Organic', 'Export Grade', 'Fair Trade'],
       nutrition: {
-        calories: '41 per 100g',
-        vitamin_a: '835μg',
-        fiber: '2.8g',
-        beta_carotene: '8285μg'
+        calories: '345 per 100g',
+        protein: '7.1g',
+        carbs: '78g',
+        fiber: '0.4g'
       }
     },
-    'AGT-POT-2025-003': {
-      code: 'AGT-POT-2025-003',
-      name: 'Russet Potatoes',
+    'AGT-TUR-2025-003': {
+      code: 'AGT-TUR-2025-003',
+      name: 'Organic Turmeric (जैविक हल्दी)',
       status: 'verified',
       image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400',
       gallery: [
@@ -81,45 +84,45 @@ const ConsumerVerification = () => {
         'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=100'
       ],
       farmer: {
-        name: 'Sarah Mitchell',
-        location: 'Idaho Falls, Idaho',
-        farmSize: '60 acres'
+        name: 'Lakshmi Devi (लक्ष्मी देवी)',
+        location: 'Erode, Tamil Nadu',
+        farmSize: '10 acres'
       },
       harvestDate: 'December 28, 2024',
-      bestBefore: 'March 28, 2025',
-      storageTemp: '4-7°C',
-      batchSize: '1200 lbs',
-      certifications: ['Non-GMO', 'Sustainable'],
+      bestBefore: 'December 28, 2026',
+      storageTemp: '15-25°C',
+      batchSize: '100 kg',
+      certifications: ['FSSAI Organic', 'Export Quality', 'Ayurvedic Grade'],
       nutrition: {
-        calories: '77 per 100g',
-        vitamin_c: '19.7mg',
-        potassium: '425mg',
-        fiber: '2.2g'
+        calories: '312 per 100g',
+        curcumin: '3.14%',
+        fiber: '21g',
+        iron: '41.4mg'
       }
     },
-    'AGT-ONI-2025-004': {
-      code: 'AGT-ONI-2025-004',
-      name: 'Sweet Yellow Onions',
+    'AGT-TEA-2025-004': {
+      code: 'AGT-TEA-2025-004',
+      name: 'Organic Darjeeling Tea (जैविक दार्जिलिंग चाय)',
       status: 'verified',
       image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400',
       gallery: [
         'https://images.unsplash.com/photo-1582515073490-39981397c445?w=100'
       ],
       farmer: {
-        name: 'David Chen',
-        location: 'Walla Walla, Washington',
-        farmSize: '35 acres'
+        name: 'Pemba Sherpa (पेम्बा शेर्पा)',
+        location: 'Darjeeling, West Bengal',
+        farmSize: '20 acres'
       },
       harvestDate: 'January 3, 2025',
-      bestBefore: 'April 3, 2025',
-      storageTemp: '0-4°C',
-      batchSize: '900 lbs',
-      certifications: ['Non-GMO', 'Sustainable', 'Fair Trade'],
+      bestBefore: 'January 3, 2027',
+      storageTemp: '15-25°C',
+      batchSize: '50 kg',
+      certifications: ['FSSAI Organic', 'GI Tag', 'Fair Trade', 'Rainforest Alliance'],
       nutrition: {
-        calories: '40 per 100g',
-        vitamin_c: '7.4mg',
-        fiber: '1.7g',
-        folate: '19μg'
+        calories: '2 per cup',
+        antioxidants: 'High',
+        caffeine: '50mg per cup',
+        tannins: 'Medium'
       }
     }
   };
@@ -127,92 +130,92 @@ const ConsumerVerification = () => {
   // Mock timeline data
   const mockTimeline = [
     {
-      stage: 'Harvested',
+      stage: 'Harvested (फसल काटी)',
       date: 'Jan 8, 2025',
       time: '06:30 AM',
-      location: 'Rodriguez Farm, Salinas Valley',
-      handler: 'Maria Rodriguez',
-      temperature: '18°C',
-      notes: 'Fresh harvest at optimal ripeness. Quality grade A+',
+      location: 'Patel Farm, Ratnagiri, Maharashtra',
+      handler: 'Ramesh Patel (रमेश पटेल)',
+      temperature: '28°C',
+      notes: 'Fresh harvest at optimal ripeness. Premium Alphonso grade',
       completed: true
     },
     {
-      stage: 'Processed',
+      stage: 'Processed (प्रसंस्करण)',
       date: 'Jan 8, 2025',
       time: '10:15 AM',
-      location: 'Valley Processing Center',
+      location: 'Maharashtra Processing Center',
       handler: 'Processing Team Alpha',
-      temperature: '4°C',
-      notes: 'Washed, sorted, and packaged according to organic standards',
+      temperature: '15°C',
+      notes: 'Washed, sorted, and graded according to FSSAI organic standards',
       completed: true
     },
     {
-      stage: 'Packaged',
+      stage: 'Packaged (पैकेजिंग)',
       date: 'Jan 8, 2025',
       time: '02:30 PM',
-      location: 'Valley Processing Center',
+      location: 'Maharashtra Processing Center',
       handler: 'Packaging Unit 3',
-      temperature: '4°C',
-      notes: 'Sealed in biodegradable packaging with QR tracking codes',
+      temperature: '15°C',
+      notes: 'Sealed in eco-friendly packaging with QR tracking codes',
       completed: true
     },
     {
-      stage: 'Shipped',
+      stage: 'Shipped (भेजा गया)',
       date: 'Jan 9, 2025',
       time: '05:00 AM',
-      location: 'Distribution Hub, Fresno',
-      handler: 'FreshTrans Logistics',
-      temperature: '2-4°C',
-      notes: 'Loaded into refrigerated truck for regional distribution',
+      location: 'Mumbai Distribution Hub',
+      handler: 'Bharti Logistics',
+      temperature: '12-15°C',
+      notes: 'Loaded into temperature-controlled truck for Mumbai delivery',
       completed: true
     },
     {
-      stage: 'Distributed',
+      stage: 'Distributed (वितरण)',
       date: 'Jan 10, 2025',
       time: '08:45 AM',
-      location: 'Regional Distribution Center',
-      handler: 'Distribution Team B',
-      temperature: '2-4°C',
-      notes: 'Sorted for retail delivery routes',
+      location: 'Mumbai Regional Distribution Center',
+      handler: 'Distribution Team Mumbai',
+      temperature: '12-15°C',
+      notes: 'Sorted for retail delivery routes across Mumbai',
       completed: true
     },
     {
-      stage: 'Retail',
+      stage: 'Retail (खुदरा)',
       date: 'Jan 11, 2025',
       time: '06:00 AM',
-      location: 'FreshMart Store #247',
-      handler: 'Store Receiving',
-      temperature: '4°C',
-      notes: 'Received and placed in refrigerated display',
+      location: 'Reliance Fresh Bandra',
+      handler: 'Store Receiving Team',
+      temperature: '15°C',
+      notes: 'Received and placed in fresh produce display section',
       completed: true
     },
     {
-      stage: 'Delivered',
+      stage: 'Delivered (वितरित)',
       date: 'Pending',
       time: 'Pending',
       location: 'Customer Location',
       handler: 'Pending',
       temperature: 'N/A',
-      notes: 'Awaiting customer purchase',
+      notes: 'Awaiting customer purchase (ग्राहक खरीद का इंतजार)',
       completed: false
     }
   ];
 
   // Mock trust indicators
   const mockTrustData = {
-    trustScore: 94,
+    trustScore: 96,
     verificationBadges: [
-      { type: 'Verified', verifiedDate: 'Jan 8, 2025' },
-      { type: 'Authentic', verifiedDate: 'Jan 8, 2025' },
-      { type: 'Fresh', verifiedDate: 'Jan 11, 2025' },
-      { type: 'Quality', verifiedDate: 'Jan 8, 2025' },
-      { type: 'Traceable', verifiedDate: 'Jan 8, 2025' }
+      { type: 'Verified (सत्यापित)', verifiedDate: 'Jan 8, 2025' },
+      { type: 'Authentic (प्रामाणिक)', verifiedDate: 'Jan 8, 2025' },
+      { type: 'Fresh (ताज़ा)', verifiedDate: 'Jan 11, 2025' },
+      { type: 'Premium Quality', verifiedDate: 'Jan 8, 2025' },
+      { type: 'Traceable (प्रलेखनीय)', verifiedDate: 'Jan 8, 2025' }
     ],
     complianceCertifications: [
-      { name: 'FDA Approved', expiryDate: 'Dec 31, 2025' },
-      { name: 'USDA Organic', expiryDate: 'Jun 15, 2025' },
-      { name: 'HACCP Compliant', expiryDate: 'Mar 20, 2025' },
-      { name: 'Fair Trade', expiryDate: 'Aug 10, 2025' }
+      { name: 'FSSAI Approved', expiryDate: 'Dec 31, 2025' },
+      { name: 'FSSAI Organic', expiryDate: 'Jun 15, 2025' },
+      { name: 'GI Tag Certified', expiryDate: 'Permanent' },
+      { name: 'Export Quality', expiryDate: 'Aug 10, 2025' }
     ]
   };
 
@@ -268,11 +271,14 @@ const ConsumerVerification = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Page Header */}
           <div className="text-center mb-8">
+            <div className="flex justify-center mb-4">
+              <LanguageToggle isHindi={isHindi} onToggle={toggleLanguage} />
+            </div>
             <h1 className="text-4xl font-bold text-text-primary mb-4">
-              Product Verification
+              {isHindi ? 'उत्पाद सत्यापन' : 'Product Verification'}
             </h1>
             <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-              Verify the authenticity and trace the complete journey of your agricultural products from farm to table
+              {isHindi ? 'अपने कृषि उत्पादों की प्रामाणिकता को सत्यापित करें और भारतीय खेतों से आपकी मेज तक की पूरी यात्रा का पता लगाएं' : 'Verify the authenticity and trace the complete journey of your agricultural products from Indian farms to your table'}
             </p>
           </div>
 
@@ -282,8 +288,8 @@ const ConsumerVerification = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-primary to-success rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse-soft">
                 <Icon name="Search" size={32} color="white" strokeWidth={2} />
               </div>
-              <h2 className="text-xl font-semibold text-text-primary mb-2">Verifying Product...</h2>
-              <p className="text-text-secondary">Please wait while we authenticate your product</p>
+              <h2 className="text-xl font-semibold text-text-primary mb-2">{isHindi ? 'उत्पाद सत्यापित कर रहे हैं...' : 'Verifying Product...'}</h2>
+              <p className="text-text-secondary">{isHindi ? 'कृपया प्रतीक्षा करें जबकि हम आपके उत्पाद को प्रमाणित करते हैं' : 'Please wait while we authenticate your product'}</p>
             </div>
           )}
 

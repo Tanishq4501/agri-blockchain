@@ -283,19 +283,19 @@ const RouteManagement = () => {
               />
               <Select
                 value={newRoute.driver}
-                onValueChange={(value) => setNewRoute(prev => ({ ...prev, driver: value }))}
+                onChange={(value) => setNewRoute(prev => ({ ...prev, driver: value }))}
                 options={[{ value: '', label: 'Select Driver' }, ...drivers]}
                 required
               />
               <Select
                 value={newRoute.vehicle}
-                onValueChange={(value) => setNewRoute(prev => ({ ...prev, vehicle: value }))}
+                onChange={(value) => setNewRoute(prev => ({ ...prev, vehicle: value }))}
                 options={[{ value: '', label: 'Select Vehicle' }, ...vehicles]}
                 required
               />
               <Select
                 value={newRoute.priority}
-                onValueChange={(value) => setNewRoute(prev => ({ ...prev, priority: value }))}
+                onChange={(value) => setNewRoute(prev => ({ ...prev, priority: value }))}
                 options={priorityOptions}
               />
               <div className="flex space-x-2">

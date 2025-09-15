@@ -5,16 +5,16 @@ const StockSummaryCards = () => {
   const summaryData = [
     {
       id: 1,
-      title: "Total Inventory Value",
-      value: "$127,450",
+      title: "Total Inventory Value (कुल स्टॉक मूल्य)",
+      value: "₹12,74,500",
       change: "+12.5%",
       changeType: "positive",
-      icon: "DollarSign",
+      icon: "IndianRupee",
       description: "Current stock valuation"
     },
     {
       id: 2,
-      title: "Verification Rate",
+      title: "Verification Rate (सत्यापन दर)",
       value: "94.2%",
       change: "+2.1%",
       changeType: "positive",
@@ -23,7 +23,7 @@ const StockSummaryCards = () => {
     },
     {
       id: 3,
-      title: "Compliance Score",
+      title: "Compliance Score (अनुपालन स्कोर)",
       value: "98.7%",
       change: "-0.3%",
       changeType: "negative",
@@ -32,7 +32,7 @@ const StockSummaryCards = () => {
     },
     {
       id: 4,
-      title: "Expiring Soon",
+      title: "Expiring Soon (जल्दी खराब होने वाले)",
       value: "23",
       change: "+5",
       changeType: "warning",

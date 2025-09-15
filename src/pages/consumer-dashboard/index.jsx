@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import RoleBasedSidebar from '../../components/ui/RoleBasedSidebar';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import NotificationIndicator from '../../components/ui/NotificationIndicator';
+import LanguageToggle from '../../components/ui/LanguageToggle';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
+import { useLanguage } from '../../utils/translations';
 
 const ConsumerDashboard = () => {
   const navigate = useNavigate();
+  const { isHindi, toggleLanguage, t } = useLanguage();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState('scan');
   const [qrCode, setQrCode] = useState('');
@@ -17,8 +20,8 @@ const ConsumerDashboard = () => {
 
   // Mock user data
   const userData = {
-    name: 'Sarah Johnson',
-    email: 'sarah.johnson@email.com',
+    name: 'Anita Sharma (अनिता शर्मा)',
+    email: 'anita.sharma@gmail.com',
     role: 'consumer',
     avatar: null
   };
@@ -28,24 +31,24 @@ const ConsumerDashboard = () => {
     {
       id: 1,
       type: 'info',
-      title: 'Product Alert',
-      message: 'New organic tomatoes from Green Valley Farm are now available in your area',
+      title: 'Product Alert (उत्पाद अलर्ट)',
+      message: 'New organic basmati rice from Krishna Farm is now available in Mumbai markets',
       timestamp: new Date(Date.now() - 30 * 60 * 1000),
       read: false
     },
     {
       id: 2,
       type: 'success',
-      title: 'Verification Complete',
-      message: 'Successfully verified organic certification for your recent purchase',
+      title: 'Verification Complete (सत्यापन पूर्ण)',
+      message: 'Successfully verified FSSAI organic certification for your recent mango purchase',
       timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
       read: false
     },
     {
       id: 3,
       type: 'warning',
-      title: 'Recall Notice',
-      message: 'Product recall issued for batch #ABC-123. Check your purchase history.',
+      title: 'Recall Notice (वापसी सूचना)',
+      message: 'Product recall issued for batch #MH-123 from Maharashtra. Check your purchase history.',
       timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000),
       read: true
     }
@@ -54,36 +57,36 @@ const ConsumerDashboard = () => {
   // Mock scanned products data
   const mockScannedProducts = [
     {
-      id: 'TOM-2025-001',
-      name: 'Organic Tomatoes',
-      farmer: 'Green Valley Farm',
-      location: 'California, USA',
+      id: 'MAN-2025-001',
+      name: 'Organic Alphonso Mangoes (जैविक आम)',
+      farmer: 'Ratnagiri Farms (रत्नागिरी फार्म)',
+      location: 'Ratnagiri, Maharashtra',
       harvestDate: '2025-01-10',
-      certifications: ['Organic', 'Non-GMO'],
+      certifications: ['FSSAI Organic', 'GI Tag', 'Export Quality'],
       status: 'verified',
       scanDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
       image: null,
       journey: [
-        { stage: 'Harvested', date: '2025-01-10', location: 'Green Valley Farm' },
-        { stage: 'Processed', date: '2025-01-11', location: 'Valley Processing Co.' },
-        { stage: 'Distributed', date: '2025-01-12', location: 'Fresh Market Co.' },
-        { stage: 'Retail', date: '2025-01-13', location: 'Local Grocery Store' }
+        { stage: 'Harvested (फसल काटी)', date: '2025-01-10', location: 'Ratnagiri Farms' },
+        { stage: 'Processed (प्रसंस्करण)', date: '2025-01-11', location: 'Maharashtra Processing Unit' },
+        { stage: 'Distributed (वितरण)', date: '2025-01-12', location: 'Mumbai Distribution Center' },
+        { stage: 'Retail (खुदरा)', date: '2025-01-13', location: 'Reliance Fresh Mumbai' }
       ]
     },
     {
-      id: 'CAR-2025-002',
-      name: 'Organic Carrots',
-      farmer: 'Sunrise Organic Farm',
-      location: 'Oregon, USA',
+      id: 'RIC-2025-002',
+      name: 'Organic Basmati Rice (जैविक बासमती)',
+      farmer: 'Punjab Organic Co-op (पंजाब जैविक सहकारी)',
+      location: 'Amritsar, Punjab',
       harvestDate: '2025-01-08',
-      certifications: ['Organic', 'Fair Trade'],
+      certifications: ['FSSAI Organic', 'Fair Trade', 'Export Grade'],
       status: 'verified',
       scanDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
       image: null,
       journey: [
-        { stage: 'Harvested', date: '2025-01-08', location: 'Sunrise Organic Farm' },
-        { stage: 'Packaged', date: '2025-01-09', location: 'Organic Pack Co.' },
-        { stage: 'Shipped', date: '2025-01-10', location: 'Regional Distribution' }
+        { stage: 'Harvested (फसल काटी)', date: '2025-01-08', location: 'Punjab Organic Co-op' },
+        { stage: 'Processed (प्रसंस्करण)', date: '2025-01-09', location: 'Amritsar Rice Mill' },
+        { stage: 'Packaged (पैकेजिंग)', date: '2025-01-10', location: 'Punjab Packaging Unit' }
       ]
     }
   ];
@@ -141,10 +144,10 @@ const ConsumerDashboard = () => {
 
   // Tab configuration
   const tabs = [
-    { id: 'scan', label: 'Scan Product', icon: 'QrCode' },
-    { id: 'history', label: 'Scan History', icon: 'History' },
-    { id: 'favorites', label: 'Favorites', icon: 'Heart' },
-    { id: 'alerts', label: 'Alerts', icon: 'Bell' }
+    { id: 'scan', label: isHindi ? 'उत्पाद स्कैन करें' : 'Scan Product', icon: 'QrCode' },
+    { id: 'history', label: isHindi ? 'स्कैन इतिहास' : 'Scan History', icon: 'History' },
+    { id: 'favorites', label: isHindi ? 'पसंदीदा' : 'Favorites', icon: 'Heart' },
+    { id: 'alerts', label: isHindi ? 'अलर्ट' : 'Alerts', icon: 'Bell' }
   ];
 
   // Set page title
@@ -175,18 +178,22 @@ const ConsumerDashboard = () => {
               {/* Page Title */}
               <div className="flex items-center space-x-4">
                 <h1 className="text-2xl font-bold text-text-primary">
-                  Consumer Dashboard
+                  {isHindi ? 'उपभोक्ता डैशबोर्ड' : 'Consumer Dashboard'}
                 </h1>
                 <div className="hidden sm:block">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary border border-secondary/20">
                     <Icon name="Shield" size={12} className="mr-1" strokeWidth={2} />
-                    Verified Consumer
+                    {isHindi ? 'सत्यापित उपभोक्ता' : 'Verified Consumer'}
                   </span>
                 </div>
               </div>
 
               {/* Header Actions */}
               <div className="flex items-center space-x-4">
+                <LanguageToggle
+                  isHindi={isHindi}
+                  onToggle={toggleLanguage}
+                />
                 <NotificationIndicator
                   notifications={notifications}
                   unreadCount={notifications?.filter(n => !n?.read)?.length}
@@ -241,10 +248,10 @@ const ConsumerDashboard = () => {
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-text-primary">
-                        Welcome, {userData?.name?.split(' ')?.[0]}!
+                        {isHindi ? `स्वागत है, ${userData?.name?.split(' ')?.[0]}!` : `Welcome, ${userData?.name?.split(' ')?.[0]}!`}
                       </h2>
                       <p className="text-text-secondary mt-1">
-                        Scan QR codes to verify product authenticity and trace your food's journey from farm to table.
+                        {isHindi ? 'उत्पाद प्रामाणिकता सत्यापित करने और खेत से मेज तक अपने भोजन की यात्रा का पता लगाने के लिए QR कोड स्कैन करें।' : 'Scan QR codes to verify product authenticity and trace your food\'s journey from farm to table.'}
                       </p>
                     </div>
                   </div>
@@ -261,13 +268,13 @@ const ConsumerDashboard = () => {
                   <div className="glass-card p-6">
                     <h3 className="text-xl font-semibold text-text-primary mb-4 flex items-center">
                       <Icon name="QrCode" size={20} className="mr-2" />
-                      Scan QR Code
+                      {isHindi ? 'QR कोड स्कैन करें' : 'Scan QR Code'}
                     </h3>
                     <div className="space-y-4">
                       <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
                         <Icon name="Camera" size={48} className="mx-auto text-gray-400 mb-4" />
                         <p className="text-text-secondary mb-4">
-                          Point your camera at the QR code or enter code manually
+                          {isHindi ? 'अपना कैमरा QR कोड पर इंगित करें या मैन्युअल रूप से कोड दर्ज करें' : 'Point your camera at the QR code or enter code manually'}
                         </p>
                         <Button
                           variant="outline"
@@ -275,12 +282,12 @@ const ConsumerDashboard = () => {
                           iconPosition="left"
                           className="mb-4"
                         >
-                          Open Camera
+                          {isHindi ? 'कैमरा खोलें' : 'Open Camera'}
                         </Button>
                       </div>
                       <div className="flex space-x-2">
                         <Input
-                          placeholder="Enter QR code manually"
+                          placeholder={isHindi ? 'QR कोड मैन्युअल रूप से दर्ज करें' : 'Enter QR code manually'}
                           value={qrCode}
                           onChange={(e) => setQrCode(e.target.value)}
                           className="flex-1"
@@ -291,7 +298,7 @@ const ConsumerDashboard = () => {
                           iconName="Search"
                           disabled={!qrCode.trim()}
                         >
-                          Scan
+                          {isHindi ? 'स्कैन करें' : 'Scan'}
                         </Button>
                       </div>
                     </div>
@@ -301,30 +308,30 @@ const ConsumerDashboard = () => {
                   <div className="glass-card p-6">
                     <h3 className="text-xl font-semibold text-text-primary mb-4 flex items-center">
                       <Icon name="BarChart3" size={20} className="mr-2" />
-                      Your Activity
+                      {isHindi ? 'आपकी गतिविधि' : 'Your Activity'}
                     </h3>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="text-center p-4 bg-primary/5 rounded-lg border border-primary/10">
                         <div className="text-2xl font-bold text-primary">{scannedProducts.length}</div>
-                        <div className="text-sm text-text-secondary">Products Scanned</div>
+                        <div className="text-sm text-text-secondary">{isHindi ? 'स्कैन किए गए उत्पाद' : 'Products Scanned'}</div>
                       </div>
                       <div className="text-center p-4 bg-success/5 rounded-lg border border-success/10">
                         <div className="text-2xl font-bold text-success">
                           {scannedProducts.filter(p => p.status === 'verified').length}
                         </div>
-                        <div className="text-sm text-text-secondary">Verified Products</div>
+                        <div className="text-sm text-text-secondary">{isHindi ? 'सत्यापित उत्पाद' : 'Verified Products'}</div>
                       </div>
                       <div className="text-center p-4 bg-secondary/5 rounded-lg border border-secondary/10">
                         <div className="text-2xl font-bold text-secondary">
                           {new Set(scannedProducts.map(p => p.farmer)).size}
                         </div>
-                        <div className="text-sm text-text-secondary">Unique Farms</div>
+                        <div className="text-sm text-text-secondary">{isHindi ? 'अनोखे फार्म' : 'Unique Farms'}</div>
                       </div>
                       <div className="text-center p-4 bg-accent/5 rounded-lg border border-accent/10">
                         <div className="text-2xl font-bold text-accent">
                           {scannedProducts.reduce((acc, p) => acc + p.certifications.length, 0)}
                         </div>
-                        <div className="text-sm text-text-secondary">Certifications</div>
+                        <div className="text-sm text-text-secondary">{isHindi ? 'प्रमाणपत्र' : 'Certifications'}</div>
                       </div>
                     </div>
                   </div>
@@ -335,9 +342,9 @@ const ConsumerDashboard = () => {
               {activeTab === 'history' && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-semibold text-text-primary">Scan History</h3>
+                    <h3 className="text-xl font-semibold text-text-primary">{isHindi ? 'स्कैन इतिहास' : 'Scan History'}</h3>
                     <Button variant="outline" iconName="Download" iconPosition="left">
-                      Export History
+                      {isHindi ? 'इतिहास निर्यात करें' : 'Export History'}
                     </Button>
                   </div>
                   
@@ -372,21 +379,21 @@ const ConsumerDashboard = () => {
                         
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                           <div>
-                            <label className="text-sm font-medium text-text-secondary">Harvest Date</label>
+                            <label className="text-sm font-medium text-text-secondary">{isHindi ? 'फसल की तारीख' : 'Harvest Date'}</label>
                             <p className="text-text-primary">{product.harvestDate}</p>
                           </div>
                           <div>
-                            <label className="text-sm font-medium text-text-secondary">Scan Date</label>
+                            <label className="text-sm font-medium text-text-secondary">{isHindi ? 'स्कैन की तारीख' : 'Scan Date'}</label>
                             <p className="text-text-primary">{product.scanDate.toLocaleDateString()}</p>
                           </div>
                           <div>
-                            <label className="text-sm font-medium text-text-secondary">Product ID</label>
+                            <label className="text-sm font-medium text-text-secondary">{isHindi ? 'उत्पाद ID' : 'Product ID'}</label>
                             <p className="text-text-primary font-mono text-sm">{product.id}</p>
                           </div>
                         </div>
 
                         <div className="mb-4">
-                          <label className="text-sm font-medium text-text-secondary mb-2 block">Certifications</label>
+                          <label className="text-sm font-medium text-text-secondary mb-2 block">{isHindi ? 'प्रमाणपत्र' : 'Certifications'}</label>
                           <div className="flex flex-wrap gap-2">
                             {product.certifications.map((cert, index) => (
                               <span 
@@ -404,11 +411,11 @@ const ConsumerDashboard = () => {
                           <div className="flex items-center space-x-2">
                             <Icon name="MapPin" size={16} className="text-text-secondary" />
                             <span className="text-sm text-text-secondary">
-                              {product.journey.length} tracking points
+                              {product.journey.length} {isHindi ? 'ट्रैकिंग पॉइंट्स' : 'tracking points'}
                             </span>
                           </div>
                           <Button variant="outline" size="sm" iconName="Eye" iconPosition="left">
-                            View Journey
+                            {isHindi ? 'यात्रा देखें' : 'View Journey'}
                           </Button>
                         </div>
                       </div>
@@ -424,10 +431,10 @@ const ConsumerDashboard = () => {
                     <Icon name="Heart" size={32} color="white" strokeWidth={2} />
                   </div>
                   <h3 className="text-xl font-semibold text-text-primary mb-2">
-                    Favorite Products
+                    {isHindi ? 'पसंदीदा उत्पाद' : 'Favorite Products'}
                   </h3>
                   <p className="text-text-secondary mb-6">
-                    Save your favorite products and farmers to easily track them and get notifications about new harvests.
+                    {isHindi ? 'अपने पसंदीदा उत्पादों और किसानों को सहेजें ताकि आसानी से उन्हें ट्रैक कर सकें और नई फसल के बारे में सूचनाएं प्राप्त कर सकें।' : 'Save your favorite products and farmers to easily track them and get notifications about new harvests.'}
                   </p>
                   <Button
                     variant="outline"
@@ -435,7 +442,7 @@ const ConsumerDashboard = () => {
                     iconPosition="left"
                     iconSize={16}
                   >
-                    Add Favorites
+                    {isHindi ? 'पसंदीदा जोड़ें' : 'Add Favorites'}
                   </Button>
                 </div>
               )}
@@ -444,9 +451,9 @@ const ConsumerDashboard = () => {
               {activeTab === 'alerts' && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-semibold text-text-primary">Product Alerts</h3>
+                    <h3 className="text-xl font-semibold text-text-primary">{isHindi ? 'उत्पाद अलर्ट' : 'Product Alerts'}</h3>
                     <Button variant="outline" iconName="Settings" iconPosition="left">
-                      Alert Settings
+                      {isHindi ? 'अलर्ट सेटिंग्स' : 'Alert Settings'}
                     </Button>
                   </div>
                   

@@ -8,17 +8,23 @@ import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
+import LanguageToggle from '../../components/ui/LanguageToggle';
+import GeminiToggle from '../../components/ui/GeminiToggle';
+import { useLanguage } from '../../utils/translations';
+import { useGeminiTranslation } from '../../hooks/useGeminiTranslation';
 
 const DistributorRoutes = () => {
   const navigate = useNavigate();
+  const { isHindi, toggleLanguage, t } = useLanguage();
+  const { translateText, isGeminiEnabled, toggleGemini, isTranslating } = useGeminiTranslation();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [sortBy, setSortBy] = useState('date');
 
   const userData = {
-    name: 'Mike Rodriguez',
-    email: 'mike.rodriguez@fastlogistics.com',
+    name: 'Rajesh Kumar (राजेश कुमार)',
+    email: 'rajesh@bharatlogistics.com',
     role: 'distributor',
     avatar: null
   };
@@ -43,102 +49,102 @@ const DistributorRoutes = () => {
   const mockRoutes = [
     {
       id: 'RT-001',
-      name: 'Bay Area Fresh Produce Route',
+      name: 'Mumbai Fresh Produce Route (मुंबई ताजा उत्पाद मार्ग)',
       status: 'active',
-      driver: 'Carlos Martinez',
+      driver: 'Suresh Patel (सुरेश पटेल)',
       vehicle: 'Truck-001 (Refrigerated)',
       startTime: '2024-01-15T06:00:00Z',
       estimatedEndTime: '2024-01-15T18:00:00Z',
       actualEndTime: null,
-      totalDistance: '245 miles',
+      totalDistance: '245 km',
       estimatedDuration: '12 hours',
-      fuelEfficiency: '8.5 mpg',
+      fuelEfficiency: '12 km/l',
       carbonFootprint: '28.8 kg CO2',
       stops: [
         {
           id: 'STOP-001',
-          name: 'Green Valley Farm',
-          address: '123 Farm Road, Salinas, CA',
+          name: 'Hariyali Krishi Farm (हरियाली कृषि फार्म)',
+          address: '123 Farm Road, Nashik, Maharashtra',
           type: 'pickup',
           status: 'completed',
           scheduledTime: '2024-01-15T06:00:00Z',
           actualTime: '2024-01-15T06:05:00Z',
-          products: ['Organic Tomatoes - 500 lbs', 'Fresh Lettuce - 200 heads'],
+          products: ['Organic Tomatoes (जैविक टमाटर) - 500 kg', 'Fresh Lettuce (ताजा सलाद) - 200 bunches'],
           duration: '30 minutes'
         },
         {
           id: 'STOP-002',
-          name: 'Whole Foods Market - Downtown',
-          address: '456 Market St, San Francisco, CA',
+          name: 'Fresh Bazar Market - Andheri',
+          address: '456 Market St, Andheri, Mumbai',
           type: 'delivery',
           status: 'in-progress',
           scheduledTime: '2024-01-15T14:00:00Z',
           actualTime: null,
-          products: ['Organic Tomatoes - 300 lbs'],
+          products: ['Organic Tomatoes (जैविक टमाटर) - 300 kg'],
           duration: '45 minutes'
         },
         {
           id: 'STOP-003',
-          name: 'Whole Foods Market - Mission',
-          address: '789 Mission St, San Francisco, CA',
+          name: 'Fresh Bazar Market - Bandra',
+          address: '789 Linking Road, Bandra, Mumbai',
           type: 'delivery',
           status: 'pending',
           scheduledTime: '2024-01-15T16:00:00Z',
           actualTime: null,
-          products: ['Organic Tomatoes - 200 lbs', 'Fresh Lettuce - 200 heads'],
+          products: ['Organic Tomatoes (जैविक टमाटर) - 200 kg', 'Fresh Lettuce (ताजा सलाद) - 200 bunches'],
           duration: '45 minutes'
         }
       ],
-      currentLocation: 'Highway 101, approaching San Francisco',
+      currentLocation: 'Mumbai-Nashik Highway, approaching Mumbai',
       alerts: [
-        { type: 'traffic', message: 'Heavy traffic on Highway 101 - 30 min delay expected' }
+        { type: 'traffic', message: 'Heavy traffic on Mumbai-Nashik Highway - 30 min delay expected' }
       ]
     },
     {
       id: 'RT-002',
-      name: 'Oregon Dairy Distribution',
+      name: 'Delhi Dairy Distribution (दिल्ली डेयरी वितरण)',
       status: 'completed',
-      driver: 'Lisa Chen',
+      driver: 'Anjali Singh (अंजली सिंह)',
       vehicle: 'Van-003 (Refrigerated)',
       startTime: '2024-01-14T08:00:00Z',
       estimatedEndTime: '2024-01-14T16:00:00Z',
       actualEndTime: '2024-01-14T15:30:00Z',
-      totalDistance: '180 miles',
+      totalDistance: '180 km',
       estimatedDuration: '8 hours',
-      fuelEfficiency: '12.2 mpg',
+      fuelEfficiency: '15 km/l',
       carbonFootprint: '14.8 kg CO2',
       stops: [
         {
           id: 'STOP-004',
-          name: 'Happy Hen Farm',
-          address: '321 Rural Route, Portland, OR',
+          name: 'Gokul Dairy Farm (गोकुल डेयरी फार्म)',
+          address: '321 Rural Route, Gurgaon, Haryana',
           type: 'pickup',
           status: 'completed',
           scheduledTime: '2024-01-14T08:00:00Z',
           actualTime: '2024-01-14T08:00:00Z',
-          products: ['Free-Range Eggs - 1000 dozen'],
+          products: ['Fresh Milk (ताजा दूध) - 1000 liters'],
           duration: '20 minutes'
         },
         {
           id: 'STOP-005',
-          name: 'Local Grocery Chain - Store 1',
-          address: '654 Main St, Portland, OR',
+          name: 'Mother Dairy Store - CP',
+          address: '654 Connaught Place, New Delhi',
           type: 'delivery',
           status: 'completed',
           scheduledTime: '2024-01-14T10:00:00Z',
           actualTime: '2024-01-14T09:45:00Z',
-          products: ['Free-Range Eggs - 500 dozen'],
+          products: ['Fresh Milk (ताजा दूध) - 500 liters'],
           duration: '30 minutes'
         },
         {
           id: 'STOP-006',
-          name: 'Local Grocery Chain - Store 2',
-          address: '987 Oak Ave, Portland, OR',
+          name: 'Mother Dairy Store - Lajpat Nagar',
+          address: '987 Lajpat Nagar, New Delhi',
           type: 'delivery',
           status: 'completed',
           scheduledTime: '2024-01-14T14:00:00Z',
           actualTime: '2024-01-14T13:45:00Z',
-          products: ['Free-Range Eggs - 500 dozen'],
+          products: ['Fresh Milk (ताजा दूध) - 500 liters'],
           duration: '30 minutes'
         }
       ],
@@ -147,49 +153,49 @@ const DistributorRoutes = () => {
     },
     {
       id: 'RT-003',
-      name: 'LA Organic Produce Circuit',
+      name: 'Bangalore Organic Produce Circuit (बेंगलूरु जैविक उत्पाद मार्ग)',
       status: 'scheduled',
-      driver: 'David Kim',
+      driver: 'Vikram Reddy (विक्रम रेड्डी)',
       vehicle: 'Truck-002 (Refrigerated)',
       startTime: '2024-01-16T05:00:00Z',
       estimatedEndTime: '2024-01-16T17:00:00Z',
       actualEndTime: null,
-      totalDistance: '320 miles',
+      totalDistance: '320 km',
       estimatedDuration: '12 hours',
-      fuelEfficiency: '8.8 mpg',
+      fuelEfficiency: '11 km/l',
       carbonFootprint: '36.4 kg CO2',
       stops: [
         {
           id: 'STOP-007',
-          name: 'Sunshine Farms',
-          address: '555 Valley Road, Fresno, CA',
+          name: 'Sunshine Organic Farms (सनशाइन जैविक फार्म)',
+          address: '555 Valley Road, Mysore, Karnataka',
           type: 'pickup',
           status: 'scheduled',
           scheduledTime: '2024-01-16T05:00:00Z',
           actualTime: null,
-          products: ['Organic Carrots - 800 lbs', 'Fresh Spinach - 300 bunches'],
+          products: ['Organic Carrots (जैविक गाजर) - 800 kg', 'Fresh Spinach (ताजा पालक) - 300 bunches'],
           duration: '45 minutes'
         },
         {
           id: 'STOP-008',
-          name: 'Farmer\'s Market Hub',
-          address: '111 Market Plaza, Los Angeles, CA',
+          name: 'Organic Bazar Hub (जैविक बाजार हब)',
+          address: '111 Market Plaza, Bangalore, Karnataka',
           type: 'delivery',
           status: 'scheduled',
           scheduledTime: '2024-01-16T12:00:00Z',
           actualTime: null,
-          products: ['Organic Carrots - 400 lbs', 'Fresh Spinach - 150 bunches'],
+          products: ['Organic Carrots (जैविक गाजर) - 400 kg', 'Fresh Spinach (ताजा पालक) - 150 bunches'],
           duration: '60 minutes'
         },
         {
           id: 'STOP-009',
-          name: 'Natural Foods Co-op',
-          address: '222 Wellness Blvd, Los Angeles, CA',
+          name: 'Natural Foods Co-op (प्राकृतिक खाद्य सहकारी)',
+          address: '222 Wellness Road, Bangalore, Karnataka',
           type: 'delivery',
           status: 'scheduled',
           scheduledTime: '2024-01-16T15:00:00Z',
           actualTime: null,
-          products: ['Organic Carrots - 400 lbs', 'Fresh Spinach - 150 bunches'],
+          products: ['Organic Carrots (जैविक गाजर) - 400 kg', 'Fresh Spinach (ताजा पालक) - 150 bunches'],
           duration: '45 minutes'
         }
       ],
@@ -411,7 +417,7 @@ const DistributorRoutes = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1">
                   <Input
-                    placeholder="Search routes, drivers, or route IDs..."
+                    placeholder="मार्ग, चालक या मार्ग ID खोजें... (Search routes, drivers, or route IDs)"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     iconName="Search"

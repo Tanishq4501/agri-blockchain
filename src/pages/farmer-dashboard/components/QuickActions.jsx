@@ -8,7 +8,7 @@ const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
   const recentProducts = [
     {
       id: 'PRD-2025-001',
-      name: 'Organic Tomatoes',
+      name: 'Organic Tomatoes (जैविक टमाटर)',
       quantity: '500kg',
       harvestDate: '2025-01-10',
       status: 'active',
@@ -16,7 +16,7 @@ const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
     },
     {
       id: 'PRD-2025-002',
-      name: 'Sweet Corn',
+      name: 'Sweet Corn (मीठा मक्का)',
       quantity: '300kg',
       harvestDate: '2025-01-08',
       status: 'sold',
@@ -24,7 +24,7 @@ const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
     },
     {
       id: 'PRD-2025-003',
-      name: 'Organic Potatoes',
+      name: 'Organic Potatoes (जैविक आलू)',
       quantity: '800kg',
       harvestDate: '2025-01-05',
       status: 'active',
@@ -32,7 +32,7 @@ const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
     },
     {
       id: 'PRD-2025-004',
-      name: 'Carrots',
+      name: 'Carrots (गाजर)',
       quantity: '400kg',
       harvestDate: '2025-01-03',
       status: 'pending',

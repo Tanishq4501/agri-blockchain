@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import RoleBasedSidebar from '../../components/ui/RoleBasedSidebar';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import NotificationIndicator from '../../components/ui/NotificationIndicator';
+import LanguageToggle from '../../components/ui/LanguageToggle';
 import ProduceRegistrationForm from './components/ProduceRegistrationForm';
 import WalletSection from './components/WalletSection';
 import SummaryMetrics from './components/SummaryMetrics';
@@ -10,9 +11,11 @@ import QuickActions from './components/QuickActions';
 import QRCodeModal from './components/QRCodeModal';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
+import { useLanguage } from '../../utils/translations';
 
 const FarmerDashboard = () => {
   const navigate = useNavigate();
+  const { isHindi, toggleLanguage, t } = useLanguage();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
@@ -21,8 +24,8 @@ const FarmerDashboard = () => {
 
   // Mock user data
   const userData = {
-    name: 'John Mitchell',
-    email: 'john.mitchell@greenfarm.com',
+    name: 'Ramesh Patel (रमेश पटेल)',
+    email: 'ramesh@krishifarm.com',
     role: 'farmer',
     avatar: null
   };
@@ -32,24 +35,24 @@ const FarmerDashboard = () => {
     {
       id: 1,
       type: 'verification',
-      title: 'Product Verified',
-      message: 'Your organic tomatoes batch has been successfully verified by Green Valley Distributors',
+      title: 'Product Verified (उत्पाद सत्यापित)',
+      message: 'Your organic tomatoes (जैविक टमाटर) batch has been successfully verified by Hariyali Distributors (हरियाली डिस्ट्रिब्यूटर्स)',
       timestamp: new Date(Date.now() - 10 * 60 * 1000),
       read: false
     },
     {
       id: 2,
       type: 'success',
-      title: 'Payment Received',
-      message: 'Payment of $1,250.00 received from Fresh Market Co. for tomatoes batch #TOM-2025-001',
+      title: 'Payment Received (भुगतान प्राप्त)',
+      message: 'Payment of ₹12,500.00 received from Fresh Bazar Company (फ्रेश बाजार कंपनी) for tomatoes batch #TOM-2025-001',
       timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
       read: false
     },
     {
       id: 3,
       type: 'warning',
-      title: 'Certification Expiring',
-      message: 'Your organic certification expires in 45 days. Please renew to maintain premium pricing',
+      title: 'Certification Expiring (प्रमाणन समाप्त)',
+      message: 'Your organic certification (जैविक प्रमाणन) expires in 45 days. Please renew to maintain premium pricing',
       timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000),
       read: true
     }
@@ -89,11 +92,11 @@ const FarmerDashboard = () => {
       // Mock product data for regeneration
       const mockProductData = {
         id: productId,
-        cropType: 'Organic Tomatoes',
+        cropType: 'Organic Tomatoes (जैविक टमाटर)',
         quantity: '500',
         unit: 'kg',
         harvestDate: '2025-01-10',
-        location: 'Green Valley Farm, California'
+        location: 'Hariyali Krishi Farm, Maharashtra, India'
       };
       setSelectedProductData(mockProductData);
       setIsQRModalOpen(true);
@@ -117,10 +120,10 @@ const FarmerDashboard = () => {
 
   // Tab configuration
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: 'LayoutDashboard' },
-    { id: 'register', label: 'Register Produce', icon: 'Plus' },
+    { id: 'overview', label: t('Dashboard'), icon: 'LayoutDashboard' },
+    { id: 'register', label: t('Add New Product'), icon: 'Plus' },
     { id: 'wallet', label: 'Wallet', icon: 'Wallet' },
-    { id: 'analytics', label: 'Analytics', icon: 'BarChart3' }
+    { id: 'analytics', label: t('Analytics'), icon: 'BarChart3' }
   ];
 
   // Set page title
@@ -149,18 +152,22 @@ const FarmerDashboard = () => {
               {/* Page Title */}
               <div className="flex items-center space-x-4">
                 <h1 className="text-2xl font-bold text-text-primary">
-                  Farmer Dashboard
+                  {t('Dashboard')}
                 </h1>
                 <div className="hidden sm:block">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20">
                     <Icon name="CheckCircle" size={12} className="mr-1" strokeWidth={2} />
-                    Verified Farmer
+                    {isHindi ? 'सत्यापित किसान' : 'Verified Farmer'}
                   </span>
                 </div>
               </div>
 
               {/* Header Actions */}
               <div className="flex items-center space-x-4">
+                <LanguageToggle
+                  isHindi={isHindi}
+                  onToggle={toggleLanguage}
+                />
                 <NotificationIndicator
                   notifications={notifications}
                   unreadCount={notifications?.filter(n => !n?.read)?.length}
@@ -214,10 +221,10 @@ const FarmerDashboard = () => {
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-text-primary">
-                        Welcome back, {userData?.name?.split(' ')?.[0]}!
+                        {isHindi ? `वापस स्वागत है, ${userData?.name?.split(' ')?.[0]}!` : `Welcome back, ${userData?.name?.split(' ')?.[0]}!`}
                       </h2>
                       <p className="text-text-secondary mt-1">
-                        Manage your farm produce, track earnings, and grow your agricultural business.
+                        {isHindi ? 'अपने कृषि उत्पादों का प्रबंधन करें, आय ट्रैक करें, और अपने कृषि व्यवसाय को बढ़ाएं।' : 'Manage your farm produce, track earnings, and grow your agricultural business.'}
                       </p>
                     </div>
                   </div>
@@ -229,7 +236,7 @@ const FarmerDashboard = () => {
                       iconSize={18}
                       onClick={handleNewProduceClick}
                     >
-                      Register New Produce
+                      {isHindi ? 'नया उत्पाद पंजीकृत करें' : 'Register New Produce'}
                     </Button>
                   </div>
                 </div>
@@ -263,10 +270,10 @@ const FarmerDashboard = () => {
                     <Icon name="BarChart3" size={32} color="white" strokeWidth={2} />
                   </div>
                   <h3 className="text-xl font-semibold text-text-primary mb-2">
-                    Analytics Dashboard
+                    {t('Analytics')} {t('Dashboard')}
                   </h3>
                   <p className="text-text-secondary mb-6">
-                    Detailed analytics and reporting features coming soon. Track your farm performance, sales trends, and market insights.
+                    {isHindi ? 'विस्तृत विश्लेषण और रिपोर्टिंग सुविधाएं जल्द आ रही हैं। अपने खेत के प्रदर्शन, बिक्री रुझान और बाजार अंतर्दृष्टि को ट्रैक करें।' : 'Detailed analytics and reporting features coming soon. Track your farm performance, sales trends, and market insights.'}
                   </p>
                   <Button
                     variant="outline"
@@ -274,7 +281,7 @@ const FarmerDashboard = () => {
                     iconPosition="left"
                     iconSize={16}
                   >
-                    View Sample Reports
+                    {isHindi ? 'नमूना रिपोर्ट देखें' : 'View Sample Reports'}
                   </Button>
                 </div>
               )}

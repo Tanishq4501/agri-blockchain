@@ -5,8 +5,15 @@ import PublicHeader from '../../components/ui/PublicHeader';
 import LoginForm from './components/LoginForm';
 import SecurityIndicators from './components/SecurityIndicators';
 import MockCredentialsInfo from './components/MockCredentialsInfo';
+import LanguageToggle from '../../components/ui/LanguageToggle';
+import GeminiToggle from '../../components/ui/GeminiToggle';
+import { useLanguage } from '../../utils/translations';
+import { useGeminiTranslation } from '../../hooks/useGeminiTranslation';
 
 const UserLogin = () => {
+  const { isHindi, toggleLanguage, t } = useLanguage();
+  const { translateText, isGeminiEnabled, toggleGemini, isTranslating } = useGeminiTranslation();
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50">
       <PublicHeader />
@@ -21,11 +28,17 @@ const UserLogin = () => {
                 <Icon name="LogIn" size={32} color="white" strokeWidth={2} />
               </div>
             </div>
+            <div className="flex justify-center mb-4">
+              <LanguageToggle isHindi={isHindi} onToggle={toggleLanguage} />
+              <div className="ml-2">
+                <GeminiToggle isEnabled={isGeminiEnabled} onToggle={toggleGemini} isTranslating={isTranslating} />
+              </div>
+            </div>
             <h1 className="text-3xl font-bold text-text-primary mb-2">
-              Welcome Back
+              {isHindi ? (isGeminiEnabled ? translateText('वापस स्वागत है') : 'वापस स्वागत है') : (isGeminiEnabled ? translateText('Welcome Back') : 'Welcome Back')}
             </h1>
             <p className="text-text-secondary">
-              Sign in to your AgriTrace account to continue
+              {isHindi ? (isGeminiEnabled ? translateText('जारी रखने के लिए अपने AgriTrace खाते में साइन इन करें') : 'जारी रखने के लिए अपने AgriTrace खाते में साइन इन करें') : (isGeminiEnabled ? translateText('Sign in to your AgriTrace account to continue') : 'Sign in to your AgriTrace account to continue')}
             </p>
           </div>
 

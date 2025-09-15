@@ -8,7 +8,7 @@ import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
-import Checkbox from '../../components/ui/Checkbox';
+import { Checkbox } from '../../components/ui/Checkbox';
 
 const ConsumerProfile = () => {
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ const ConsumerProfile = () => {
   const [profileData, setProfileData] = useState({});
 
   const userData = {
-    name: 'Sarah Johnson',
-    email: 'sarah.johnson@email.com',
+    name: 'Anita Sharma (अनिता शर्मा)',
+    email: 'anita.sharma@gmail.com',
     role: 'consumer',
     avatar: null
   };
@@ -27,7 +27,7 @@ const ConsumerProfile = () => {
     {
       id: 1,
       type: 'info',
-      message: 'New organic certification available for your favorite products',
+      message: 'New FSSAI organic certification available for your favorite basmati rice (आपके पसंदीदा बासमती के लिए)',
       timestamp: '2024-01-15T10:30:00Z',
       read: false
     }
@@ -35,16 +35,16 @@ const ConsumerProfile = () => {
 
   const mockProfileData = {
     personalInfo: {
-      firstName: 'Sarah',
-      lastName: 'Johnson',
-      email: 'sarah.johnson@email.com',
-      phone: '+1 (555) 987-6543',
+      firstName: 'Anita (अनिता)',
+      lastName: 'Sharma (शर्मा)',
+      email: 'anita.sharma@gmail.com',
+      phone: '+91 98765 43210',
       dateOfBirth: '1990-07-22',
-      address: '456 Wellness Avenue, San Francisco, CA 94102'
+      address: 'A-204, Green Valley Apartments, Bandra West, Mumbai, Maharashtra 400050'
     },
     preferences: {
-      dietaryRestrictions: ['Vegetarian', 'Gluten-Free'],
-      allergens: ['Nuts', 'Shellfish'],
+      dietaryRestrictions: ['Vegetarian (शाकाहारी)', 'Jain Food'],
+      allergens: ['Nuts (मेवे)', 'Dairy (डेयरी)'],
       sustainabilityPriority: 'high',
       localProductsPreference: true,
       organicPreference: true,
@@ -77,22 +77,22 @@ const ConsumerProfile = () => {
     achievements: [
       {
         id: 'ECO_WARRIOR',
-        name: 'Eco Warrior',
-        description: 'Scanned 100+ sustainable products',
+        name: 'Eco Warrior (पर्यावरण योद्धा)',
+        description: 'Scanned 100+ sustainable products from Indian organic farms',
         earnedDate: '2024-01-10',
         icon: 'Leaf'
       },
       {
         id: 'TRANSPARENCY_CHAMPION',
-        name: 'Transparency Champion',
-        description: 'Verified 50+ product origins',
+        name: 'Transparency Champion (पारदर्शिता चैंपियन)',
+        description: 'Verified 50+ FSSAI certified product origins',
         earnedDate: '2024-01-05',
         icon: 'Shield'
       },
       {
         id: 'LOCAL_SUPPORTER',
-        name: 'Local Supporter',
-        description: 'Scanned 25+ local products',
+        name: 'Local Supporter (स्थानीय समर्थक)',
+        description: 'Scanned 25+ products from Maharashtra farmers',
         earnedDate: '2023-12-20',
         icon: 'MapPin'
       }
@@ -158,7 +158,7 @@ const ConsumerProfile = () => {
     });
   };
 
-  const dietaryOptions = ['Vegetarian', 'Vegan', 'Gluten-Free', 'Dairy-Free', 'Keto', 'Paleo'];
+  const dietaryOptions = ['Vegetarian (शाकाहारी)', 'Vegan', 'Jain Food (जैन भोजन)', 'Gluten-Free', 'Dairy-Free', 'Sattvic (सात्त्विक)'];
   const allergenOptions = ['Nuts', 'Shellfish', 'Eggs', 'Dairy', 'Soy', 'Wheat', 'Fish'];
 
   return (

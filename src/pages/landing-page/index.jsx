@@ -6,8 +6,15 @@ import FeaturesSection from './components/FeaturesSection';
 import DemoSection from './components/DemoSection';
 import TrustSection from './components/TrustSection';
 import FooterSection from './components/FooterSection';
+import LanguageToggle from '../../components/ui/LanguageToggle';
+import GeminiToggle from '../../components/ui/GeminiToggle';
+import { useLanguage } from '../../utils/translations';
+import { useGeminiTranslation } from '../../hooks/useGeminiTranslation';
 
 const LandingPage = () => {
+  const { isHindi, toggleLanguage, t } = useLanguage();
+  const { translateText, isGeminiEnabled, toggleGemini, isTranslating } = useGeminiTranslation();
+  
   useEffect(() => {
     // Scroll to top on page load
     window.scrollTo(0, 0);

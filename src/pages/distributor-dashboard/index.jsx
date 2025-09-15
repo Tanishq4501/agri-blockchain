@@ -4,13 +4,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import RoleBasedSidebar from '../../components/ui/RoleBasedSidebar';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import NotificationIndicator from '../../components/ui/NotificationIndicator';
+import LanguageToggle from '../../components/ui/LanguageToggle';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
+import { useLanguage } from '../../utils/translations';
 
 const DistributorDashboard = () => {
   const navigate = useNavigate();
+  const { isHindi, toggleLanguage, t } = useLanguage();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState('scan');
   const [qrCode, setQrCode] = useState('');
@@ -28,8 +31,8 @@ const DistributorDashboard = () => {
 
   // Mock user data
   const userData = {
-    name: 'Mike Thompson',
-    email: 'mike.thompson@quicklogistics.com',
+    name: 'Rajesh Kumar (राजेश कुमार)',
+    email: 'rajesh@bharatlogistics.com',
     role: 'distributor',
     avatar: null
   };
@@ -39,24 +42,24 @@ const DistributorDashboard = () => {
     {
       id: 1,
       type: 'success',
-      title: 'Delivery Completed',
-      message: 'Batch #TOM-2025-001 successfully delivered to Fresh Market Co.',
+      title: 'Delivery Completed (डिलीवरी पूर्ण)',
+      message: 'Batch #TOM-2025-001 successfully delivered to Fresh Bazar Company (फ्रेश बाजार कंपनी).',
       timestamp: new Date(Date.now() - 30 * 60 * 1000),
       read: false
     },
     {
       id: 2,
       type: 'info',
-      title: 'New Pickup Request',
-      message: 'Green Valley Farm has requested pickup for organic vegetables batch',
+      title: 'New Pickup Request (नया पिकअप अनुरोध)',
+      message: 'Hariyali Krishi Farm (हरियाली कृषि फार्म) has requested pickup for organic vegetables batch',
       timestamp: new Date(Date.now() - 1 * 60 * 60 * 1000),
       read: false
     },
     {
       id: 3,
       type: 'warning',
-      title: 'Route Delay',
-      message: 'Route #RTE-205 experiencing delays due to weather conditions',
+      title: 'Route Delay (मार्ग में देरी)',
+      message: 'Route #RTE-205 experiencing delays due to monsoon conditions',
       timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000),
       read: true
     }
@@ -67,45 +70,45 @@ const DistributorDashboard = () => {
     {
       id: 1,
       productId: 'TOM-2025-001',
-      productName: 'Organic Tomatoes',
-      location: 'Green Valley Farm, CA',
-      status: 'Picked Up',
+      productName: 'Organic Tomatoes (जैविक टमाटर)',
+      location: 'Hariyali Krishi Farm, Maharashtra',
+      status: 'Picked Up (पिकअप)',
       timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000),
-      driverName: 'Mike Thompson',
+      driverName: 'Rajesh Kumar (राजेश कुमार)',
       estimatedDelivery: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
     },
     {
       id: 2,
       productId: 'CAR-2025-002',
-      productName: 'Fresh Carrots',
-      location: 'Distribution Center, CA',
-      status: 'In Transit',
+      productName: 'Fresh Carrots (ताजी गाजर)',
+      location: 'Distribution Center, Mumbai',
+      status: 'In Transit (ट्रांजिट में)',
       timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000),
-      driverName: 'Alex Turner',
+      driverName: 'Suresh Patel (सुरेश पटेल)',
       estimatedDelivery: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)
     },
     {
       id: 3,
       productId: 'LET-2025-003',
-      productName: 'Organic Lettuce',
-      location: 'Fresh Market Co., CA',
-      status: 'Delivered',
+      productName: 'Organic Lettuce (जैविक सलाद)',
+      location: 'Fresh Bazar Company, Delhi',
+      status: 'Delivered (डिलीवर)',
       timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000),
-      driverName: 'Sarah Wilson',
+      driverName: 'Anjali Singh (अंजली सिंह)',
       estimatedDelivery: new Date(Date.now() - 8 * 60 * 60 * 1000)
     }
   ];
 
   // Status options for dropdown
   const statusOptions = [
-    { value: '', label: 'Select Status' },
-    { value: 'Picked Up', label: 'Picked Up' },
-    { value: 'In Transit', label: 'In Transit' },
-    { value: 'At Warehouse', label: 'At Warehouse' },
-    { value: 'Out for Delivery', label: 'Out for Delivery' },
-    { value: 'Delivered', label: 'Delivered' },
-    { value: 'Delayed', label: 'Delayed' },
-    { value: 'Returned', label: 'Returned' }
+    { value: '', label: 'Select Status (स्थिति चुनें)' },
+    { value: 'Picked Up', label: 'Picked Up (पिकअप)' },
+    { value: 'In Transit', label: 'In Transit (ट्रांजिट में)' },
+    { value: 'At Warehouse', label: 'At Warehouse (गोदाम में)' },
+    { value: 'Out for Delivery', label: 'Out for Delivery (डिलीवरी के लिए)' },
+    { value: 'Delivered', label: 'Delivered (डिलीवर)' },
+    { value: 'Delayed', label: 'Delayed (देरी)' },
+    { value: 'Returned', label: 'Returned (वापस)' }
   ];
 
   useEffect(() => {
@@ -188,10 +191,10 @@ const DistributorDashboard = () => {
 
   // Tab configuration
   const tabs = [
-    { id: 'scan', label: 'QR Scanner', icon: 'QrCode' },
-    { id: 'logistics', label: 'Update Logistics', icon: 'Truck' },
-    { id: 'timeline', label: 'Timeline', icon: 'Clock' },
-    { id: 'analytics', label: 'Analytics', icon: 'BarChart3' }
+    { id: 'scan', label: isHindi ? 'QR स्कैनर' : 'QR Scanner', icon: 'QrCode' },
+    { id: 'logistics', label: isHindi ? 'लॉजिस्टिक्स अपडेट' : 'Update Logistics', icon: 'Truck' },
+    { id: 'timeline', label: isHindi ? 'समयरेखा' : 'Timeline', icon: 'Clock' },
+    { id: 'analytics', label: t('Analytics'), icon: 'BarChart3' }
   ];
 
   // Set page title
@@ -243,18 +246,22 @@ const DistributorDashboard = () => {
               {/* Page Title */}
               <div className="flex items-center space-x-4">
                 <h1 className="text-2xl font-bold text-text-primary">
-                  Distributor Dashboard
+                  {isHindi ? 'वितरक डैशबोर्ड' : 'Distributor Dashboard'}
                 </h1>
                 <div className="hidden sm:block">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary border border-secondary/20">
                     <Icon name="Truck" size={12} className="mr-1" strokeWidth={2} />
-                    Active Distributor
+                    {isHindi ? 'सक्रिय वितरक' : 'Active Distributor'}
                   </span>
                 </div>
               </div>
 
               {/* Header Actions */}
               <div className="flex items-center space-x-4">
+                <LanguageToggle
+                  isHindi={isHindi}
+                  onToggle={toggleLanguage}
+                />
                 <NotificationIndicator
                   notifications={notifications}
                   unreadCount={notifications?.filter(n => !n?.read)?.length}
@@ -309,10 +316,10 @@ const DistributorDashboard = () => {
                     </div>
                     <div>
                       <h2 className="text-2xl font-bold text-text-primary">
-                        Welcome, {userData?.name?.split(' ')?.[0]}!
+                        {isHindi ? `स्वागत है, ${userData?.name?.split(' ')?.[0]}!` : `Welcome, ${userData?.name?.split(' ')?.[0]}!`}
                       </h2>
                       <p className="text-text-secondary mt-1">
-                        Scan products, update logistics status, and track supply chain movements in real-time.
+                        {isHindi ? 'उत्पादों को स्कैन करें, लॉजिस्टिक्स स्थिति अपडेट करें, और आपूर्ति श्रृंखला की गतिविधियों को रीयल-टाइम में ट्रैक करें।' : 'Scan products, update logistics status, and track supply chain movements in real-time.'}
                       </p>
                     </div>
                   </div>
@@ -329,13 +336,13 @@ const DistributorDashboard = () => {
                   <div className="glass-card p-6">
                     <h3 className="text-xl font-semibold text-text-primary mb-4 flex items-center">
                       <Icon name="QrCode" size={20} className="mr-2" />
-                      QR Code Scanner
+                      {isHindi ? 'QR कोड स्कैनर' : 'QR Code Scanner'}
                     </h3>
                     <div className="space-y-4">
                       <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
                         <Icon name="Scan" size={48} className="mx-auto text-gray-400 mb-4" />
                         <p className="text-text-secondary mb-4">
-                          Scan product QR code to update logistics information
+                          {isHindi ? 'लॉजिस्टिक्स जानकारी अपडेट करने के लिए उत्पाद QR कोड स्कैन करें' : 'Scan product QR code to update logistics information'}
                         </p>
                         <Button
                           variant="outline"
@@ -343,12 +350,12 @@ const DistributorDashboard = () => {
                           iconPosition="left"
                           className="mb-4"
                         >
-                          Open Scanner
+                          {isHindi ? 'स्कैन करें' : 'Scan'}
                         </Button>
                       </div>
                       <div className="flex space-x-2">
                         <Input
-                          placeholder="Enter QR code manually"
+                          placeholder={isHindi ? 'QR कोड मैन्युअल रूप से दर्ज करें' : 'Enter QR code manually'}
                           value={qrCode}
                           onChange={(e) => setQrCode(e.target.value)}
                           className="flex-1"
@@ -370,7 +377,7 @@ const DistributorDashboard = () => {
                         >
                           <div className="flex items-center space-x-2 mb-2">
                             <Icon name="CheckCircle" size={16} className="text-success" />
-                            <span className="text-sm font-medium text-success">Product Scanned Successfully</span>
+                            <span className="text-sm font-medium text-success">{isHindi ? 'उत्पाद सफलतापूर्वक स्कैन किया गया' : 'Product Scanned Successfully'}</span>
                           </div>
                           <p className="text-sm text-text-secondary">
                             Product ID: <span className="font-mono font-medium">{scannedProduct.id}</span>
@@ -387,30 +394,30 @@ const DistributorDashboard = () => {
                   <div className="glass-card p-6">
                     <h3 className="text-xl font-semibold text-text-primary mb-4 flex items-center">
                       <Icon name="BarChart3" size={20} className="mr-2" />
-                      Logistics Summary
+                      {isHindi ? 'लॉजिस्टिक्स सारांश' : 'Logistics Summary'}
                     </h3>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="text-center p-4 bg-primary/5 rounded-lg border border-primary/10">
                         <div className="text-2xl font-bold text-primary">{logisticsUpdates.length}</div>
-                        <div className="text-sm text-text-secondary">Total Shipments</div>
+                        <div className="text-sm text-text-secondary">{isHindi ? 'कुल शिपमेंट' : 'Total Shipments'}</div>
                       </div>
                       <div className="text-center p-4 bg-success/5 rounded-lg border border-success/10">
                         <div className="text-2xl font-bold text-success">
                           {logisticsUpdates.filter(u => u.status === 'Delivered').length}
                         </div>
-                        <div className="text-sm text-text-secondary">Delivered</div>
+                        <div className="text-sm text-text-secondary">{isHindi ? 'डिलीवर' : 'Delivered'}</div>
                       </div>
                       <div className="text-center p-4 bg-secondary/5 rounded-lg border border-secondary/10">
                         <div className="text-2xl font-bold text-secondary">
                           {logisticsUpdates.filter(u => u.status === 'In Transit').length}
                         </div>
-                        <div className="text-sm text-text-secondary">In Transit</div>
+                        <div className="text-sm text-text-secondary">{isHindi ? 'ट्रांजिट में' : 'In Transit'}</div>
                       </div>
                       <div className="text-center p-4 bg-warning/5 rounded-lg border border-warning/10">
                         <div className="text-2xl font-bold text-warning">
                           {logisticsUpdates.filter(u => u.status === 'Delayed').length}
                         </div>
-                        <div className="text-sm text-text-secondary">Delayed</div>
+                        <div className="text-sm text-text-secondary">{isHindi ? 'देरी' : 'Delayed'}</div>
                       </div>
                     </div>
                   </div>
@@ -423,7 +430,7 @@ const DistributorDashboard = () => {
                   <div className="glass-card p-6">
                     <h3 className="text-xl font-semibold text-text-primary mb-4 flex items-center">
                       <Icon name="MapPin" size={20} className="mr-2" />
-                      Update Logistics
+                      {isHindi ? 'लॉजिस्टिक्स अपडेट करें' : 'Update Logistics'}
                     </h3>
                     
                     {scannedProduct && (
@@ -436,10 +443,10 @@ const DistributorDashboard = () => {
                     <form onSubmit={handleLogisticsSubmit} className="space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-text-secondary mb-2">
-                          Current Location
+                          {isHindi ? 'वर्तमान स्थान' : 'Current Location'}
                         </label>
                         <Input
-                          placeholder="Enter current location"
+                          placeholder="वर्तमान स्थान दर्ज करें (Enter current location)"
                           value={logisticsForm.location}
                           onChange={(e) => setLogisticsForm(prev => ({ ...prev, location: e.target.value }))}
                           required
@@ -448,11 +455,11 @@ const DistributorDashboard = () => {
 
                       <div>
                         <label className="block text-sm font-medium text-text-secondary mb-2">
-                          Transit Status
+                          {isHindi ? 'ट्रांजिट स्थिति' : 'Transit Status'}
                         </label>
                         <Select
                           value={logisticsForm.status}
-                          onValueChange={(value) => setLogisticsForm(prev => ({ ...prev, status: value }))}
+                          onChange={(value) => setLogisticsForm(prev => ({ ...prev, status: value }))}
                           options={statusOptions}
                           required
                         />
@@ -460,7 +467,7 @@ const DistributorDashboard = () => {
 
                       <div>
                         <label className="block text-sm font-medium text-text-secondary mb-2">
-                          Estimated Delivery (Optional)
+                          {isHindi ? 'अनुमानित डिलीवरी (वैकल्पिक)' : 'Estimated Delivery (Optional)'}
                         </label>
                         <Input
                           type="datetime-local"
@@ -470,7 +477,7 @@ const DistributorDashboard = () => {
                       </div>
 
                       <div className="bg-muted/50 p-3 rounded-lg">
-                        <p className="text-sm font-medium text-text-secondary mb-1">Timestamp (Auto-filled)</p>
+                        <p className="text-sm font-medium text-text-secondary mb-1">{isHindi ? 'टाइमस्टैम्प (स्वचालित)' : 'Timestamp (Auto-filled)'}</p>
                         <p className="text-sm text-text-primary">{new Date().toLocaleString()}</p>
                       </div>
 
@@ -482,13 +489,13 @@ const DistributorDashboard = () => {
                         fullWidth
                         disabled={!logisticsForm.location || !logisticsForm.status}
                       >
-                        Update Logistics
+                        {isHindi ? 'लॉजिस्टिक्स अपडेट करें' : 'Update Logistics'}
                       </Button>
                     </form>
                   </div>
 
                   <div className="glass-card p-6">
-                    <h3 className="text-xl font-semibold text-text-primary mb-4">Recent Updates</h3>
+                    <h3 className="text-xl font-semibold text-text-primary mb-4">{isHindi ? 'हाल के अपडेट' : 'Recent Updates'}</h3>
                     <div className="space-y-3 max-h-96 overflow-y-auto">
                       {logisticsUpdates.slice(0, 5).map((update) => (
                         <motion.div
@@ -517,9 +524,9 @@ const DistributorDashboard = () => {
               {activeTab === 'timeline' && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-semibold text-text-primary">Logistics Timeline</h3>
+                    <h3 className="text-xl font-semibold text-text-primary">{isHindi ? 'लॉजिस्टिक्स समयरेखा' : 'Logistics Timeline'}</h3>
                     <Button variant="outline" iconName="Download" iconPosition="left">
-                      Export Timeline
+                      {isHindi ? 'समयरेखा निर्यात करें' : 'Export Timeline'}
                     </Button>
                   </div>
 
@@ -596,10 +603,10 @@ const DistributorDashboard = () => {
                     <Icon name="BarChart3" size={32} color="white" strokeWidth={2} />
                   </div>
                   <h3 className="text-xl font-semibold text-text-primary mb-2">
-                    Logistics Analytics
+                    {isHindi ? 'लॉजिस्टिक्स विश्लेषण' : 'Logistics Analytics'}
                   </h3>
                   <p className="text-text-secondary mb-6">
-                    Advanced analytics and performance metrics coming soon. Track delivery times, route efficiency, and supply chain optimization.
+                    {isHindi ? 'उन्नत विश्लेषण और प्रदर्शन मेट्रिक्स जल्द आ रहे हैं। डिलीवरी समय, मार्ग दक्षता, और आपूर्ति श्रृंखला अनुकूलन को ट्रैक करें।' : 'Advanced analytics and performance metrics coming soon. Track delivery times, route efficiency, and supply chain optimization.'}
                   </p>
                   <Button
                     variant="outline"
@@ -607,7 +614,7 @@ const DistributorDashboard = () => {
                     iconPosition="left"
                     iconSize={16}
                   >
-                    View Sample Reports
+                    {isHindi ? 'नमूना रिपोर्ट देखें' : 'View Sample Reports'}
                   </Button>
                 </div>
               )}

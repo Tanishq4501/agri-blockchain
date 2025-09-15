@@ -17,8 +17,8 @@ const DistributorShipments = () => {
   const [sortBy, setSortBy] = useState('newest');
 
   const userData = {
-    name: 'Mike Rodriguez',
-    email: 'mike.rodriguez@fastlogistics.com',
+    name: 'Rajesh Kumar (राजेश कुमार)',
+    email: 'rajesh.kumar@bhartilogistics.com',
     role: 'distributor',
     avatar: null
   };
@@ -27,14 +27,14 @@ const DistributorShipments = () => {
     {
       id: 1,
       type: 'warning',
-      message: 'Shipment SH-2024-001 requires temperature check',
+      message: 'Shipment SH-2024-001 requires temperature check (तापमान जाँच आवश्यक)',
       timestamp: '2024-01-15T10:30:00Z',
       read: false
     },
     {
       id: 2,
       type: 'info',
-      message: 'New delivery route optimized for efficiency',
+      message: 'New delivery route optimized for Mumbai-Pune corridor (मुंबई-पुणे मार्ग के लिए नया रूट)',
       timestamp: '2024-01-15T09:15:00Z',
       read: false
     }
@@ -44,108 +44,108 @@ const DistributorShipments = () => {
     {
       id: 'SH-2024-001',
       trackingNumber: 'TRK789123456',
-      origin: 'Green Valley Farm, CA',
-      destination: 'Whole Foods Market, San Francisco',
+      origin: 'Patel Organic Farm, Ratnagiri',
+      destination: 'Reliance Fresh, Mumbai',
       status: 'in-transit',
       priority: 'high',
       products: [
-        { name: 'Organic Tomatoes', quantity: '500 lbs', temperature: '2-4°C' },
-        { name: 'Fresh Lettuce', quantity: '200 heads', temperature: '0-2°C' }
+        { name: 'Organic Alphonso Mangoes (जैविक आम)', quantity: '500 kg', temperature: '12-15°C' },
+        { name: 'Fresh Coconuts (ताज़ा नारियल)', quantity: '200 pieces', temperature: '15-20°C' }
       ],
       departureDate: '2024-01-15T06:00:00Z',
       estimatedArrival: '2024-01-15T18:00:00Z',
       actualArrival: null,
-      driver: 'Carlos Martinez',
-      vehicle: 'Truck-001 (Refrigerated)',
-      distance: '450 miles',
-      currentLocation: 'Highway 101, San Jose',
-      temperature: '2.1°C',
+      driver: 'Suresh Patil (सुरेश पाटिल)',
+      vehicle: 'MH-12-AB-1234 (Refrigerated)',
+      distance: '350 km',
+      currentLocation: 'Mumbai-Goa Highway, Panvel',
+      temperature: '13.1°C',
       humidity: '85%',
       alerts: [
-        { type: 'temperature', message: 'Temperature slightly above optimal range' }
+        { type: 'temperature', message: 'Temperature slightly above optimal range (तापमान थोड़ा अधिक)' }
       ],
       timeline: [
-        { stage: 'Picked up', time: '2024-01-15T06:00:00Z', location: 'Green Valley Farm, CA' },
-        { stage: 'In transit', time: '2024-01-15T06:30:00Z', location: 'Highway 101, San Jose' }
+        { stage: 'Picked up (उठाया गया)', time: '2024-01-15T06:00:00Z', location: 'Patel Organic Farm, Ratnagiri' },
+        { stage: 'In transit (यात्रा में)', time: '2024-01-15T06:30:00Z', location: 'Mumbai-Goa Highway, Panvel' }
       ]
     },
     {
       id: 'SH-2024-002',
       trackingNumber: 'TRK456789123',
-      origin: 'Happy Hen Farm, OR',
-      destination: 'Local Grocery Chain, Portland',
+      origin: 'Singh Organic Mills, Amritsar',
+      destination: 'Big Bazaar, Delhi',
       status: 'delivered',
       priority: 'medium',
       products: [
-        { name: 'Free-Range Eggs', quantity: '1000 dozen', temperature: '4-7°C' }
+        { name: 'Organic Basmati Rice (जैविक बासमती)', quantity: '1000 kg', temperature: '15-20°C' }
       ],
       departureDate: '2024-01-14T08:00:00Z',
       estimatedArrival: '2024-01-14T14:00:00Z',
       actualArrival: '2024-01-14T13:45:00Z',
-      driver: 'Lisa Chen',
-      vehicle: 'Van-003 (Refrigerated)',
-      distance: '120 miles',
-      currentLocation: 'Local Grocery Chain, Portland',
-      temperature: '5.2°C',
-      humidity: '80%',
+      driver: 'Harpreet Singh (हरप्रीत सिंह)',
+      vehicle: 'PB-03-CD-5678 (Covered)',
+      distance: '450 km',
+      currentLocation: 'Big Bazaar, Delhi',
+      temperature: '18.2°C',
+      humidity: '65%',
       alerts: [],
       timeline: [
-        { stage: 'Picked up', time: '2024-01-14T08:00:00Z', location: 'Happy Hen Farm, OR' },
-        { stage: 'In transit', time: '2024-01-14T08:30:00Z', location: 'I-5 North' },
-        { stage: 'Delivered', time: '2024-01-14T13:45:00Z', location: 'Local Grocery Chain, Portland' }
+        { stage: 'Picked up (उठाया गया)', time: '2024-01-14T08:00:00Z', location: 'Singh Organic Mills, Amritsar' },
+        { stage: 'In transit (यात्रा में)', time: '2024-01-14T08:30:00Z', location: 'GT Road, Ludhiana' },
+        { stage: 'Delivered (वितरित)', time: '2024-01-14T13:45:00Z', location: 'Big Bazaar, Delhi' }
       ]
     },
     {
       id: 'SH-2024-003',
       trackingNumber: 'TRK123456789',
-      origin: 'Sunshine Farms, CA',
-      destination: 'Farmer\'s Market Hub, LA',
+      origin: 'Devi Spices, Erode',
+      destination: 'Nature\'s Basket, Bangalore',
       status: 'pending',
       priority: 'low',
       products: [
-        { name: 'Organic Carrots', quantity: '800 lbs', temperature: '0-2°C' },
-        { name: 'Fresh Spinach', quantity: '300 bunches', temperature: '0-2°C' }
+        { name: 'Organic Turmeric (जैविक हल्दी)', quantity: '200 kg', temperature: '15-25°C' },
+        { name: 'Fresh Curry Leaves (ताज़ी करी पत्ता)', quantity: '50 kg', temperature: '2-8°C' }
       ],
       departureDate: '2024-01-16T05:00:00Z',
       estimatedArrival: '2024-01-16T15:00:00Z',
       actualArrival: null,
-      driver: 'David Kim',
-      vehicle: 'Truck-002 (Refrigerated)',
-      distance: '380 miles',
-      currentLocation: 'Sunshine Farms, CA',
+      driver: 'Murugan (मुरुगन)',
+      vehicle: 'TN-09-EF-9012 (Refrigerated)',
+      distance: '480 km',
+      currentLocation: 'Devi Spices, Erode',
       temperature: null,
       humidity: null,
       alerts: [],
       timeline: [
-        { stage: 'Scheduled', time: '2024-01-15T12:00:00Z', location: 'Sunshine Farms, CA' }
+        { stage: 'Scheduled (निर्धारित)', time: '2024-01-15T12:00:00Z', location: 'Devi Spices, Erode' }
       ]
     },
     {
       id: 'SH-2024-004',
       trackingNumber: 'TRK987654321',
-      origin: 'Organic Valley Co-op, WI',
-      destination: 'Natural Foods Store, Chicago',
+      origin: 'Sherpa Tea Estate, Darjeeling',
+      destination: 'Spencer\'s, Kolkata',
       status: 'delayed',
       priority: 'high',
       products: [
-        { name: 'Organic Milk', quantity: '500 gallons', temperature: '2-4°C' },
-        { name: 'Organic Cheese', quantity: '200 lbs', temperature: '2-4°C' }
+        { name: 'Organic Darjeeling Tea (जैविक दार्जिलिंग चाय)', quantity: '300 kg', temperature: '15-25°C' },
+        { name: 'Premium Tea Bags (प्रीमियम टी बैग)', quantity: '500 boxes', temperature: '15-25°C' }
       ],
       departureDate: '2024-01-14T10:00:00Z',
       estimatedArrival: '2024-01-15T16:00:00Z',
       actualArrival: null,
-      driver: 'Jennifer Walsh',
-      vehicle: 'Truck-004 (Refrigerated)',
-      distance: '520 miles',
-      currentLocation: 'I-94, Milwaukee',
-      temperature: '3.8°C',
-      humidity: '82%',
+      driver: 'Binod Rai (बिनोद राय)',
+      vehicle: 'WB-01-GH-3456 (Covered)',
+      distance: '650 km',
+      currentLocation: 'NH-12, Siliguri',
+      temperature: '22.8°C',
+      humidity: '78%',
       alerts: [
-        { type: 'delay', message: 'Traffic delays - arrival pushed to 8 PM' }
+        { type: 'delay', message: 'Monsoon delays - arrival pushed to 8 PM (मानसून की वजह से देरी)' }
       ],
       timeline: [
-        { stage: 'Picked up', time: '2024-01-14T10:00:00Z', location: 'Organic Valley Co-op, WI' },
-        { stage: 'Delayed', time: '2024-01-15T14:00:00Z', location: 'I-94, Milwaukee' }
+        { stage: 'Picked up (उठाया गया)', time: '2024-01-14T10:00:00Z', location: 'Sherpa Tea Estate, Darjeeling' },
+        { stage: 'Delayed (देरी)', time: '2024-01-15T14:00:00Z', location: 'NH-12, Siliguri' }
       ]
     }
   ];
@@ -317,7 +317,7 @@ const DistributorShipments = () => {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Delivered Today</p>
+                    <p className="text-sm font-medium text-text-secondary">Delivered Today (आज वितरित)</p>
                     <p className="text-2xl font-bold text-success">
                       {mockShipments.filter(s => 
                         s.status === 'delivered' && 
@@ -340,7 +340,7 @@ const DistributorShipments = () => {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Alerts</p>
+                    <p className="text-sm font-medium text-text-secondary">Alerts (अलर्ट)</p>
                     <p className="text-2xl font-bold text-error">
                       {mockShipments.reduce((sum, s) => sum + s.alerts.length, 0)}
                     </p>

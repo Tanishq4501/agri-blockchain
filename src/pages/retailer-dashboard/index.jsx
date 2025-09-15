@@ -4,12 +4,15 @@ import { motion } from 'framer-motion';
 import RoleBasedSidebar from '../../components/ui/RoleBasedSidebar';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import NotificationIndicator from '../../components/ui/NotificationIndicator';
+import LanguageToggle from '../../components/ui/LanguageToggle';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
+import { useLanguage } from '../../utils/translations';
 import { 
   Package, 
   TrendingUp, 
   DollarSign, 
+  IndianRupee,
   Users,
   ShoppingCart,
   AlertTriangle,
@@ -28,6 +31,7 @@ import {
 
 const RetailerDashboard = () => {
   const navigate = useNavigate();
+  const { isHindi, toggleLanguage, t } = useLanguage();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [dashboardStats, setDashboardStats] = useState({});
   const [recentOrders, setRecentOrders] = useState([]);
@@ -36,8 +40,8 @@ const RetailerDashboard = () => {
 
   // Mock user data
   const userData = {
-    name: "Sarah Johnson",
-    email: "sarah@freshmart.com",
+    name: "Priya Sharma (प्रिया शर्मा)",
+    email: "priya@freshbazar.com",
     role: "retailer",
     avatar: "/api/placeholder/40/40"
   };
@@ -45,8 +49,8 @@ const RetailerDashboard = () => {
   // Mock dashboard data
   useEffect(() => {
     setDashboardStats({
-      totalRevenue: 125400,
-      dailyRevenue: 4250,
+      totalRevenue: 1254000,
+      dailyRevenue: 42500,
       totalOrders: 1847,
       dailyOrders: 67,
       totalProducts: 2456,
@@ -63,36 +67,36 @@ const RetailerDashboard = () => {
       {
         id: 1,
         orderId: "ORD-2024-001",
-        customer: "John Smith",
+        customer: "Rajesh Kumar (राजेश कुमार)",
         items: 5,
-        total: 89.50,
+        total: 895.00,
         status: "completed",
         time: "2 hours ago"
       },
       {
         id: 2,
         orderId: "ORD-2024-002",
-        customer: "Emily Davis",
+        customer: "Sunita Devi (सुनीता देवी)",
         items: 3,
-        total: 45.75,
+        total: 457.50,
         status: "processing",
         time: "3 hours ago"
       },
       {
         id: 3,
         orderId: "ORD-2024-003",
-        customer: "Michael Brown",
+        customer: "Amit Patel (अमित पटेल)",
         items: 8,
-        total: 156.20,
+        total: 1562.00,
         status: "pending",
         time: "4 hours ago"
       },
       {
         id: 4,
         orderId: "ORD-2024-004",
-        customer: "Lisa Wilson",
+        customer: "Meera Singh (मीरा सिंह)",
         items: 2,
-        total: 23.40,
+        total: 234.00,
         status: "completed",
         time: "5 hours ago"
       }
@@ -101,35 +105,35 @@ const RetailerDashboard = () => {
     setLowStockItems([
       {
         id: 1,
-        name: "Organic Tomatoes",
+        name: "Organic Tomatoes (जैविक टमाटर)",
         currentStock: 5,
         minStock: 20,
-        supplier: "Green Valley Farms",
-        category: "Vegetables"
+        supplier: "Hariyali Krishi Farm (हरियाली कृषि फार्म)",
+        category: "Vegetables (सब्जियां)"
       },
       {
         id: 2,
-        name: "Red Apples",
+        name: "Red Apples (लाल सेब)",
         currentStock: 8,
         minStock: 25,
-        supplier: "Mountain Orchards",
-        category: "Fruits"
+        supplier: "Himachal Seb Bagaan (हिमाचल सेब बागान)",
+        category: "Fruits (फल)"
       },
       {
         id: 3,
-        name: "Baby Carrots",
+        name: "Baby Carrots (छोटी गाजर)",
         currentStock: 3,
         minStock: 15,
-        supplier: "Fresh Fields Co.",
-        category: "Vegetables"
+        supplier: "Taza Khet Company (ताजा खेत कंपनी)",
+        category: "Vegetables (सब्जियां)"
       },
       {
         id: 4,
-        name: "Romaine Lettuce",
+        name: "Spinach (पालक)",
         currentStock: 2,
         minStock: 12,
-        supplier: "Sunny Greens",
-        category: "Vegetables"
+        supplier: "Suryodaya Organic (सूर्योदय ऑर्गेनिक)",
+        category: "Vegetables (सब्जियां)"
       }
     ]);
 
@@ -137,7 +141,7 @@ const RetailerDashboard = () => {
       {
         id: 1,
         type: "order",
-        description: "New order received from John Smith",
+        description: "New order received from Rajesh Kumar (राजेश कुमार)",
         time: "5 minutes ago",
         icon: ShoppingCart,
         status: "success"
@@ -145,7 +149,7 @@ const RetailerDashboard = () => {
       {
         id: 2,
         type: "stock",
-        description: "Low stock alert: Organic Tomatoes",
+        description: "Low stock alert: Organic Tomatoes (जैविक टमाटर)",
         time: "15 minutes ago",
         icon: AlertTriangle,
         status: "warning"
@@ -161,7 +165,7 @@ const RetailerDashboard = () => {
       {
         id: 4,
         type: "delivery",
-        description: "Shipment received from Green Valley Farms",
+        description: "Shipment received from Hariyali Krishi Farm (हरियाली कृषि फार्म)",
         time: "1 hour ago",
         icon: Truck,
         status: "info"
@@ -171,29 +175,29 @@ const RetailerDashboard = () => {
 
   const quickActions = [
     {
-      title: "Verify Inventory",
-      description: "Scan and verify product authenticity",
+      title: isHindi ? "इन्वेंटरी सत्यापित करें" : "Verify Inventory",
+      description: isHindi ? "उत्पाद प्रामाणिकता स्कैन और सत्यापित करें" : "Scan and verify product authenticity",
       icon: QrCode,
       color: "bg-blue-500",
       path: "/retailer-verify"
     },
     {
-      title: "Stock Management",
-      description: "Manage inventory and stock levels",
+      title: isHindi ? "स्टॉक प्रबंधन" : "Stock Management",
+      description: isHindi ? "इन्वेंटरी और स्टॉक स्तर प्रबंधित करें" : "Manage inventory and stock levels",
       icon: Package,
       color: "bg-green-500",
       path: "/retailer-stock-management"
     },
     {
-      title: "Sales Reports",
-      description: "View detailed sales analytics",
+      title: isHindi ? "बिक्री रिपोर्ट" : "Sales Reports",
+      description: isHindi ? "विस्तृत बिक्री विश्लेषण देखें" : "View detailed sales analytics",
       icon: BarChart3,
       color: "bg-purple-500",
       path: "/retailer-reports"
     },
     {
-      title: "Add New Product",
-      description: "Add products to inventory",
+      title: isHindi ? "नया उत्पाद जोड़ें" : "Add New Product",
+      description: isHindi ? "इन्वेंटरी में उत्पाद जोड़ें" : "Add products to inventory",
       icon: Plus,
       color: "bg-amber-500",
       path: "/retailer-stock-management"
@@ -202,36 +206,36 @@ const RetailerDashboard = () => {
 
   const dashboardMetrics = [
     {
-      title: "Today's Revenue",
-      value: `$${dashboardStats.dailyRevenue?.toLocaleString() || '0'}`,
-      total: `$${dashboardStats.totalRevenue?.toLocaleString() || '0'} total`,
+      title: isHindi ? "आज की आय" : "Today's Revenue",
+      value: `₹${dashboardStats.dailyRevenue?.toLocaleString() || '0'}`,
+      total: `₹${dashboardStats.totalRevenue?.toLocaleString() || '0'} ${isHindi ? 'कुल' : 'total'}`,
       change: dashboardStats.revenueChange,
       changeType: dashboardStats.revenueChange > 0 ? "positive" : "negative",
-      icon: DollarSign,
+      icon: IndianRupee,
       color: "text-green-600"
     },
     {
-      title: "Today's Orders",
+      title: isHindi ? "आज के ऑर्डर" : "Today's Orders",
       value: dashboardStats.dailyOrders?.toLocaleString() || '0',
-      total: `${dashboardStats.totalOrders?.toLocaleString() || '0'} total`,
+      total: `${dashboardStats.totalOrders?.toLocaleString() || '0'} ${isHindi ? 'कुल' : 'total'}`,
       change: dashboardStats.ordersChange,
       changeType: dashboardStats.ordersChange > 0 ? "positive" : "negative",
       icon: ShoppingCart,
       color: "text-blue-600"
     },
     {
-      title: "Total Products",
+      title: isHindi ? "कुल उत्पाद" : "Total Products",
       value: dashboardStats.totalProducts?.toLocaleString() || '0',
-      total: `${dashboardStats.lowStockProducts || '0'} low stock`,
+      total: `${dashboardStats.lowStockProducts || '0'} ${isHindi ? 'कम स्टॉक' : 'low stock'}`,
       change: dashboardStats.productsChange,
       changeType: dashboardStats.productsChange > 0 ? "positive" : "negative",
       icon: Package,
       color: "text-purple-600"
     },
     {
-      title: "Total Customers",
+      title: isHindi ? "कुल ग्राहक" : "Total Customers",
       value: dashboardStats.totalCustomers?.toLocaleString() || '0',
-      total: `${dashboardStats.newCustomers || '0'} new today`,
+      total: `${dashboardStats.newCustomers || '0'} ${isHindi ? 'आज नए' : 'new today'}`,
       change: dashboardStats.customersChange,
       changeType: dashboardStats.customersChange > 0 ? "positive" : "negative",
       icon: Users,
@@ -271,10 +275,14 @@ const RetailerDashboard = () => {
         <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Retailer Dashboard</h1>
-              <p className="text-gray-600">Welcome back, {userData.name}! Here's your store overview.</p>
+              <h1 className="text-2xl font-bold text-gray-900">{isHindi ? 'रिटेलर डैशबोर्ड' : 'Retailer Dashboard'}</h1>
+              <p className="text-gray-600">{isHindi ? `वापस स्वागत है, ${userData.name}! यहाँ आपके स्टोर का अवलोकन है।` : `Welcome back, ${userData.name}! Here's your store overview.`}</p>
             </div>
             <div className="flex items-center space-x-4">
+              <LanguageToggle
+                isHindi={isHindi}
+                onToggle={toggleLanguage}
+              />
               <NotificationIndicator count={5} />
               <ProfileDropdown user={userData} />
             </div>
@@ -289,7 +297,7 @@ const RetailerDashboard = () => {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-3"
           >
-            <h2 className="text-lg font-semibold text-gray-900">Today's Overview</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{isHindi ? 'आज का अवलोकन' : "Today's Overview"}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {dashboardMetrics.map((metric, index) => (
                 <div
@@ -328,7 +336,7 @@ const RetailerDashboard = () => {
             transition={{ delay: 0.1 }}
             className="space-y-3"
           >
-            <h2 className="text-lg font-semibold text-gray-900">Quick Actions</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{isHindi ? 'त्वरित कार्य' : 'Quick Actions'}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {quickActions.map((action, index) => (
                 <motion.div
@@ -358,9 +366,9 @@ const RetailerDashboard = () => {
             {/* Recent Orders */}
             <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-gray-200">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Recent Orders</h3>
+                <h3 className="text-lg font-semibold text-gray-900">{isHindi ? 'हाल के ऑर्डर' : 'Recent Orders'}</h3>
                 <Button variant="outline" size="sm" onClick={() => navigate('/retailer-reports')}>
-                  View All
+                  {isHindi ? 'सभी देखें' : 'View All'}
                 </Button>
               </div>
               <div className="space-y-4">
@@ -376,7 +384,7 @@ const RetailerDashboard = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-gray-900">${order.total}</p>
+                      <p className="text-sm font-medium text-gray-900">₹{order.total}</p>
                       <div className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
                         {order.status}
                       </div>
@@ -389,9 +397,9 @@ const RetailerDashboard = () => {
             {/* Low Stock Alerts */}
             <div className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-gray-200">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Low Stock Alerts</h3>
+                <h3 className="text-lg font-semibold text-gray-900">{isHindi ? 'कम स्टॉक अलर्ट' : 'Low Stock Alerts'}</h3>
                 <Button variant="outline" size="sm" onClick={() => navigate('/retailer-stock-management')}>
-                  Manage Stock
+                  {isHindi ? 'स्टॉक प्रबंधित करें' : 'Manage Stock'}
                 </Button>
               </div>
               <div className="space-y-4">
@@ -423,7 +431,7 @@ const RetailerDashboard = () => {
             transition={{ delay: 0.3 }}
             className="space-y-3"
           >
-            <h2 className="text-lg font-semibold text-gray-900">Recent Activity</h2>
+            <h2 className="text-lg font-semibold text-gray-900">{isHindi ? 'हाल की गतिविधि' : 'Recent Activity'}</h2>
             <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-gray-200">
               <div className="divide-y divide-gray-200">
                 {recentActivity.map((activity) => (
@@ -453,28 +461,28 @@ const RetailerDashboard = () => {
             transition={{ delay: 0.4 }}
             className="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-gray-200"
           >
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Store Performance</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">{isHindi ? 'स्टोर प्रदर्शन' : 'Store Performance'}</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
                 <div className="p-3 bg-green-100 rounded-lg inline-block mb-2">
                   <TrendingUp className="w-6 h-6 text-green-600" />
                 </div>
                 <p className="text-2xl font-bold text-gray-900">98.5%</p>
-                <p className="text-sm text-gray-600">Customer Satisfaction</p>
+                <p className="text-sm text-gray-600">{isHindi ? 'ग्राहक संतुष्टि' : 'Customer Satisfaction'}</p>
               </div>
               <div className="text-center">
                 <div className="p-3 bg-blue-100 rounded-lg inline-block mb-2">
                   <Store className="w-6 h-6 text-blue-600" />
                 </div>
                 <p className="text-2xl font-bold text-gray-900">15.2%</p>
-                <p className="text-sm text-gray-600">Monthly Growth</p>
+                <p className="text-sm text-gray-600">{isHindi ? 'मासिक वृद्धि' : 'Monthly Growth'}</p>
               </div>
               <div className="text-center">
                 <div className="p-3 bg-purple-100 rounded-lg inline-block mb-2">
                   <CheckCircle className="w-6 h-6 text-purple-600" />
                 </div>
                 <p className="text-2xl font-bold text-gray-900">99.8%</p>
-                <p className="text-sm text-gray-600">Product Authenticity</p>
+                <p className="text-sm text-gray-600">{isHindi ? 'उत्पाद प्रामाणिकता' : 'Product Authenticity'}</p>
               </div>
             </div>
           </motion.div>

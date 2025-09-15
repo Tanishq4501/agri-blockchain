@@ -8,7 +8,11 @@ import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
-import Checkbox from '../../components/ui/Checkbox';
+import { Checkbox } from '../../components/ui/Checkbox';
+import LanguageToggle from '../../components/ui/LanguageToggle';
+import GeminiToggle from '../../components/ui/GeminiToggle';
+import { useLanguage } from '../../utils/translations';
+import { useGeminiTranslation } from '../../hooks/useGeminiTranslation';
 import { 
   User, 
   Mail, 
@@ -34,6 +38,8 @@ import {
 
 const RetailerProfile = () => {
   const navigate = useNavigate();
+  const { isHindi, toggleLanguage, t } = useLanguage();
+  const { translateText, isGeminiEnabled, toggleGemini, isTranslating } = useGeminiTranslation();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [activeTab, setActiveTab] = useState('personal');
@@ -43,8 +49,8 @@ const RetailerProfile = () => {
 
   // Mock user data
   const userData = {
-    name: "Sarah Johnson",
-    email: "sarah@freshmart.com",
+    name: "Priya Sharma (प्रिया शर्मा)",
+    email: "priya@freshbazar.com",
     role: "retailer",
     avatar: "/api/placeholder/40/40"
   };
@@ -52,57 +58,57 @@ const RetailerProfile = () => {
   // Mock profile data
   useEffect(() => {
     setProfileData({
-      firstName: "Sarah",
-      lastName: "Johnson",
-      email: "sarah@freshmart.com",
-      phone: "+1 (555) 123-4567",
-      address: "123 Market Street",
-      city: "San Francisco",
-      state: "California",
-      zipCode: "94102",
-      country: "United States",
+      firstName: "Priya (प्रिया)",
+      lastName: "Sharma (शर्मा)",
+      email: "priya@freshbazar.com",
+      phone: "+91 98765 43210",
+      address: "Shop No. 15, Gandhi Market",
+      city: "Mumbai (मुंबई)",
+      state: "Maharashtra (महाराष्ट्र)",
+      zipCode: "400001",
+      country: "India (भारत)",
       joinDate: "2023-06-15",
       lastLogin: "2024-01-18 09:30 AM",
       avatar: "/api/placeholder/120/120"
     });
 
     setBusinessData({
-      businessName: "FreshMart Grocery",
-      businessType: "Grocery Store",
-      licenseNumber: "BL-2023-SF-001234",
-      taxId: "12-3456789",
-      website: "www.freshmart-grocery.com",
+      businessName: "Fresh Bazar Grocery (फ्रेश बाजार ग्रोसरी)",
+      businessType: "Grocery Store (किराना दुकान)",
+      licenseNumber: "BL-2023-MH-001234",
+      taxId: "GSTIN27ABCDE1234F1Z5",
+      website: "www.freshbazar-grocery.in",
       establishedYear: "2015",
       employeeCount: "25-50",
-      annualRevenue: "$2-5M",
-      businessAddress: "123 Market Street, San Francisco, CA 94102",
-      businessPhone: "+1 (555) 123-4567",
-      businessEmail: "info@freshmart-grocery.com",
-      certifications: ["Organic Retailer", "Food Safety Certified", "Local Business Certified"],
+      annualRevenue: "₹15-40 Lakh",
+      businessAddress: "Shop No. 15, Gandhi Market, Mumbai, Maharashtra 400001",
+      businessPhone: "+91 98765 43210",
+      businessEmail: "info@freshbazar-grocery.in",
+      certifications: ["Organic Retailer (जैविक खुदरा विक्रेता)", "Food Safety Certified (खाद्य सुरक्षा प्रमाणित)", "FSSAI Licensed"],
       operatingHours: {
-        monday: "8:00 AM - 10:00 PM",
-        tuesday: "8:00 AM - 10:00 PM",
-        wednesday: "8:00 AM - 10:00 PM",
-        thursday: "8:00 AM - 10:00 PM",
-        friday: "8:00 AM - 11:00 PM",
-        saturday: "8:00 AM - 11:00 PM",
-        sunday: "9:00 AM - 9:00 PM"
+        monday: "7:00 AM - 10:00 PM",
+        tuesday: "7:00 AM - 10:00 PM",
+        wednesday: "7:00 AM - 10:00 PM",
+        thursday: "7:00 AM - 10:00 PM",
+        friday: "7:00 AM - 10:00 PM",
+        saturday: "7:00 AM - 10:00 PM",
+        sunday: "8:00 AM - 9:00 PM"
       }
     });
 
     setPreferences({
       emailNotifications: true,
-      smsNotifications: false,
+      smsNotifications: true,
       marketingEmails: true,
       orderAlerts: true,
       inventoryAlerts: true,
-      priceAlerts: false,
+      priceAlerts: true,
       weeklyReports: true,
       monthlyReports: true,
-      language: "english",
-      timezone: "PST",
-      currency: "USD",
-      dateFormat: "MM/DD/YYYY"
+      language: "hindi",
+      timezone: "IST",
+      currency: "INR",
+      dateFormat: "DD/MM/YYYY"
     });
   }, []);
 
@@ -315,10 +321,10 @@ const RetailerProfile = () => {
                         disabled={!isEditing}
                         onChange={(e) => setBusinessData({...businessData, businessType: e.target.value})}
                       >
-                        <option value="Grocery Store">Grocery Store</option>
-                        <option value="Supermarket">Supermarket</option>
-                        <option value="Convenience Store">Convenience Store</option>
-                        <option value="Specialty Store">Specialty Store</option>
+                        <option value="Grocery Store">Grocery Store (किराना दुकान)</option>
+                        <option value="Supermarket">Supermarket (सुपरमार्केट)</option>
+                        <option value="Convenience Store">Convenience Store (सुविधा स्टोर)</option>
+                        <option value="Specialty Store">Specialty Store (विशेष दुकान)</option>
                       </Select>
                       <Input
                         label="License Number"
@@ -409,8 +415,9 @@ const RetailerProfile = () => {
                         onChange={(e) => setPreferences({...preferences, language: e.target.value})}
                       >
                         <option value="english">English</option>
-                        <option value="spanish">Spanish</option>
-                        <option value="french">French</option>
+                        <option value="hindi">Hindi (हिंदी)</option>
+                        <option value="marathi">Marathi (मराठी)</option>
+                        <option value="gujarati">Gujarati (गुजराती)</option>
                       </Select>
                       <Select
                         label="Timezone"
@@ -418,9 +425,9 @@ const RetailerProfile = () => {
                         disabled={!isEditing}
                         onChange={(e) => setPreferences({...preferences, timezone: e.target.value})}
                       >
+                        <option value="IST">Indian Standard Time</option>
                         <option value="PST">Pacific Standard Time</option>
                         <option value="EST">Eastern Standard Time</option>
-                        <option value="CST">Central Standard Time</option>
                       </Select>
                     </div>
                   </div>

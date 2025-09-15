@@ -17,8 +17,8 @@ const AdminControl = () => {
 
   // Mock user data
   const userData = {
-    name: 'Admin User',
-    email: 'admin@agritrace.com',
+    name: 'Arjun Mehta (अर्जुन मेहता) - Control Admin',
+    email: 'arjun@agritrace.in',
     role: 'admin',
     avatar: null
   };
@@ -28,16 +28,16 @@ const AdminControl = () => {
     {
       id: 1,
       type: 'warning',
-      title: 'System Alert',
-      message: 'High server load detected. Consider scaling resources.',
+      title: 'System Alert (सिस्टम अलर्ट)',
+      message: 'High server load detected in Mumbai data center. Consider scaling resources.',
       timestamp: new Date(Date.now() - 15 * 60 * 1000),
       read: false
     },
     {
       id: 2,
       type: 'info',
-      title: 'New User Registration',
-      message: '5 new farmers registered in the last hour',
+      title: 'New User Registration (नवा पंजीकरण)',
+      message: '5 new farmers registered from Punjab in the last hour',
       timestamp: new Date(Date.now() - 45 * 60 * 1000),
       read: false
     }
@@ -57,8 +57,8 @@ const AdminControl = () => {
   const mockUsers = [
     {
       id: 1,
-      name: 'John Mitchell',
-      email: 'john.mitchell@greenfarm.com',
+      name: 'Ramesh Patel (रमेश पटेल)',
+      email: 'ramesh.patel@krishifarm.in',
       role: 'farmer',
       status: 'active',
       joinDate: '2024-12-15',
@@ -66,8 +66,8 @@ const AdminControl = () => {
     },
     {
       id: 2,
-      name: 'Sarah Johnson',
-      email: 'sarah.johnson@email.com',
+      name: 'Priya Sharma (प्रिया शर्मा)',
+      email: 'priya.sharma@email.com',
       role: 'consumer',
       status: 'active',
       joinDate: '2024-11-20',
@@ -75,8 +75,8 @@ const AdminControl = () => {
     },
     {
       id: 3,
-      name: 'Mike Distribution Co.',
-      email: 'contact@mikedist.com',
+      name: 'Bharti Logistics (भारती लॉजिस्टिक्स)',
+      email: 'contact@bhartilogistics.in',
       role: 'distributor',
       status: 'pending',
       joinDate: '2025-01-10',
@@ -324,7 +324,7 @@ const AdminControl = () => {
                       <div className="w-full sm:w-48">
                         <Select
                           value={selectedFilter}
-                          onValueChange={setSelectedFilter}
+                          onChange={setSelectedFilter}
                           options={filterOptions}
                         />
                       </div>

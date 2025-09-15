@@ -8,9 +8,15 @@ import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import Select from '../../components/ui/Select';
+import LanguageToggle from '../../components/ui/LanguageToggle';
+import GeminiToggle from '../../components/ui/GeminiToggle';
+import { useLanguage } from '../../utils/translations';
+import { useGeminiTranslation } from '../../hooks/useGeminiTranslation';
 
 const FarmerProducts = () => {
   const navigate = useNavigate();
+  const { isHindi, toggleLanguage, t } = useLanguage();
+  const { translateText, isGeminiEnabled, toggleGemini, isTranslating } = useGeminiTranslation();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -18,8 +24,8 @@ const FarmerProducts = () => {
 
   // Mock user data
   const userData = {
-    name: 'John Mitchell',
-    email: 'john.mitchell@greenfarm.com',
+    name: 'Ramesh Patel (रमेश पटेल)',
+    email: 'ramesh.patel@organicfarm.com',
     role: 'farmer',
     avatar: null
   };
@@ -29,8 +35,8 @@ const FarmerProducts = () => {
     {
       id: 1,
       type: 'success',
-      title: 'Product Verified',
-      message: 'Your organic tomatoes batch has been verified',
+      title: 'Product Verified (उत्पाद सत्यापित)',
+      message: 'Your organic Alphonso mangoes batch has been FSSAI verified (आपके जैविक आम का बैच सत्यापित)',
       timestamp: new Date(Date.now() - 10 * 60 * 1000),
       read: false
     }
@@ -39,58 +45,58 @@ const FarmerProducts = () => {
   // Mock products data
   const mockProducts = [
     {
-      id: 'TOM-2025-001',
-      name: 'Organic Tomatoes',
-      category: 'Vegetables',
+      id: 'MAN-2025-001',
+      name: 'Organic Alphonso Mangoes (जैविक आम)',
+      category: 'Fruits (फल)',
       quantity: 500,
       unit: 'kg',
       harvestDate: '2025-01-10',
       expiryDate: '2025-01-25',
       status: 'verified',
-      price: 4.50,
-      certifications: ['Organic', 'Non-GMO'],
+      price: 450,
+      certifications: ['FSSAI Organic', 'GI Tag'],
       qrGenerated: true,
-      location: 'Greenhouse A',
-      batchNumber: 'TOM-B001'
+      location: 'Orchard A (बाग A)',
+      batchNumber: 'MAN-B001'
     },
     {
-      id: 'CAR-2025-002',
-      name: 'Fresh Carrots',
-      category: 'Vegetables',
-      quantity: 300,
+      id: 'RIC-2025-002',
+      name: 'Organic Basmati Rice (जैविक बासमती)',
+      category: 'Grains (अनाज)',
+      quantity: 1000,
       unit: 'kg',
       harvestDate: '2025-01-08',
-      expiryDate: '2025-02-08',
+      expiryDate: '2026-01-08',
       status: 'pending',
-      price: 3.20,
-      certifications: ['Organic'],
+      price: 180,
+      certifications: ['FSSAI Organic'],
       qrGenerated: false,
-      location: 'Field B',
-      batchNumber: 'CAR-B002'
+      location: 'Field B (खेत B)',
+      batchNumber: 'RIC-B002'
     },
     {
-      id: 'LET-2025-003',
-      name: 'Organic Lettuce',
-      category: 'Leafy Greens',
-      quantity: 150,
+      id: 'TUR-2025-003',
+      name: 'Organic Turmeric (जैविक हल्दी)',
+      category: 'Spices (मसाले)',
+      quantity: 200,
       unit: 'kg',
       harvestDate: '2025-01-12',
-      expiryDate: '2025-01-19',
+      expiryDate: '2026-01-12',
       status: 'shipped',
-      price: 6.00,
-      certifications: ['Organic', 'Fair Trade'],
+      price: 1200,
+      certifications: ['FSSAI Organic', 'Ayurvedic Grade'],
       qrGenerated: true,
-      location: 'Greenhouse C',
-      batchNumber: 'LET-B003'
+      location: 'Field C (खेत C)',
+      batchNumber: 'TUR-B003'
     }
   ];
 
   const statusOptions = [
-    { value: 'all', label: 'All Status' },
-    { value: 'pending', label: 'Pending Verification' },
-    { value: 'verified', label: 'Verified' },
-    { value: 'shipped', label: 'Shipped' },
-    { value: 'delivered', label: 'Delivered' }
+    { value: 'all', label: 'All Status (सभी स्थिति)' },
+    { value: 'pending', label: 'Pending Verification (सत्यापन पेंडिंग)' },
+    { value: 'verified', label: 'Verified (सत्यापित)' },
+    { value: 'shipped', label: 'Shipped (भेजा गया)' },
+    { value: 'delivered', label: 'Delivered (वितरित)' }
   ];
 
   useEffect(() => {
@@ -167,10 +173,12 @@ const FarmerProducts = () => {
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center space-x-4">
-                <h1 className="text-2xl font-bold text-text-primary">My Products</h1>
+                <h1 className="text-2xl font-bold text-text-primary">{isHindi ? (isGeminiEnabled ? translateText('मेरे उत्पाद') : 'मेरे उत्पाद') : (isGeminiEnabled ? translateText('My Products') : 'My Products')}</h1>
               </div>
 
               <div className="flex items-center space-x-4">
+                <LanguageToggle isHindi={isHindi} onToggle={toggleLanguage} />
+                <GeminiToggle isEnabled={isGeminiEnabled} onToggle={toggleGemini} isTranslating={isTranslating} />
                 <NotificationIndicator
                   notifications={notifications}
                   unreadCount={notifications?.filter(n => !n?.read)?.length}
@@ -198,7 +206,7 @@ const FarmerProducts = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-primary/5 to-success/5 border border-primary/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Total Products</p>
+                    <p className="text-sm font-medium text-text-secondary">{isHindi ? (isGeminiEnabled ? translateText('कुल उत्पाद') : 'कुल उत्पाद') : (isGeminiEnabled ? translateText('Total Products') : 'Total Products')}</p>
                     <p className="text-3xl font-bold text-primary">{products.length}</p>
                   </div>
                   <Icon name="Package" size={24} className="text-primary" />
@@ -208,7 +216,7 @@ const FarmerProducts = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-success/5 to-primary/5 border border-success/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Verified</p>
+                    <p className="text-sm font-medium text-text-secondary">{isHindi ? (isGeminiEnabled ? translateText('सत्यापित') : 'सत्यापित') : (isGeminiEnabled ? translateText('Verified') : 'Verified')}</p>
                     <p className="text-3xl font-bold text-success">
                       {products.filter(p => p.status === 'verified').length}
                     </p>
@@ -220,7 +228,7 @@ const FarmerProducts = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-secondary/5 to-accent/5 border border-secondary/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Shipped</p>
+                    <p className="text-sm font-medium text-text-secondary">{isHindi ? (isGeminiEnabled ? translateText('भेजा गया') : 'भेजा गया') : (isGeminiEnabled ? translateText('Shipped') : 'Shipped')}</p>
                     <p className="text-3xl font-bold text-secondary">
                       {products.filter(p => p.status === 'shipped').length}
                     </p>
@@ -232,7 +240,7 @@ const FarmerProducts = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-warning/5 to-accent/5 border border-warning/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Pending</p>
+                    <p className="text-sm font-medium text-text-secondary">{isHindi ? (isGeminiEnabled ? translateText('पेंडिंग') : 'पेंडिंग') : (isGeminiEnabled ? translateText('Pending') : 'Pending')}</p>
                     <p className="text-3xl font-bold text-warning">
                       {products.filter(p => p.status === 'pending').length}
                     </p>
@@ -256,7 +264,7 @@ const FarmerProducts = () => {
                 <div className="w-full sm:w-48">
                   <Select
                     value={statusFilter}
-                    onValueChange={setStatusFilter}
+                    onChange={setStatusFilter}
                     options={statusOptions}
                   />
                 </div>
@@ -312,7 +320,7 @@ const FarmerProducts = () => {
                     </div>
                     <div>
                       <label className="text-sm font-medium text-text-secondary">Price per {product.unit}</label>
-                      <p className="text-text-primary">${product.price}</p>
+                      <p className="text-text-primary">₹{product.price}</p>
                     </div>
                     <div>
                       <label className="text-sm font-medium text-text-secondary">Location</label>
