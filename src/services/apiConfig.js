@@ -61,3 +61,8 @@ export const getConfig = () => {
     }
   };
 };
+
+// Helper function to get API base URL
+export const getApiBaseUrl = () => {
+  return process.env.REACT_APP_API_URL || 'http://localhost:3001';
+};

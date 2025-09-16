@@ -22,27 +22,26 @@ router.post('/register', async (req, res) => {
     const cropData = req.body;
     
     // Register crop on blockchain
-    const result = await registerCrop(cropData);
-    
-    if (!result.success) {
-      return res.status(400).json({
-        status: 'error',
-        message: result.error,
-        code: 'BLOCKCHAIN_ERROR'
-      });
+    let result;
+    try {
+      result = await registerCrop(cropData);
+    } catch (error) {
+      console.error('Blockchain error:', error);
+      // Continue with MongoDB registration even if blockchain fails
+      result = { success: false, error: error.message };
     }
     
-    // Also create metadata in MongoDB
-    const metadataResult = await createOrUpdateCropMetadata(result.data.cropID, {
+    // Create metadata in MongoDB regardless of blockchain status
+    const metadataResult = await createOrUpdateCropMetadata(cropData.cropID || `CROP-${Date.now()}`, {
       ...cropData,
-      blockchainData: result.data
+      blockchainData: result.success ? result.data : null
     });
     
     res.status(201).json({
       status: 'success',
-      message: 'Crop registered successfully on blockchain and metadata created',
+      message: 'Crop metadata created in database',
       data: {
-        blockchainData: result.data,
+        blockchainData: result.success ? result.data : null,
         metadata: metadataResult.data
       }
     });

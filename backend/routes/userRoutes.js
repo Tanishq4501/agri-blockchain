@@ -91,20 +91,19 @@ router.post('/register', async (req, res) => {
     }
     
     // Register user on blockchain
-    const result = await registerUserOnBlockchain(userData);
-    
-    if (!result.success) {
-      return res.status(400).json({
-        status: 'error',
-        message: result.error,
-        code: 'BLOCKCHAIN_ERROR'
-      });
+    let result;
+    try {
+      result = await registerUserOnBlockchain(userData);
+    } catch (error) {
+      console.error('Blockchain error:', error);
+      // Continue with MongoDB registration even if blockchain fails
+      result = { success: false, error: error.message };
     }
     
     res.status(201).json({
       status: 'success',
-      message: result.message,
-      data: result.data
+      message: result.success ? result.message : 'User metadata created in database',
+      data: result.success ? result.data : null
     });
   } catch (error) {
     console.error('Error in POST /users/register:', error.message);

@@ -25,10 +25,14 @@ const app = express();
 connectDB();
 
 // Initialize Fabric connection
-initializeFabric().catch(error => {
-  console.error('Failed to initialize Fabric connection:', error);
-  // Continue running even if Fabric initialization fails
-});
+try {
+  initializeFabric().catch(error => {
+    console.error('Failed to initialize Fabric connection:', error);
+    // Continue running even if Fabric initialization fails
+  });
+} catch (error) {
+  console.error('Error during Fabric initialization:', error);
+}
 
 // Middleware
 app.use(helmet()); // Security headers
