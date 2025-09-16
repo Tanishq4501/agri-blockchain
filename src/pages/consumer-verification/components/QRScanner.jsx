@@ -228,26 +228,15 @@ const QRScanner = ({ onScanSuccess, onScanError }) => {
                 {hasCamera ? 'Start Camera' : 'Camera Not Available'}
               </Button>
             ) : (
-              <>
-                <Button
-                  variant="outline"
-                  onClick={stopCamera}
-                  iconName="X"
-                  iconPosition="left"
-                  iconSize={18}
-                >
-                  Stop Camera
-                </Button>
-                <Button
-                  variant="success"
-                  onClick={simulateQRScan}
-                  iconName="Scan"
-                  iconPosition="left"
-                  iconSize={18}
-                >
-                  Simulate Scan
-                </Button>
-              </>
+              <Button
+                variant="outline"
+                onClick={stopCamera}
+                iconName="X"
+                iconPosition="left"
+                iconSize={18}
+              >
+                Stop Camera
+              </Button>
             )}
           </div>
         </div>
