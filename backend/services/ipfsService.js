@@ -27,7 +27,7 @@ try {
 
 /**
  * Upload a document to IPFS
- * @param {Buffer|String} content - Document content to upload
+ * @param {Buffer|String} content - Document content to upload (base64 string or buffer)
  * @param {String} filename - Optional filename
  * @returns {Promise<Object>} - IPFS hash and other metadata
  */
@@ -41,9 +41,18 @@ const uploadDocument = async (content, filename = 'document') => {
       };
     }
     
+    // Convert base64 content to buffer if it's a string
+    let bufferContent;
+    if (typeof content === 'string') {
+      // Assume it's base64 encoded
+      bufferContent = Buffer.from(content, 'base64');
+    } else {
+      bufferContent = content;
+    }
+    
     // Add content to IPFS
     const result = await ipfsClient.add({
-      content,
+      content: bufferContent,
       path: filename
     });
     
@@ -110,7 +119,8 @@ const retrieveDocument = async (hash) => {
  * @returns {String} - Gateway URL
  */
 const getGatewayUrl = (hash) => {
-  return `${process.env.IPFS_GATEWAY_URL || 'https://ipfs.io/ipfs/'}${hash}`;
+  const baseUrl = process.env.IPFS_GATEWAY_URL || 'https://ipfs.io';
+  return `${baseUrl}/ipfs/${hash}`;
 };
 
 // Export all functions

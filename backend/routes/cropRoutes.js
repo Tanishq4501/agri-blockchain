@@ -139,6 +139,55 @@ router.post('/:id/price', async (req, res) => {
 });
 
 /**
+ * GET /api/crops/:id
+ * Get crop details
+ */
+router.get('/:id', async (req, res) => {
+  try {
+    // Get crop ID from route parameters
+    const cropId = req.params.id;
+    
+    // Import Fabric service
+    const { getCrop } = require('../services/fabricService');
+    
+    // Get crop from blockchain
+    const result = await getCrop(cropId);
+    
+    if (result.success) {
+      res.status(200).json({
+        status: 'success',
+        data: result.data
+      });
+    } else {
+      // If blockchain query fails, check MongoDB as fallback
+      const { getCropMetadataById } = require('../services/cropService');
+      const mongoResult = await getCropMetadataById(cropId);
+      
+      if (mongoResult.success) {
+        res.status(200).json({
+          status: 'success',
+          data: mongoResult.data,
+          source: 'mongodb'
+        });
+      } else {
+        return res.status(404).json({
+          status: 'error',
+          message: 'Crop not found in blockchain or database',
+          code: 'CROP_NOT_FOUND'
+        });
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching crop:', error);
+    res.status(500).json({
+      status: 'error',
+      message: error.message || 'Failed to fetch crop',
+      code: 'SERVER_ERROR'
+    });
+  }
+});
+
+/**
  * GET /api/crops/:id/analytics
  * Fetch analytics data for a crop
  */
@@ -208,18 +257,30 @@ router.get('/:id/history', async (req, res) => {
     // Get crop history from blockchain
     const result = await getCropHistory(cropId);
     
-    if (!result.success) {
-      return res.status(404).json({
-        status: 'error',
-        message: result.error,
-        code: 'CROP_NOT_FOUND'
+    if (result.success) {
+      res.status(200).json({
+        status: 'success',
+        data: result.data
       });
+    } else {
+      // If blockchain query fails, return empty history from MongoDB
+      const { getCropMetadataById } = require('../services/cropService');
+      const mongoResult = await getCropMetadataById(cropId);
+      
+      if (mongoResult.success) {
+        res.status(200).json({
+          status: 'success',
+          data: [],
+          source: 'mongodb'
+        });
+      } else {
+        return res.status(404).json({
+          status: 'error',
+          message: 'Crop not found in blockchain or database',
+          code: 'CROP_NOT_FOUND'
+        });
+      }
     }
-    
-    res.status(200).json({
-      status: 'success',
-      data: result.data
-    });
   } catch (error) {
     console.error('Error fetching crop history:', error);
     res.status(500).json({

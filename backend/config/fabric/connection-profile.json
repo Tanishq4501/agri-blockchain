@@ -25,7 +25,10 @@
   },
   "peers": {
     "peer0.org1.example.com": {
-      "url": "grpc://localhost:7051",
+      "url": "grpcs://localhost:7051",
+      "tlsCACerts": {
+        "pem": "-----BEGIN CERTIFICATE-----\nMIICVzCCAf6gAwIBAgIRAI1OXqAvxTtoJy5RuMKlko8wCgYIKoZIzj0EAwIwdjEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHzAdBgNVBAMTFnRs\nc2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMjUwOTE2MTYwODAwWhcNMzUwOTE0MTYw\nODAwWjB2MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UE\nBxMNU2FuIEZyYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEfMB0G\nA1UEAxMWdGxzY2Eub3JnMS5leGFtcGxlLmNvbTBZMBMGByqGSM49AgEGCCqGSM49\nAwEHA0IABNA7PyOyDrWDaJT0o1t1ob1FdOUAKLKl+tP79xT4W/dJLQmrVrBIsteh\nKj3GUonPLuHCB9KkZO8fpwi2MjPbLtejbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNV\nHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNV\nHQ4EIgQgF6IirB/gwyYFUmLA8KdjPI70sSCoVrgkFBP2paZEwFEwCgYIKoZIzj0E\nAwIDRwAwRAIgcXZVdrd1aW5Twld6u2LCl9uX/XK7AvLS/ock9cgua6MCIC59Stbv\nFtTP6NHhBdya8Cw9Fi7/PrQ/yzykvc/eixZX\n-----END CERTIFICATE-----\n"
+      },
       "grpcOptions": {
         "ssl-target-name-override": "peer0.org1.example.com",
         "hostnameOverride": "peer0.org1.example.com"
@@ -34,8 +37,11 @@
   },
   "certificateAuthorities": {
     "ca.org1.example.com": {
-      "url": "http://localhost:7054",
+      "url": "https://localhost:7054",
       "caName": "ca-org1",
+      "tlsCACerts": {
+        "pem": ["-----BEGIN CERTIFICATE-----\nMIICUjCCAfigAwIBAgIRAORsXMkZi0m94EZoc9If0gcwCgYIKoZIzj0EAwIwczEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHDAaBgNVBAMTE2Nh\nLm9yZzEuZXhhbXBsZS5jb20wHhcNMjUwOTE2MTYwODAwWhcNMzUwOTE0MTYwODAw\nWjBzMQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMN\nU2FuIEZyYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UE\nAxMTY2Eub3JnMS5leGFtcGxlLmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IA\nBAF6yaXu6Yp3hLukc76PlGsb2sK7ta9pBrp+VB2b3LRAbxBuQpfj1gyJV1mYPL82\nKDYH9FdS7tix1NkJhb1o8wSjbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAU\nBggrBgEFBQcDAgYIKwYBBQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EIgQg\n9Br6YNnohg16G26orb5exqTF/vzUIr4arFz3v66+B5kwCgYIKoZIzj0EAwIDSAAw\nRQIhAKXFoDU7hYLOo7Mhf0D9iPywMSsMmOAktb35y5v/LhaHAiBj9izS/itl0j6U\n/RXlTWBFHsn1G8NIq1/HGrleeXYQQw==\n-----END CERTIFICATE-----\n"]
+      },
       "httpOptions": {
         "verify": false
       }

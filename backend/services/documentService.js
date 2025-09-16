@@ -39,7 +39,7 @@ const uploadDocumentToIPFS = async (content, filename, docType) => {
       };
     }
     
-    // Generate gateway URL
+    // Generate gateway URL for the document
     const gatewayUrl = getGatewayUrl(uploadResult.hash);
     
     return {

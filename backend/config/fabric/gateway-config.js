@@ -11,7 +11,7 @@ const ccp = JSON.parse(ccpJSON);
 // Gateway configuration
 const gatewayConfig = {
   discovery: {
-    enabled: true,
+    enabled: false,
     asLocalhost: true // Set to false for production
   },
   eventHandlerOptions: {
