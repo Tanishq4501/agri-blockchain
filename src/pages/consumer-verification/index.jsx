@@ -217,26 +217,70 @@ const ConsumerVerification = () => {
   };
 
   // Check for product code in URL params on component mount
-  useEffect(() => {
-    const codeFromUrl = searchParams?.get('code');
-    if (codeFromUrl) {
-      handleScanSuccess(codeFromUrl);
-    }
-  }, [searchParams]);
+  // Removed URL parameter handling - QR scanning stays on same page
 
   const handleScanSuccess = async (code) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      // Simulate API call delay
+      // Extract batch code from URL if QR code is a URL
+      let batchCode = code;
+      if (code.startsWith('http')) {
+        try {
+          const url = new URL(code);
+          const batch = url.searchParams.get('batch');
+          if (batch) {
+            batchCode = batch;
+          }
+        } catch (urlError) {
+          console.error('Error parsing QR code URL:', urlError);
+        }
+      }
+
+      // Check if this is the specific QR code for supply chain journey
+      if (batchCode === 'CROP-2025-001-ORGANIC-CARROTS' || batchCode === 'CROP123') {
+        // Create mock product data for the supply chain journey
+        const supplyChainProduct = {
+          code: batchCode,
+          name: batchCode === 'CROP123' ? 'Premium Organic Vegetables' : 'Organic Carrots - Premium Grade',
+          status: 'verified',
+          image: 'https://images.unsplash.com/photo-1445282768818-728615cc910a?w=400',
+          gallery: [
+            'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=100',
+            'https://images.unsplash.com/photo-1582515073490-39981397c445?w=100'
+          ],
+          farmer: {
+            name: 'John Smith',
+            location: 'Green Valley, California',
+            farmSize: '25 acres'
+          },
+          harvestDate: 'March 15, 2025',
+          bestBefore: 'April 15, 2025',
+          storageTemp: '0-2°C',
+          batchSize: '500 kg',
+          certifications: ['Organic', 'Non-GMO', 'Sustainable'],
+          nutrition: {
+            calories: '41 per 100g',
+            vitamin_a: '835μg',
+            fiber: '2.8g',
+            beta_carotene: '8285μg'
+          }
+        };
+        
+        setScannedProduct(supplyChainProduct);
+        setIsLoading(false);
+        return;
+      }
+
+      // Simulate API call delay for other products
       await new Promise(resolve => setTimeout(resolve, 1500));
 
-      const product = mockProducts?.[code];
+      const product = mockProducts?.[batchCode];
       if (product) {
         setScannedProduct(product);
       } else {
-        setError(`Product code "${code}" not found. Please check the code and try again.`);
+        setError(`Product code "${batchCode}" not found. Please check the code and try again.`);
       }
     } catch (err) {
       setError('Failed to verify product. Please try again.');

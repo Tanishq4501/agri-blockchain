@@ -7,20 +7,20 @@
 const API_CONFIG = {
   // Fabric Network Configuration
   NETWORK_CONFIG: {
-    CHANNEL_NAME: 'agrichannel',
-    CHAINCODE_NAME: 'agrisupplychain',
-    NETWORK_URL: process.env.FABRIC_NETWORK_URL || 'grpc://localhost:7051',
-    EVENT_URL: process.env.FABRIC_EVENT_URL || 'grpc://localhost:7053',
-    CA_URL: process.env.FABRIC_CA_URL || 'http://localhost:7054',
-    MSP_ID: process.env.FABRIC_MSP_ID || 'Org1MSP',
-    PEER_NAME: process.env.FABRIC_PEER_NAME || 'peer0.org1.example.com',
-    ORDERER_URL: process.env.FABRIC_ORDERER_URL || 'grpc://localhost:7050'
+    CHANNEL_NAME: import.meta.env.VITE_CHANNEL_NAME || 'agrichannel',
+    CHAINCODE_NAME: import.meta.env.VITE_CHAINCODE_NAME || 'agrisupplychain',
+    NETWORK_URL: import.meta.env.VITE_FABRIC_NETWORK_URL || 'grpc://localhost:7051',
+    EVENT_URL: import.meta.env.VITE_FABRIC_EVENT_URL || 'grpc://localhost:7053',
+    CA_URL: import.meta.env.VITE_FABRIC_CA_URL || 'http://localhost:7054',
+    MSP_ID: import.meta.env.VITE_FABRIC_MSP_ID || 'Org1MSP',
+    PEER_NAME: import.meta.env.VITE_FABRIC_PEER_NAME || 'peer0.org1.example.com',
+    ORDERER_URL: import.meta.env.VITE_FABRIC_ORDERER_URL || 'grpc://localhost:7050'
   },
   
   // Wallet Configuration
   WALLET_CONFIG: {
-    WALLET_PATH: process.env.WALLET_PATH || './wallet',
-    IDENTITY_LABEL: process.env.IDENTITY_LABEL || 'appUser'
+    WALLET_PATH: import.meta.env.VITE_WALLET_PATH || './wallet',
+    IDENTITY_LABEL: import.meta.env.VITE_IDENTITY_LABEL || 'appUser'
   },
   
   // Connection Options
@@ -56,13 +56,13 @@ export const getConfig = () => {
     ...API_CONFIG,
     NETWORK_CONFIG: {
       ...API_CONFIG.NETWORK_CONFIG,
-      CHANNEL_NAME: process.env.CHANNEL_NAME || API_CONFIG.NETWORK_CONFIG.CHANNEL_NAME,
-      CHAINCODE_NAME: process.env.CHAINCODE_NAME || API_CONFIG.NETWORK_CONFIG.CHAINCODE_NAME
+      CHANNEL_NAME: import.meta.env.VITE_CHANNEL_NAME || API_CONFIG.NETWORK_CONFIG.CHANNEL_NAME,
+      CHAINCODE_NAME: import.meta.env.VITE_CHAINCODE_NAME || API_CONFIG.NETWORK_CONFIG.CHAINCODE_NAME
     }
   };
 };
 
 // Helper function to get API base URL
 export const getApiBaseUrl = () => {
-  return process.env.REACT_APP_API_URL || 'http://localhost:3001';
+  return import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
 };

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import QrScanner from 'qr-scanner';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 
@@ -6,30 +7,75 @@ const QRScanner = ({ onScanSuccess, onScanError }) => {
   const [isScanning, setIsScanning] = useState(false);
   const [manualCode, setManualCode] = useState('');
   const [scanMode, setScanMode] = useState('camera'); // 'camera' or 'manual'
+  const [cameraError, setCameraError] = useState(null);
+  const [hasCamera, setHasCamera] = useState(true);
   const videoRef = useRef(null);
   const streamRef = useRef(null);
+  const qrScannerRef = useRef(null);
 
   const startCamera = async () => {
     try {
       setIsScanning(true);
-      const stream = await navigator.mediaDevices?.getUserMedia({
-        video: { facingMode: 'environment' }
-      });
-      streamRef.current = stream;
-      if (videoRef?.current) {
-        videoRef.current.srcObject = stream;
+      setCameraError(null);
+      
+      // Check if camera is available
+      const hasCamera = await QrScanner.hasCamera();
+      if (!hasCamera) {
+        throw new Error('No camera found on this device');
+      }
+
+      if (videoRef.current) {
+        // Initialize QR Scanner
+        qrScannerRef.current = new QrScanner(
+          videoRef.current,
+          (result) => {
+            console.log('QR Code detected:', result.data);
+            onScanSuccess(result.data);
+            stopCamera();
+          },
+          {
+            onDecodeError: (error) => {
+              // Silently handle decode errors - they're normal when no QR code is visible
+              console.debug('QR decode error (normal):', error);
+            },
+            highlightScanRegion: true,
+            highlightCodeOutline: true,
+            preferredCamera: 'environment'
+          }
+        );
+
+        await qrScannerRef.current.start();
+        console.log('Camera started successfully');
       }
     } catch (error) {
-      console.error('Camera access denied:', error);
-      onScanError('Camera access denied. Please allow camera permissions or use manual entry.');
+      console.error('Error accessing camera:', error);
+      let errorMessage = 'Failed to access camera. ';
+      
+      if (error.name === 'NotAllowedError') {
+        errorMessage += 'Camera permission denied. Please allow camera access and try again.';
+      } else if (error.name === 'NotFoundError') {
+        errorMessage += 'No camera found on this device.';
+        setHasCamera(false);
+      } else if (error.name === 'NotSupportedError') {
+        errorMessage += 'Camera not supported in this browser.';
+      } else if (error.message.includes('No camera found')) {
+        errorMessage += 'No camera detected on this device.';
+        setHasCamera(false);
+      } else {
+        errorMessage += error.message || 'Unknown error occurred.';
+      }
+      
+      setCameraError(errorMessage);
+      onScanError?.(errorMessage);
       setIsScanning(false);
     }
   };
 
   const stopCamera = () => {
-    if (streamRef?.current) {
-      streamRef?.current?.getTracks()?.forEach(track => track?.stop());
-      streamRef.current = null;
+    if (qrScannerRef.current) {
+      qrScannerRef.current.stop();
+      qrScannerRef.current.destroy();
+      qrScannerRef.current = null;
     }
     setIsScanning(false);
   };
@@ -45,6 +91,7 @@ const QRScanner = ({ onScanSuccess, onScanError }) => {
   const simulateQRScan = () => {
     // Simulate QR code scan for demo purposes
     const mockQRCodes = [
+      'CROP-2025-001-ORGANIC-CARROTS',
       'AGT-TOM-2025-001',
       'AGT-CAR-2025-002',
       'AGT-POT-2025-003',
@@ -58,6 +105,23 @@ const QRScanner = ({ onScanSuccess, onScanError }) => {
   };
 
   useEffect(() => {
+    // Check camera availability on mount
+    const checkCamera = async () => {
+      try {
+        const cameraAvailable = await QrScanner.hasCamera();
+        setHasCamera(cameraAvailable);
+        if (!cameraAvailable) {
+          setCameraError('No camera detected on this device. Please use manual entry.');
+        }
+      } catch (error) {
+        console.error('Error checking camera:', error);
+        setHasCamera(false);
+        setCameraError('Unable to detect camera. Please use manual entry.');
+      }
+    };
+
+    checkCamera();
+
     return () => {
       stopCamera();
     };
@@ -97,6 +161,24 @@ const QRScanner = ({ onScanSuccess, onScanError }) => {
       </div>
       {scanMode === 'camera' ? (
         <div className="space-y-4">
+          {/* Camera Error Display */}
+          {cameraError && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+              <div className="flex items-start">
+                <Icon name="AlertCircle" size={20} color="#dc2626" className="mr-3 mt-0.5 flex-shrink-0" />
+                <div>
+                  <h4 className="text-sm font-medium text-red-800 mb-1">Camera Issue</h4>
+                  <p className="text-sm text-red-700">{cameraError}</p>
+                  {!hasCamera && (
+                    <p className="text-xs text-red-600 mt-2">
+                      Try switching to "Manual Entry" tab to enter codes directly.
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Camera Scanner */}
           <div className="relative bg-gray-900 rounded-xl overflow-hidden aspect-square max-w-sm mx-auto">
             {isScanning ? (
@@ -141,8 +223,9 @@ const QRScanner = ({ onScanSuccess, onScanError }) => {
                 iconName="Camera"
                 iconPosition="left"
                 iconSize={18}
+                disabled={!hasCamera}
               >
-                Start Camera
+                {hasCamera ? 'Start Camera' : 'Camera Not Available'}
               </Button>
             ) : (
               <>
@@ -204,7 +287,7 @@ const QRScanner = ({ onScanSuccess, onScanError }) => {
           <div className="bg-muted rounded-lg p-4">
             <p className="text-sm font-medium text-text-primary mb-2">Sample codes to try:</p>
             <div className="grid grid-cols-2 gap-2">
-              {['AGT-TOM-2025-001', 'AGT-CAR-2025-002', 'AGT-POT-2025-003', 'AGT-ONI-2025-004']?.map((code) => (
+              {['CROP-2025-001-ORGANIC-CARROTS', 'AGT-TOM-2025-001', 'AGT-CAR-2025-002', 'AGT-POT-2025-003']?.map((code) => (
                 <button
                   key={code}
                   onClick={() => setManualCode(code)}

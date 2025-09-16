@@ -3,8 +3,8 @@ import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import Select from '../../../components/ui/Select';
-import { registerCrop } from '../../../services/blockchainService';
-import { addCropPrice } from '../../../services/backendService';
+import { registerCrop, attachDoc } from '../../../services/blockchainService';
+import { addCropPrice, uploadDocument } from '../../../services/backendService';
 
 const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
   const [formData, setFormData] = useState({
@@ -18,8 +18,11 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
     organicCertified: false,
     qualityCertifications: [],
     expectedPrice: '',
-    description: ''
+    description: '',
+    documents: []
   });
+  
+  const [uploadedDocuments, setUploadedDocuments] = useState([]);
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -74,6 +77,76 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
     }
   };
 
+  const handleDocumentUpload = async (e) => {
+    const files = e.target.files;
+    
+    console.log('Files selected:', files.length);
+    
+    if (files.length === 0) return;
+    
+    // Process each selected file
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      
+      console.log('Processing file:', file.name, 'Size:', file.size, 'Type:', file.type);
+      
+      try {
+        // Read file content as base64
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+          try {
+            console.log('File read successfully, uploading to IPFS...');
+            const base64Content = event.target.result.split(',')[1]; // Remove data URL prefix
+            
+            // Upload to IPFS via backend
+            const uploadResult = await uploadDocument({
+              content: base64Content,
+              filename: file.name,
+              docType: 'certificate'
+            });
+            
+            console.log('Upload result:', uploadResult);
+            
+            if (uploadResult.status === 'success') {
+              // Add to uploaded documents state
+              const docInfo = {
+                name: file.name,
+                hash: uploadResult.data.hash,
+                gatewayUrl: uploadResult.data.gatewayUrl,
+                size: uploadResult.data.size,
+                uploadedAt: uploadResult.data.uploadedAt
+              };
+              
+              console.log('Document uploaded successfully:', docInfo);
+              
+              setUploadedDocuments(prev => [...prev, docInfo]);
+              setFormData(prev => ({
+                ...prev,
+                documents: [...prev.documents, docInfo]
+              }));
+            } else {
+              console.error('Document upload failed:', uploadResult.message || uploadResult.error);
+              alert(`Document upload failed: ${uploadResult.message || uploadResult.error}`);
+            }
+          } catch (uploadError) {
+            console.error('Error during upload:', uploadError);
+            alert(`Error uploading document: ${uploadError.message}`);
+          }
+        };
+        
+        reader.onerror = (error) => {
+          console.error('FileReader error:', error);
+          alert('Error reading file');
+        };
+        
+        reader.readAsDataURL(file);
+      } catch (error) {
+        console.error('Error processing file:', error);
+        alert(`Error processing file: ${error.message}`);
+      }
+    }
+  };
+
   const validateForm = () => {
     const newErrors = {};
 
@@ -95,10 +168,24 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
     if (validateForm()) {
       setIsSubmitting(true);
       try {
-        // Register crop on blockchain
+        // Register crop on blockchain (without document hashes initially)
         const blockchainResult = await registerCrop(formData);
         
         if (blockchainResult.success) {
+          // Attach documents to the registered crop
+          if (formData.documents && formData.documents.length > 0) {
+            try {
+              // Attach each document
+              for (const doc of formData.documents) {
+                await attachDoc(blockchainResult.data.cropID, doc.hash, 'certificate');
+              }
+              
+              console.log('Documents attached successfully');
+            } catch (docError) {
+              console.warn('Error attaching documents:', docError);
+            }
+          }
+          
           // Store price history in backend database
           try {
             const priceResult = await addCropPrice(blockchainResult.data.cropID, {
@@ -249,6 +336,61 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
           multiple
           description="Select all applicable certifications"
         />
+
+        {/* Document Upload */}
+        <div>
+          <label className="block text-sm font-medium text-text-primary mb-2">
+            Upload Documents
+          </label>
+          <div className="flex items-center space-x-4">
+            <input
+              type="file"
+              id="documentUpload"
+              className="hidden"
+              onChange={handleDocumentUpload}
+              multiple
+              accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+            />
+            <label 
+              htmlFor="documentUpload"
+              className="cursor-pointer px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-200 flex items-center space-x-2"
+            >
+              <Icon name="Upload" size={16} color="white" />
+              <span>Choose Files</span>
+            </label>
+            <p className="text-sm text-text-secondary">
+              Upload certificates, invoices, or other documents (PDF, JPG, PNG, DOC)
+            </p>
+          </div>
+          
+          {/* Uploaded Documents Preview */}
+          {uploadedDocuments.length > 0 && (
+            <div className="mt-4">
+              <h4 className="text-sm font-medium text-text-primary mb-2">Uploaded Documents:</h4>
+              <div className="space-y-2">
+                {uploadedDocuments.map((doc, index) => (
+                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
+                    <div className="flex items-center space-x-3">
+                      <Icon name="FileText" size={16} color="gray" />
+                      <div>
+                        <p className="text-sm font-medium text-text-primary">{doc.name}</p>
+                        <p className="text-xs text-text-secondary">{doc.size} bytes</p>
+                      </div>
+                    </div>
+                    <a 
+                      href={doc.gatewayUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline text-sm"
+                    >
+                      View on IPFS
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Description */}
         <div>

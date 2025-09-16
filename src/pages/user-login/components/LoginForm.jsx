@@ -91,7 +91,7 @@ const LoginForm = () => {
     const roleRoutes = {
       farmer: '/farmer-dashboard',
       distributor: '/distributor-dashboard',
-      consumer: '/consumer-verification',
+      consumer: '/consumer-dashboard',
       retailer: '/retailer-stock-management',
       admin: '/admin-dashboard',
       regulator: '/regulator-dashboard'
