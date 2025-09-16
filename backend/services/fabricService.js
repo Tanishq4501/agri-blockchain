@@ -45,7 +45,8 @@ const initializeFabric = async (identityLabel = 'admin') => {
           privateKey
         },
         mspId: 'Org1MSP',
-        type: 'X.509'
+        type: 'X.509',
+        version: 1
       };
       
       await wallet.put('admin', identity);
@@ -86,7 +87,7 @@ const registerCrop = async (cropData) => {
     const cropID = `CROP-${Date.now()}`;
     
     // Call chaincode function
-    const result = await contract.submitTransaction(
+    await contract.submitTransaction(
       'RegisterCrop',
       cropID,
       cropData.name || cropData.cropType,
@@ -95,14 +96,15 @@ const registerCrop = async (cropData) => {
       cropData.price.toString()
     );
     
-    console.log('Crop registered on blockchain:', result.toString());
+    console.log('Crop registered on blockchain with ID:', cropID);
     
-    // Parse result
-    const crop = JSON.parse(result.toString());
+    // Fetch the registered crop to return complete data
+    const cropResult = await contract.evaluateTransaction('GetCrop', cropID);
+    const crop = JSON.parse(cropResult.toString());
     
     return {
       success: true,
-      data: crop,
+      data: { ...crop, cropID },
       message: 'Crop successfully registered on the blockchain'
     };
   } catch (error) {
@@ -189,17 +191,22 @@ const registerUser = async (userData) => {
     const userID = `${userData.role.toUpperCase()}-${Date.now()}`;
     
     // Call chaincode function
-    const result = await contract.submitTransaction(
+    await contract.submitTransaction(
       'RegisterUser',
       userID,
       userData.role,
       userData.name
     );
     
-    console.log('User registered on blockchain:', result.toString());
+    console.log('User registered on blockchain with ID:', userID);
     
-    // Parse result
-    const user = JSON.parse(result.toString());
+    // Create user object for response (RegisterUser doesn't return data)
+    const user = {
+      userID,
+      role: userData.role,
+      name: userData.name,
+      createdAt: new Date().toISOString()
+    };
     
     return {
       success: true,

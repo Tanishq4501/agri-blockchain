@@ -15,12 +15,12 @@ const gatewayConfig = {
     asLocalhost: true // Set to false for production
   },
   eventHandlerOptions: {
-    commitTimeout: 100,
-    strategy: 'PREFER_MSPID_SCOPE_ANYFORTX'
+    commitTimeout: 300,
+    strategy: 'MSPID_SCOPE_ANYFORTX'
   },
   queryHandlerOptions: {
     timeout: 30,
-    strategy: 'PREFER_MSPID_SCOPE_ROUND_ROBIN'
+    strategy: 'MSPID_SCOPE_ROUND_ROBIN'
   }
 };
 
