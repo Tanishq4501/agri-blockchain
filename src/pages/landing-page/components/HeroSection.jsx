@@ -68,7 +68,7 @@ const HeroSection = () => {
               </div>
               <div className="flex items-center">
                 <Icon name="CheckCircle" size={16} className="text-success mr-2" />
-                USDA Compliant
+                INRA Compliant
               </div>
               <div className="flex items-center">
                 <Icon name="Users" size={16} className="text-success mr-2" />

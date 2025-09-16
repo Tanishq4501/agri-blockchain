@@ -56,7 +56,7 @@ const DistributorScan = () => {
       harvestDate: '2024-01-10',
       expiryDate: '2024-01-20',
       origin: 'Green Valley Farm, California',
-      certifications: ['USDA Organic', 'Non-GMO'],
+      certifications: ['INRA Organic', 'Non-GMO'],
       currentStatus: 'in-transit',
       temperature: '2-4°C',
       humidity: '85-90%',

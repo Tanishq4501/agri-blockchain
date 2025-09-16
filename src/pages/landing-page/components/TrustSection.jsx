@@ -13,8 +13,8 @@ const TrustSection = () => {
     },
     {
       id: 2,
-      title: "USDA Compliant",
-      description: "Fully compliant with USDA food safety regulations",
+      title: "INRA Compliant",
+      description: "Fully compliant with INRA food safety regulations",
       icon: "Shield",
       color: "text-primary",
       bgColor: "bg-primary/10"
@@ -67,7 +67,7 @@ const TrustSection = () => {
   const certifications = [
     {
       id: 1,
-      name: "USDA Organic",
+      name: "INRA Organic",
       image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80",
       description: "United States Department of Agriculture certification"
     },

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
+import TranslatableText from '../../components/ui/TranslatableText';
 import Select from '../../components/ui/Select';
 
 const CropManagement = () => {
@@ -141,15 +142,15 @@ const CropManagement = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-text-primary">Crop Management</h2>
-          <p className="text-text-secondary mt-1">Monitor and manage your crop lifecycle</p>
+          <TranslatableText as="h2" className="text-2xl font-bold text-text-primary" text="Crop Management" />
+          <TranslatableText as="p" className="text-text-secondary mt-1" text="Monitor and manage your crop lifecycle" />
         </div>
         <Button
           onClick={() => setIsAddingCrop(true)}
           iconName="Plus"
           iconPosition="left"
         >
-          Add New Crop
+          <TranslatableText text="Add New Crop" />
         </Button>
       </div>
 
@@ -161,7 +162,7 @@ const CropManagement = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="glass-card p-6 w-full max-w-md mx-4"
           >
-            <h3 className="text-lg font-semibold text-text-primary mb-4">Add New Crop</h3>
+            <TranslatableText as="h3" className="text-lg font-semibold text-text-primary mb-4" text="Add New Crop" />
             <form onSubmit={handleAddCrop} className="space-y-4">
               <Input
                 placeholder="Crop name"
@@ -198,14 +199,14 @@ const CropManagement = () => {
                 required
               />
               <div className="flex space-x-2">
-                <Button type="submit" className="flex-1">Add Crop</Button>
+                <Button type="submit" className="flex-1"><TranslatableText text="Add Crop" /></Button>
                 <Button 
                   type="button" 
                   variant="outline" 
                   onClick={() => setIsAddingCrop(false)}
                   className="flex-1"
                 >
-                  Cancel
+                  <TranslatableText text="Cancel" />
                 </Button>
               </div>
             </form>
@@ -230,8 +231,8 @@ const CropManagement = () => {
                   <Icon name={getStatusIcon(crop.status)} size={20} color="white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-text-primary">{crop.name}</h3>
-                  <p className="text-sm text-text-secondary">{crop.variety}</p>
+                  <TranslatableText as="h3" className="font-semibold text-text-primary" text={crop.name} />
+                  <TranslatableText as="p" className="text-sm text-text-secondary" text={crop.variety} />
                 </div>
               </div>
               <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(crop.status)}`}>
@@ -242,41 +243,41 @@ const CropManagement = () => {
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
-                  <p className="text-text-secondary">Area</p>
+                  <TranslatableText as="p" className="text-text-secondary" text="Area" />
                   <p className="font-medium text-text-primary">{crop.area} acres</p>
                 </div>
                 <div>
-                  <p className="text-text-secondary">Health Score</p>
+                  <TranslatableText as="p" className="text-text-secondary" text="Health Score" />
                   <p className="font-medium text-primary">{crop.healthScore}%</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
-                  <p className="text-text-secondary">Planted</p>
+                  <TranslatableText as="p" className="text-text-secondary" text="Planted" />
                   <p className="font-medium text-text-primary">{new Date(crop.plantingDate).toLocaleDateString()}</p>
                 </div>
                 <div>
-                  <p className="text-text-secondary">Expected Harvest</p>
+                  <TranslatableText as="p" className="text-text-secondary" text="Expected Harvest" />
                   <p className="font-medium text-text-primary">{new Date(crop.expectedHarvest).toLocaleDateString()}</p>
                 </div>
               </div>
 
               <div className="pt-3 border-t border-gray-200">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-text-secondary">Yield Estimate</span>
+                  <TranslatableText as="span" className="text-sm text-text-secondary" text="Yield Estimate" />
                   <span className="text-sm font-medium text-text-primary">{crop.yieldEstimate} kg</span>
                 </div>
               </div>
 
               {crop.tasks.length > 0 && (
                 <div className="pt-3 border-t border-gray-200">
-                  <p className="text-sm text-text-secondary mb-2">Pending Tasks</p>
+                  <TranslatableText as="p" className="text-sm text-text-secondary mb-2" text="Pending Tasks" />
                   <div className="space-y-1">
                     {crop.tasks.filter(task => !task.completed).slice(0, 2).map(task => (
                       <div key={task.id} className="flex items-center space-x-2">
                         <div className="w-2 h-2 bg-warning rounded-full"></div>
-                        <span className="text-xs text-text-secondary">{task.task}</span>
+                        <TranslatableText as="span" className="text-xs text-text-secondary" text={task.task} />
                       </div>
                     ))}
                   </div>
@@ -311,29 +312,29 @@ const CropManagement = () => {
               {/* Crop Details */}
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-semibold text-text-primary mb-3">Crop Information</h4>
+                  <TranslatableText as="h4" className="font-semibold text-text-primary mb-3" text="Crop Information" />
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-text-secondary">Status:</span>
+                      <TranslatableText as="span" className="text-text-secondary" text="Status:" />
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(selectedCrop.status)}`}>
-                        {selectedCrop.status}
+                        <TranslatableText text={selectedCrop.status} />
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-text-secondary">Area:</span>
+                      <TranslatableText as="span" className="text-text-secondary" text="Area:" />
                       <span className="font-medium">{selectedCrop.area} acres</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-text-secondary">Health Score:</span>
+                      <TranslatableText as="span" className="text-text-secondary" text="Health Score:" />
                       <span className="font-medium text-primary">{selectedCrop.healthScore}%</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-text-secondary">Yield Estimate:</span>
+                      <TranslatableText as="span" className="text-text-secondary" text="Yield Estimate:" />
                       <span className="font-medium">{selectedCrop.yieldEstimate} kg</span>
                     </div>
                     {selectedCrop.actualYield && (
                       <div className="flex justify-between">
-                        <span className="text-text-secondary">Actual Yield:</span>
+                        <TranslatableText as="span" className="text-text-secondary" text="Actual Yield:" />
                         <span className="font-medium text-success">{selectedCrop.actualYield} kg</span>
                       </div>
                     )}
@@ -341,22 +342,22 @@ const CropManagement = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-text-primary mb-3">Weather Conditions</h4>
+                  <TranslatableText as="h4" className="font-semibold text-text-primary mb-3" text="Weather Conditions" />
                   <div className="grid grid-cols-3 gap-2 text-sm">
                     <div className="text-center p-2 bg-primary/5 rounded-lg">
                       <Icon name="Thermometer" size={16} className="mx-auto mb-1 text-primary" />
                       <p className="font-medium">{selectedCrop.weather.temperature}°C</p>
-                      <p className="text-xs text-text-secondary">Temp</p>
+                      <TranslatableText as="p" className="text-xs text-text-secondary" text="Temp" />
                     </div>
                     <div className="text-center p-2 bg-secondary/5 rounded-lg">
                       <Icon name="Droplets" size={16} className="mx-auto mb-1 text-secondary" />
                       <p className="font-medium">{selectedCrop.weather.humidity}%</p>
-                      <p className="text-xs text-text-secondary">Humidity</p>
+                      <TranslatableText as="p" className="text-xs text-text-secondary" text="Humidity" />
                     </div>
                     <div className="text-center p-2 bg-accent/5 rounded-lg">
                       <Icon name="CloudRain" size={16} className="mx-auto mb-1 text-accent" />
                       <p className="font-medium">{selectedCrop.weather.rainfall}mm</p>
-                      <p className="text-xs text-text-secondary">Rainfall</p>
+                      <TranslatableText as="p" className="text-xs text-text-secondary" text="Rainfall" />
                     </div>
                   </div>
                 </div>
@@ -365,7 +366,7 @@ const CropManagement = () => {
               {/* Tasks */}
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-semibold text-text-primary mb-3">Tasks & Activities</h4>
+                  <TranslatableText as="h4" className="font-semibold text-text-primary mb-3" text="Tasks & Activities" />
                   <div className="space-y-2">
                     {selectedCrop.tasks.map(task => (
                       <div
@@ -386,7 +387,7 @@ const CropManagement = () => {
                           <p className={`text-sm font-medium ${task.completed ? 'line-through text-text-secondary' : 'text-text-primary'}`}>
                             {task.task}
                           </p>
-                          <p className="text-xs text-text-secondary">Due: {new Date(task.dueDate).toLocaleDateString()}</p>
+                          <p className="text-xs text-text-secondary"><TranslatableText text="Due:" /> {new Date(task.dueDate).toLocaleDateString()}</p>
                         </div>
                       </div>
                     ))}
@@ -394,7 +395,7 @@ const CropManagement = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-text-primary mb-3">Notes</h4>
+                  <TranslatableText as="h4" className="font-semibold text-text-primary mb-3" text="Notes" />
                   <p className="text-sm text-text-secondary bg-muted/50 p-3 rounded-lg">
                     {selectedCrop.notes}
                   </p>
@@ -404,10 +405,10 @@ const CropManagement = () => {
 
             <div className="flex justify-end space-x-2 mt-6 pt-4 border-t border-gray-200">
               <Button variant="outline" onClick={() => setSelectedCrop(null)}>
-                Close
+                <TranslatableText text="Close" />
               </Button>
               <Button iconName="Edit" iconPosition="left">
-                Edit Crop
+                <TranslatableText text="Edit Crop" />
               </Button>
             </div>
           </motion.div>

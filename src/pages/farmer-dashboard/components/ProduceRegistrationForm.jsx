@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import Select from '../../../components/ui/Select';
+import QRCodeModal from './QRCodeModal';
+import TranslatableText from '../../../components/ui/TranslatableText';
 import { registerCrop, attachDoc } from '../../../services/blockchainService';
 import { addCropPrice, uploadDocument } from '../../../services/backendService';
 
@@ -223,8 +225,8 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
           <Icon name="Plus" size={20} color="white" strokeWidth={2} />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-text-primary">Register New Produce</h2>
-          <p className="text-sm text-text-secondary">Add your harvest details to generate QR code</p>
+          <TranslatableText as="h2" className="text-xl font-bold text-text-primary" text="Register New Produce" />
+          <TranslatableText as="p" className="text-sm text-text-secondary" text="Add your harvest details to generate QR code" />
         </div>
       </div>
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -288,7 +290,7 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
 
           {/* Expected Price */}
           <Input
-            label="Expected Price (USD)"
+            label="Expected Price (INR)"
             type="number"
             name="expectedPrice"
             placeholder="Price per unit"
@@ -356,7 +358,7 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
               className="cursor-pointer px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-200 flex items-center space-x-2"
             >
               <Icon name="Upload" size={16} color="white" />
-              <span>Choose Files</span>
+              <TranslatableText as="span" text="Choose Files" />
             </label>
             <p className="text-sm text-text-secondary">
               Upload certificates, invoices, or other documents (PDF, JPG, PNG, DOC)
@@ -366,7 +368,7 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
           {/* Uploaded Documents Preview */}
           {uploadedDocuments.length > 0 && (
             <div className="mt-4">
-              <h4 className="text-sm font-medium text-text-primary mb-2">Uploaded Documents:</h4>
+              <TranslatableText as="h4" className="text-sm font-medium text-text-primary mb-2" text="Uploaded Documents:" />
               <div className="space-y-2">
                 {uploadedDocuments.map((doc, index) => (
                   <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">

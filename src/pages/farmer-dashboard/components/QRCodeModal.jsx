@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
+import TranslatableText from '../../../components/ui/TranslatableText';
 
 const QRCodeModal = ({ isOpen, onClose, productData }) => {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -166,7 +168,7 @@ const QRCodeModal = ({ isOpen, onClose, productData }) => {
         <div className="p-6 space-y-6">
           {/* Product Info */}
           <div className="bg-muted rounded-lg p-4 space-y-2">
-            <h3 className="font-semibold text-text-primary">{qrCodeData?.productName}</h3>
+            <TranslatableText as="h3" className="font-semibold text-text-primary" text={qrCodeData?.productName} />
             <div className="grid grid-cols-2 gap-2 text-sm text-text-secondary">
               <div>
                 <span className="font-medium">ID:</span> {qrCodeData?.productId}

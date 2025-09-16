@@ -6,7 +6,7 @@ const StockSummaryCards = () => {
     {
       id: 1,
       title: "Total Inventory Value",
-      value: "$127,450",
+      value: "₹127,450",
       change: "+12.5%",
       changeType: "positive",
       icon: "DollarSign",

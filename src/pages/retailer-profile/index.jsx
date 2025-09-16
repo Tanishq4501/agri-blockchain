@@ -74,7 +74,7 @@ const RetailerProfile = () => {
       website: "www.freshmart-grocery.com",
       establishedYear: "2015",
       employeeCount: "25-50",
-      annualRevenue: "$2-5M",
+      annualRevenue: "₹2-5M",
       businessAddress: "123 Market Street, San Francisco, CA 94102",
       businessPhone: "+1 (555) 123-4567",
       businessEmail: "info@freshmart-grocery.com",
@@ -101,7 +101,7 @@ const RetailerProfile = () => {
       monthlyReports: true,
       language: "english",
       timezone: "PST",
-      currency: "USD",
+      currency: "INR",
       dateFormat: "MM/DD/YYYY"
     });
   }, []);

@@ -17,7 +17,7 @@ const ProductDetails = ({ productId }) => {
       name: 'Green Valley Farm',
       location: 'Salinas Valley, California',
       contact: 'john.mitchell@greenfarm.com',
-      certifications: ['USDA Organic', 'Non-GMO Project Verified'],
+      certifications: ['INRA Organic', 'Non-GMO Project Verified'],
       farmSize: '25 acres',
       established: '1995'
     },
@@ -36,7 +36,7 @@ const ProductDetails = ({ productId }) => {
     },
     certifications: [
       {
-        name: 'USDA Organic',
+        name: 'INRA Organic',
         issuer: 'United States Department of Agriculture',
         validUntil: '2025-12-31',
         certificateId: 'ORG-2024-1234'
@@ -322,7 +322,7 @@ const ProductDetails = ({ productId }) => {
                           </span>
                         </div>
                       </div>
-                      <p className="text-xs text-text-secondary capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</p>
+                      <p className="text-xs text-text-secondary capitalize">{key.replace(/([A-Z])/g, ' ₹1').trim()}</p>
                     </div>
                   ))}
                 </div>

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
+import TranslatableText from '../../../components/ui/TranslatableText';
 
 const WalletSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -78,14 +80,14 @@ const WalletSection = () => {
   };
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD'
-    })?.format(amount);
+      currency: 'INR'
+    }).format(amount);
   };
 
   const formatDate = (dateString) => {
-    return new Date(dateString)?.toLocaleDateString('en-US', {
+    return new Date(dateString)?.toLocaleDateString('en-IN', {
       month: 'short',
       day: 'numeric',
       year: 'numeric'
@@ -207,7 +209,7 @@ const WalletSection = () => {
                 </div>
                 <div>
                   <p className="font-semibold text-text-primary">{transaction?.buyer}</p>
-                  <p className="text-sm text-text-secondary">{transaction?.product}</p>
+                  <TranslatableText as="p" className="text-sm text-text-secondary" text={transaction?.product} />
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-bold text-primary">
@@ -253,7 +255,7 @@ const WalletSection = () => {
                       </div>
                     </td>
                     <td className="py-4 px-4 text-text-secondary">
-                      {transaction?.product}
+                      <TranslatableText text={transaction?.product} />
                     </td>
                     <td className="py-4 px-4">
                       <span className="font-semibold text-primary">

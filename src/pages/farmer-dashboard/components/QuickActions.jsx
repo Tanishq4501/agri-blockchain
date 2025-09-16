@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
+import TranslatableText from '../../../components/ui/TranslatableText';
 
 const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
   const [selectedProduct, setSelectedProduct] = useState('');
@@ -91,7 +92,7 @@ const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
     
     return (
       <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${config?.color}`}>
-        {config?.label}
+        <TranslatableText text={config?.label} />
       </span>
     );
   };
@@ -110,8 +111,8 @@ const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
           <Icon name="Zap" size={20} color="white" strokeWidth={2} />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-text-primary">Quick Actions</h2>
-          <p className="text-sm text-text-secondary">Frequently used tools and shortcuts</p>
+          <TranslatableText as="h2" className="text-xl font-bold text-text-primary" text="Quick Actions" />
+          <TranslatableText as="p" className="text-sm text-text-secondary" text="Frequently used tools and shortcuts" />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -125,20 +126,26 @@ const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
 
             <div className="space-y-3">
               <div>
-                <h3 className="text-lg font-semibold text-text-primary">
-                  {item?.title}
-                </h3>
-                <p className="text-sm text-text-secondary">
-                  {item?.description}
-                </p>
+                <TranslatableText 
+                  as="h3" 
+                  className="text-lg font-semibold text-text-primary"
+                  text={item?.title}
+                />
+                <TranslatableText 
+                  as="p" 
+                  className="text-sm text-text-secondary"
+                  text={item?.description}
+                />
               </div>
 
               {/* Dropdown for QR Generation */}
               {item?.hasDropdown && (
                 <div className="space-y-2">
-                  <label className="block text-xs font-medium text-text-secondary">
-                    Select Product:
-                  </label>
+                  <TranslatableText 
+                    as="label" 
+                    className="block text-xs font-medium text-text-secondary"
+                    text="Select Product:"
+                  />
                   <select
                     value={selectedProduct}
                     onChange={(e) => setSelectedProduct(e?.target?.value)}
@@ -165,7 +172,7 @@ const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
                 disabled={item?.hasDropdown && !selectedProduct}
                 className="group-hover:border-primary group-hover:text-primary transition-colors duration-200"
               >
-                {item?.buttonText}
+                <TranslatableText text={item?.buttonText} />
               </Button>
             </div>
           </div>
@@ -178,10 +185,8 @@ const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-success rounded-lg flex items-center justify-center">
               <Icon name="Package" size={16} color="white" strokeWidth={2} />
             </div>
-            <div>
-              <h3 className="text-lg font-semibold text-text-primary">Recent Products</h3>
-              <p className="text-sm text-text-secondary">Your latest registered produce</p>
-            </div>
+            <TranslatableText as="h4" className="font-semibold text-text-primary" text="Recent Products" />
+            <TranslatableText as="p" className="text-sm text-text-secondary" text="Your latest registered produce" />
           </div>
         </div>
 
@@ -194,11 +199,11 @@ const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
                     <Icon name="Leaf" size={16} color="white" strokeWidth={2} />
                   </div>
                   <div>
-                    <h4 className="font-medium text-text-primary">{product?.name}</h4>
+                    <TranslatableText as="h4" className="font-medium text-text-primary" text={product?.name} />
                     <div className="flex items-center space-x-3 text-sm text-text-secondary">
                       <span>{product?.quantity}</span>
                       <span>•</span>
-                      <span>Harvested {formatDate(product?.harvestDate)}</span>
+                      <TranslatableText text={`Harvested ${formatDate(product?.harvestDate)}`} />
                     </div>
                   </div>
                 </div>
@@ -223,7 +228,7 @@ const QuickActions = ({ onNewProduceClick, onRegenerateQRClick }) => {
               iconPosition="right"
               iconSize={16}
             >
-              View All Products
+              <TranslatableText text="View All Products" />
             </Button>
           </div>
         </div>

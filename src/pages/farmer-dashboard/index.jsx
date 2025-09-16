@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import RoleBasedSidebar from '../../components/ui/RoleBasedSidebar';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import NotificationIndicator from '../../components/ui/NotificationIndicator';
+import TranslateToggle from '../../components/ui/TranslateToggle';
+import TranslatableText from '../../components/ui/TranslatableText';
 import ProduceRegistrationForm from './components/ProduceRegistrationForm';
 import WalletSection from './components/WalletSection';
 import SummaryMetrics from './components/SummaryMetrics';
@@ -41,7 +43,7 @@ const FarmerDashboard = () => {
       id: 2,
       type: 'success',
       title: 'Payment Received',
-      message: 'Payment of $1,250.00 received from Fresh Market Co. for tomatoes batch #TOM-2025-001',
+      message: 'Payment of ₹1,250.00 received from Fresh Market Co. for tomatoes batch #TOM-2025-001',
       timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
       read: false
     },
@@ -154,19 +156,22 @@ const FarmerDashboard = () => {
             <div className="flex items-center justify-between h-16">
               {/* Page Title */}
               <div className="flex items-center space-x-4">
-                <h1 className="text-2xl font-bold text-text-primary">
-                  Farmer Dashboard
-                </h1>
+                <TranslatableText 
+                  as="h1" 
+                  className="text-2xl font-bold text-text-primary"
+                  text="Farmer Dashboard"
+                />
                 <div className="hidden sm:block">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20">
                     <Icon name="CheckCircle" size={12} className="mr-1" strokeWidth={2} />
-                    Verified Farmer
+                    <TranslatableText text="Verified Farmer" />
                   </span>
                 </div>
               </div>
 
               {/* Header Actions */}
               <div className="flex items-center space-x-4">
+                <TranslateToggle />
                 <NotificationIndicator
                   notifications={notifications}
                   unreadCount={notifications?.filter(n => !n?.read)?.length}
@@ -200,7 +205,7 @@ const FarmerDashboard = () => {
                   }`}
                 >
                   <Icon name={tab?.icon} size={16} strokeWidth={2} />
-                  <span>{tab?.label}</span>
+                  <TranslatableText text={tab?.label} />
                 </button>
               ))}
             </nav>
@@ -219,12 +224,16 @@ const FarmerDashboard = () => {
                       <Icon name="Leaf" size={32} color="white" strokeWidth={2} />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-bold text-text-primary">
-                        Welcome back, {userData?.name?.split(' ')?.[0]}!
-                      </h2>
-                      <p className="text-text-secondary mt-1">
-                        Manage your farm produce, track earnings, and grow your agricultural business.
-                      </p>
+                      <TranslatableText 
+                        as="h2" 
+                        className="text-2xl font-bold text-text-primary"
+                        text={`Welcome back, ${userData?.name?.split(' ')?.[0]}!`}
+                      />
+                      <TranslatableText 
+                        as="p" 
+                        className="text-text-secondary mt-1"
+                        text="Manage your farm produce, track earnings, and grow your agricultural business."
+                      />
                     </div>
                   </div>
                   <div className="hidden md:block">
@@ -235,7 +244,7 @@ const FarmerDashboard = () => {
                       iconSize={18}
                       onClick={handleNewProduceClick}
                     >
-                      Register New Produce
+                      <TranslatableText text="Register New Produce" />
                     </Button>
                   </div>
                 </div>
@@ -268,19 +277,23 @@ const FarmerDashboard = () => {
                   <div className="w-16 h-16 bg-gradient-to-br from-warning to-yellow-400 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <Icon name="BarChart3" size={32} color="white" strokeWidth={2} />
                   </div>
-                  <h3 className="text-xl font-semibold text-text-primary mb-2">
-                    Analytics Dashboard
-                  </h3>
-                  <p className="text-text-secondary mb-6">
-                    Detailed analytics and reporting features coming soon. Track your farm performance, sales trends, and market insights.
-                  </p>
+                  <TranslatableText 
+                    as="h3" 
+                    className="text-xl font-semibold text-text-primary mb-2"
+                    text="Analytics Dashboard"
+                  />
+                  <TranslatableText 
+                    as="p" 
+                    className="text-text-secondary mb-6"
+                    text="Detailed analytics and reporting features coming soon. Track your farm performance, sales trends, and market insights."
+                  />
                   <Button
                     variant="outline"
                     iconName="TrendingUp"
                     iconPosition="left"
                     iconSize={16}
                   >
-                    View Sample Reports
+                    <TranslatableText text="View Sample Reports" />
                   </Button>
                 </div>
               )}

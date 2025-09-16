@@ -233,7 +233,7 @@ const FooterSection = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Icon name="Award" size={16} className="text-primary" />
-                <span className="text-xs text-gray-400">USDA Compliant</span>
+                <span className="text-xs text-gray-400">INRA Compliant</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Icon name="CheckCircle" size={16} className="text-secondary" />

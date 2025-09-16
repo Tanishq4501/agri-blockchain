@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from '../../../components/AppIcon';
+import TranslatableText from '../../../components/ui/TranslatableText';
 
 const SummaryMetrics = () => {
   const metricsData = [
@@ -28,8 +29,8 @@ const SummaryMetrics = () => {
     {
       id: 3,
       title: 'Monthly Revenue',
-      value: '$8,900',
-      unit: 'USD',
+      value: '₹8,900',
+      unit: 'INR',
       change: '+12.5%',
       changeType: 'increase',
       icon: 'TrendingUp',
@@ -86,8 +87,8 @@ const SummaryMetrics = () => {
           <Icon name="BarChart3" size={20} color="white" strokeWidth={2} />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-text-primary">Performance Overview</h2>
-          <p className="text-sm text-text-secondary">Key metrics and performance indicators</p>
+          <TranslatableText as="h2" className="text-xl font-bold text-text-primary" text="Performance Overview" />
+          <TranslatableText as="p" className="text-sm text-text-secondary" text="Key metrics and performance indicators" />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -108,9 +109,11 @@ const SummaryMetrics = () => {
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-sm font-medium text-text-secondary leading-tight">
-                {metric?.title}
-              </h3>
+              <TranslatableText 
+                as="h3" 
+                className="text-sm font-medium text-text-secondary leading-tight"
+                text={metric?.title}
+              />
               <div className="flex items-baseline space-x-2">
                 <span className="text-3xl font-bold text-text-primary">
                   {metric?.value}
@@ -119,9 +122,11 @@ const SummaryMetrics = () => {
                   {metric?.unit}
                 </span>
               </div>
-              <p className="text-xs text-text-secondary leading-relaxed">
-                {metric?.description}
-              </p>
+              <TranslatableText 
+                as="p" 
+                className="text-xs text-text-secondary leading-relaxed"
+                text={metric?.description}
+              />
             </div>
 
             {/* Progress indicator for certain metrics */}
@@ -147,9 +152,11 @@ const SummaryMetrics = () => {
                     strokeWidth={1}
                   />
                 ))}
-                <span className="text-xs text-text-secondary ml-2">
-                  Based on 156 reviews
-                </span>
+                <TranslatableText 
+                  as="span" 
+                  className="text-xs text-text-secondary ml-2"
+                  text="Based on 156 reviews"
+                />
               </div>
             )}
           </div>
@@ -161,28 +168,32 @@ const SummaryMetrics = () => {
           <div className="w-8 h-8 bg-gradient-to-br from-secondary to-blue-400 rounded-lg flex items-center justify-center">
             <Icon name="Lightbulb" size={16} color="white" strokeWidth={2} />
           </div>
-          <h3 className="text-lg font-semibold text-text-primary">Quick Insights</h3>
+          <TranslatableText as="h3" className="text-lg font-semibold text-text-primary" text="Quick Insights" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-success/5 border border-success/20 rounded-lg p-4">
             <div className="flex items-center space-x-2 mb-2">
               <Icon name="TrendingUp" size={16} className="text-success" strokeWidth={2} />
-              <span className="text-sm font-medium text-success">Growth Opportunity</span>
+              <TranslatableText as="span" className="text-sm font-medium text-success" text="Growth Opportunity" />
             </div>
-            <p className="text-sm text-text-secondary">
-              Your organic produce has 23% higher demand. Consider increasing organic crop allocation.
-            </p>
+            <TranslatableText 
+              as="p" 
+              className="text-sm text-text-secondary"
+              text="Your organic produce has 23% higher demand. Consider increasing organic crop allocation."
+            />
           </div>
 
           <div className="bg-warning/5 border border-warning/20 rounded-lg p-4">
             <div className="flex items-center space-x-2 mb-2">
               <Icon name="Clock" size={16} className="text-warning" strokeWidth={2} />
-              <span className="text-sm font-medium text-warning">Action Required</span>
+              <TranslatableText as="span" className="text-sm font-medium text-warning" text="Action Required" />
             </div>
-            <p className="text-sm text-text-secondary">
-              3 quality certifications expire within 60 days. Schedule renewal to maintain premium pricing.
-            </p>
+            <TranslatableText 
+              as="p" 
+              className="text-sm text-text-secondary"
+              text="3 quality certifications expire within 60 days. Schedule renewal to maintain premium pricing."
+            />
           </div>
         </div>
       </div>

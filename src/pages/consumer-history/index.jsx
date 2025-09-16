@@ -42,11 +42,11 @@ const ConsumerHistory = () => {
       location: 'Whole Foods Market, Downtown',
       qrCode: 'QR123456789',
       verificationStatus: 'verified',
-      certifications: ['USDA Organic', 'Non-GMO'],
+      certifications: ['INRA Organic', 'Non-GMO'],
       origin: 'California, USA',
       harvestDate: '2024-01-10',
       expiryDate: '2024-01-20',
-      price: '$4.99/lb',
+      price: '₹4.99/lb',
       carbonFootprint: '0.5 kg CO2',
       journey: [
         { stage: 'Harvested', date: '2024-01-10', location: 'Green Valley Farm, CA' },
@@ -67,7 +67,7 @@ const ConsumerHistory = () => {
       origin: 'Oregon, USA',
       harvestDate: '2024-01-12',
       expiryDate: '2024-01-28',
-      price: '$6.99/dozen',
+      price: '₹6.99/dozen',
       carbonFootprint: '1.2 kg CO2',
       journey: [
         { stage: 'Collected', date: '2024-01-12', location: 'Happy Hen Farm, OR' },
@@ -88,7 +88,7 @@ const ConsumerHistory = () => {
       origin: 'Local Bakery',
       harvestDate: '2024-01-13',
       expiryDate: '2024-01-16',
-      price: '$5.50',
+      price: '₹5.50',
       carbonFootprint: '0.3 kg CO2',
       journey: [
         { stage: 'Baked', date: '2024-01-13', location: 'Baker\'s Corner, Local' },
@@ -107,7 +107,7 @@ const ConsumerHistory = () => {
       origin: 'Unknown',
       harvestDate: 'Unknown',
       expiryDate: '2024-01-18',
-      price: '$3.99/lb',
+      price: '₹3.99/lb',
       carbonFootprint: 'Unknown',
       journey: []
     }

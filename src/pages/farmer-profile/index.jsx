@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import RoleBasedSidebar from '../../components/ui/RoleBasedSidebar';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import NotificationIndicator from '../../components/ui/NotificationIndicator';
+import TranslateToggle from '../../components/ui/TranslateToggle';
+import TranslatableText from '../../components/ui/TranslatableText';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
@@ -42,8 +44,8 @@ const FarmerProfile = () => {
     },
     certifications: [
       {
-        name: 'USDA Organic',
-        issuedBy: 'USDA',
+        name: 'INRA Organic',
+        issuedBy: 'INRA',
         issueDate: '2023-01-15',
         expiryDate: '2026-01-15',
         certificateNumber: 'ORG-2023-001',
@@ -129,10 +131,11 @@ const FarmerProfile = () => {
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center space-x-4">
-                <h1 className="text-2xl font-bold text-text-primary">Profile</h1>
+                <TranslatableText as="h1" className="text-2xl font-bold text-text-primary" text="Profile" />
               </div>
 
               <div className="flex items-center space-x-4">
+                <TranslateToggle />
                 <NotificationIndicator
                   notifications={notifications}
                   unreadCount={0}
@@ -170,15 +173,15 @@ const FarmerProfile = () => {
                   {isEditing ? (
                     <>
                       <Button variant="outline" onClick={() => setIsEditing(false)}>
-                        Cancel
+                        <TranslatableText text="Cancel" />
                       </Button>
                       <Button onClick={handleSaveProfile} iconName="Save" iconPosition="left">
-                        Save Changes
+                        <TranslatableText text="Save Changes" />
                       </Button>
                     </>
                   ) : (
                     <Button onClick={handleEditToggle} iconName="Edit" iconPosition="left">
-                      Edit Profile
+                      <TranslatableText text="Edit Profile" />
                     </Button>
                   )}
                 </div>
@@ -193,11 +196,11 @@ const FarmerProfile = () => {
             >
               <h3 className="text-xl font-semibold text-text-primary mb-4 flex items-center">
                 <Icon name="User" size={20} className="mr-2" />
-                Personal Information
+                <TranslatableText text="Personal Information" />
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">First Name</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="First Name" />
                   {isEditing ? (
                     <Input
                       value={profileData.personalInfo?.firstName || ''}
@@ -211,7 +214,7 @@ const FarmerProfile = () => {
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Last Name</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Last Name" />
                   {isEditing ? (
                     <Input
                       value={profileData.personalInfo?.lastName || ''}
@@ -225,11 +228,11 @@ const FarmerProfile = () => {
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Email</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Email" />
                   <p className="text-text-primary">{profileData.personalInfo?.email}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Phone</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Phone" />
                   {isEditing ? (
                     <Input
                       value={profileData.personalInfo?.phone || ''}
@@ -243,7 +246,7 @@ const FarmerProfile = () => {
                   )}
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Address</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Address" />
                   {isEditing ? (
                     <Input
                       value={profileData.personalInfo?.address || ''}
@@ -268,11 +271,11 @@ const FarmerProfile = () => {
             >
               <h3 className="text-xl font-semibold text-text-primary mb-4 flex items-center">
                 <Icon name="Leaf" size={20} className="mr-2" />
-                Farm Information
+                <TranslatableText text="Farm Information" />
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Farm Name</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Farm Name" />
                   {isEditing ? (
                     <Input
                       value={profileData.farmInfo?.farmName || ''}
@@ -286,7 +289,7 @@ const FarmerProfile = () => {
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Farm Size</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Farm Size" />
                   {isEditing ? (
                     <Input
                       value={profileData.farmInfo?.farmSize || ''}
@@ -300,47 +303,44 @@ const FarmerProfile = () => {
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Farm Type</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Farm Type" />
                   <p className="text-text-primary">{profileData.farmInfo?.farmType}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Established</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Established" />
                   <p className="text-text-primary">{profileData.farmInfo?.establishedYear}</p>
                 </div>
               </div>
               
               <div className="mb-4">
-                <label className="block text-sm font-medium text-text-secondary mb-2">Farming Methods</label>
+                <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Farming Methods" />
                 <div className="flex flex-wrap gap-2">
                   {profileData.farmInfo?.farmingMethods?.map((method, index) => (
                     <span 
                       key={index}
                       className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20"
                     >
-                      <Icon name="CheckCircle" size={12} className="mr-1" />
-                      {method}
+                      <TranslatableText text={method} />
                     </span>
                   ))}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-2">Primary Crops</label>
+                <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Primary Crops" />
                 <div className="flex flex-wrap gap-2">
                   {profileData.farmInfo?.primaryCrops?.map((crop, index) => (
                     <span 
                       key={index}
                       className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20"
                     >
-                      <Icon name="Sprout" size={12} className="mr-1" />
-                      {crop}
+                      <TranslatableText text={crop} />
                     </span>
                   ))}
                 </div>
               </div>
             </motion.div>
 
-            {/* Certifications */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -349,7 +349,7 @@ const FarmerProfile = () => {
             >
               <h3 className="text-xl font-semibold text-text-primary mb-4 flex items-center">
                 <Icon name="Award" size={20} className="mr-2" />
-                Certifications
+                <TranslatableText text="Certifications" />
               </h3>
               <div className="grid gap-4">
                 {profileData.certifications?.map((cert, index) => (
@@ -358,20 +358,20 @@ const FarmerProfile = () => {
                       <h4 className="font-semibold text-text-primary">{cert.name}</h4>
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getCertificationStatusColor(cert.status)}`}>
                         <Icon name="Shield" size={12} className="mr-1" />
-                        {cert.status}
+                        <TranslatableText text={cert.status} />
                       </span>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                       <div>
-                        <span className="text-text-secondary">Issued by: </span>
+                        <span className="text-text-secondary"><TranslatableText text="Issued by:" /> </span>
                         <span className="text-text-primary">{cert.issuedBy}</span>
                       </div>
                       <div>
-                        <span className="text-text-secondary">Valid until: </span>
+                        <span className="text-text-secondary"><TranslatableText text="Valid until:" /> </span>
                         <span className="text-text-primary">{cert.expiryDate}</span>
                       </div>
                       <div>
-                        <span className="text-text-secondary">Certificate #: </span>
+                        <span className="text-text-secondary"><TranslatableText text="Certificate #:" /> </span>
                         <span className="text-text-primary font-mono">{cert.certificateNumber}</span>
                       </div>
                     </div>
@@ -389,28 +389,28 @@ const FarmerProfile = () => {
             >
               <h3 className="text-xl font-semibold text-text-primary mb-4 flex items-center">
                 <Icon name="CreditCard" size={20} className="mr-2" />
-                Banking Information
+                <TranslatableText text="Banking Information" />
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Account Holder</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Account Holder" />
                   <p className="text-text-primary">{profileData.bankingInfo?.accountHolder}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Bank Name</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Bank Name" />
                   <p className="text-text-primary">{profileData.bankingInfo?.bankName}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Account Number</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Account Number" />
                   <p className="text-text-primary font-mono">{profileData.bankingInfo?.accountNumber}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-secondary mb-2">Routing Number</label>
+                  <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Routing Number" />
                   <p className="text-text-primary font-mono">{profileData.bankingInfo?.routingNumber}</p>
                 </div>
               </div>
               <div className="mt-4">
-                <label className="block text-sm font-medium text-text-secondary mb-2">Payment Methods</label>
+                <TranslatableText as="label" className="block text-sm font-medium text-text-secondary mb-2" text="Payment Methods" />
                 <div className="flex flex-wrap gap-2">
                   {profileData.bankingInfo?.paymentMethods?.map((method, index) => (
                     <span 
@@ -418,7 +418,7 @@ const FarmerProfile = () => {
                       className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary border border-secondary/20"
                     >
                       <Icon name="CreditCard" size={12} className="mr-1" />
-                      {method}
+                      <TranslatableText text={method} />
                     </span>
                   ))}
                 </div>

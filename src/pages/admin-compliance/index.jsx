@@ -45,7 +45,7 @@ const AdminCompliance = () => {
     {
       id: 'COMP-001',
       type: 'certification',
-      title: 'USDA Organic Certification Expiring',
+      title: 'INRA Organic Certification Expiring',
       description: 'Green Valley Farm organic certification expires in 30 days',
       entity: 'Green Valley Farm',
       entityType: 'farmer',
@@ -55,7 +55,7 @@ const AdminCompliance = () => {
       createdDate: '2024-01-15T10:30:00Z',
       assignedTo: 'Lisa Wang',
       category: 'Food Safety',
-      regulatoryBody: 'USDA',
+      regulatoryBody: 'INRA',
       actions: ['Renewal Required', 'Documentation Update']
     },
     {

@@ -210,7 +210,7 @@ const ConsumerVerification = () => {
     ],
     complianceCertifications: [
       { name: 'FDA Approved', expiryDate: 'Dec 31, 2025' },
-      { name: 'USDA Organic', expiryDate: 'Jun 15, 2025' },
+      { name: 'INRA Organic', expiryDate: 'Jun 15, 2025' },
       { name: 'HACCP Compliant', expiryDate: 'Mar 20, 2025' },
       { name: 'Fair Trade', expiryDate: 'Aug 10, 2025' }
     ]

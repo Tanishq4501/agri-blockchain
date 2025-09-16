@@ -20,7 +20,7 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
       authenticity: "authentic",
       batchId: "TOM-2025-001",
       lastVerified: "2025-01-13",
-      price: "$4.50/kg"
+      price: "₹4.50/kg"
     },
     {
       id: 2,
@@ -32,7 +32,7 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
       authenticity: "pending",
       batchId: "SPN-2025-002",
       lastVerified: "2025-01-10",
-      price: "$6.20/kg"
+      price: "₹6.20/kg"
     },
     {
       id: 3,
@@ -44,7 +44,7 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
       authenticity: "suspicious",
       batchId: "PEP-2025-003",
       lastVerified: "2025-01-12",
-      price: "$5.80/kg"
+      price: "₹5.80/kg"
     },
     {
       id: 4,
@@ -56,7 +56,7 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
       authenticity: "authentic",
       batchId: "CAR-2025-004",
       lastVerified: "2025-01-13",
-      price: "$3.90/kg"
+      price: "₹3.90/kg"
     },
     {
       id: 5,
@@ -68,7 +68,7 @@ const StockTable = ({ onVerifyProduct, onViewDetails }) => {
       authenticity: "invalid",
       batchId: "LET-2025-005",
       lastVerified: "2025-01-11",
-      price: "$4.10/kg"
+      price: "₹4.10/kg"
     }
   ];
 

@@ -57,7 +57,7 @@ const AdminUsers = () => {
       activityScore: 95,
       totalScans: 156,
       productsRegistered: 12,
-      certifications: ['USDA Organic', 'Non-GMO']
+      certifications: ['INRA Organic', 'Non-GMO']
     },
     {
       id: 'USR-002',
@@ -125,7 +125,7 @@ const AdminUsers = () => {
       activityScore: 23,
       totalScans: 89,
       productsRegistered: 8,
-      certifications: ['USDA Organic']
+      certifications: ['INRA Organic']
     },
     {
       id: 'USR-006',

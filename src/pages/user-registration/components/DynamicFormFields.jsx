@@ -151,7 +151,7 @@ const DynamicFormFields = ({ selectedRole, formData, onChange, errors }) => {
               required
             />
             <Input
-              label="Annual Revenue (USD)"
+              label="Annual Revenue (INR)"
               type="number"
               placeholder="e.g., 500000"
               value={formData?.annualRevenue || ''}

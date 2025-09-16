@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import RoleBasedSidebar from '../../components/ui/RoleBasedSidebar';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import NotificationIndicator from '../../components/ui/NotificationIndicator';
+import TranslateToggle from '../../components/ui/TranslateToggle';
+import TranslatableText from '../../components/ui/TranslatableText';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Select from '../../components/ui/Select';
@@ -26,7 +28,7 @@ const FarmerEarnings = () => {
       id: 1,
       type: 'success',
       title: 'Payment Received',
-      message: 'Payment of $2,250.00 received from Fresh Market Co.',
+      message: 'Payment of ₹2,250.00 received from Fresh Market Co.',
       timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
       read: false
     }
@@ -154,10 +156,11 @@ const FarmerEarnings = () => {
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center space-x-4">
-                <h1 className="text-2xl font-bold text-text-primary">Earnings</h1>
+                <TranslatableText as="h1" className="text-2xl font-bold text-text-primary" text="Earnings" />
               </div>
 
               <div className="flex items-center space-x-4">
+                <TranslateToggle />
                 <NotificationIndicator
                   notifications={notifications}
                   unreadCount={notifications?.filter(n => !n?.read)?.length}
@@ -184,8 +187,8 @@ const FarmerEarnings = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-success/5 to-primary/5 border border-success/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Total Earnings</p>
-                    <p className="text-3xl font-bold text-success">${totalEarnings.toFixed(2)}</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="Total Earnings" />
+                    <p className="text-3xl font-bold text-success">₹{totalEarnings.toFixed(2)}</p>
                   </div>
                   <Icon name="DollarSign" size={24} className="text-success" />
                 </div>
@@ -194,8 +197,8 @@ const FarmerEarnings = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-primary/5 to-success/5 border border-primary/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Completed</p>
-                    <p className="text-3xl font-bold text-primary">${completedEarnings.toFixed(2)}</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="Completed" />
+                    <p className="text-3xl font-bold text-primary">₹{completedEarnings.toFixed(2)}</p>
                   </div>
                   <Icon name="CheckCircle" size={24} className="text-primary" />
                 </div>
@@ -204,8 +207,8 @@ const FarmerEarnings = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-warning/5 to-accent/5 border border-warning/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Pending</p>
-                    <p className="text-3xl font-bold text-warning">${pendingEarnings.toFixed(2)}</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="Pending" />
+                    <p className="text-3xl font-bold text-warning">₹{pendingEarnings.toFixed(2)}</p>
                   </div>
                   <Icon name="Clock" size={24} className="text-warning" />
                 </div>
@@ -214,8 +217,8 @@ const FarmerEarnings = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-secondary/5 to-accent/5 border border-secondary/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Commission</p>
-                    <p className="text-3xl font-bold text-secondary">${totalCommission.toFixed(2)}</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="Commission" />
+                    <p className="text-3xl font-bold text-secondary">₹{totalCommission.toFixed(2)}</p>
                   </div>
                   <Icon name="Percent" size={24} className="text-secondary" />
                 </div>
@@ -226,7 +229,7 @@ const FarmerEarnings = () => {
             <div className="glass-card p-6 mb-8">
               <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
                 <div className="flex items-center space-x-4">
-                  <label className="text-sm font-medium text-text-secondary">Time Period:</label>
+                  <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Time Period:" />
                   <Select
                     value={timeFilter}
                     onValueChange={setTimeFilter}
@@ -235,10 +238,10 @@ const FarmerEarnings = () => {
                 </div>
                 <div className="flex space-x-2">
                   <Button variant="outline" iconName="Download" iconPosition="left">
-                    Export Report
+                    <TranslatableText text="Export Report" />
                   </Button>
                   <Button iconName="Receipt" iconPosition="left">
-                    Request Payment
+                    <TranslatableText text="Request Payment" />
                   </Button>
                 </div>
               </div>
@@ -260,34 +263,34 @@ const FarmerEarnings = () => {
                         <Icon name="DollarSign" size={24} color="white" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold text-text-primary">{earning.productName}</h3>
+                        <TranslatableText as="h3" className="text-xl font-semibold text-text-primary" text={earning.productName} />
                         <p className="text-text-secondary">{earning.buyer} • {earning.paymentDate}</p>
-                        <p className="text-sm text-text-secondary">Batch: {earning.batchNumber}</p>
+                        <p className="text-sm text-text-secondary"><TranslatableText text="Batch:" /> {earning.batchNumber}</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getPaymentStatusColor(earning.paymentStatus)}`}>
                         <Icon name={getPaymentStatusIcon(earning.paymentStatus)} size={12} className="mr-1" />
-                        {earning.paymentStatus}
+                        <TranslatableText text={earning.paymentStatus} />
                       </span>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Quantity Sold</label>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Quantity Sold" />
                       <p className="text-text-primary font-semibold">{earning.quantity} {earning.unit}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Price per {earning.unit}</label>
-                      <p className="text-text-primary">${earning.pricePerUnit}</p>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text={`Price per ${earning.unit}`} />
+                      <p className="text-text-primary">₹{earning.pricePerUnit}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Total Amount</label>
-                      <p className="text-text-primary font-semibold">${earning.totalAmount.toFixed(2)}</p>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Total Amount" />
+                      <p className="text-text-primary font-semibold">₹{earning.totalAmount.toFixed(2)}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Payment Method</label>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Payment Method" />
                       <p className="text-text-primary">{earning.paymentMethod}</p>
                     </div>
                   </div>
@@ -295,14 +298,14 @@ const FarmerEarnings = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div className="bg-error/5 p-4 rounded-lg border border-error/20">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-text-secondary">Platform Commission (5%)</span>
-                        <span className="text-error font-semibold">-${earning.commission.toFixed(2)}</span>
+                        <TranslatableText as="span" className="text-sm font-medium text-text-secondary" text="Platform Commission (5%)" />
+                        <span className="text-error font-semibold">-₹{earning.commission.toFixed(2)}</span>
                       </div>
                     </div>
                     <div className="bg-success/5 p-4 rounded-lg border border-success/20">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-text-secondary">Net Earnings</span>
-                        <span className="text-success font-bold text-lg">${earning.netEarnings.toFixed(2)}</span>
+                        <TranslatableText as="span" className="text-sm font-medium text-text-secondary" text="Net Earnings" />
+                        <span className="text-success font-bold text-lg">₹{earning.netEarnings.toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
@@ -314,14 +317,14 @@ const FarmerEarnings = () => {
                     </div>
                     <div className="flex space-x-2">
                       <Button variant="outline" size="sm" iconName="Eye" iconPosition="left">
-                        View Details
+                        <TranslatableText text="View Details" />
                       </Button>
                       <Button variant="outline" size="sm" iconName="Receipt" iconPosition="left">
-                        Invoice
+                        <TranslatableText text="Invoice" />
                       </Button>
                       {earning.paymentStatus === 'pending' && (
                         <Button size="sm" iconName="MessageSquare" iconPosition="left">
-                          Follow Up
+                          <TranslatableText text="Follow Up" />
                         </Button>
                       )}
                     </div>
@@ -335,19 +338,23 @@ const FarmerEarnings = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-primary to-success rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Icon name="TrendingUp" size={32} color="white" strokeWidth={2} />
               </div>
-              <h3 className="text-xl font-semibold text-text-primary mb-2">
-                Earnings Analytics
-              </h3>
-              <p className="text-text-secondary mb-6">
-                Detailed earnings charts and analytics coming soon. Track your income trends, seasonal patterns, and growth metrics.
-              </p>
+              <TranslatableText 
+                as="h3" 
+                className="text-xl font-semibold text-text-primary mb-2"
+                text="Earnings Analytics"
+              />
+              <TranslatableText 
+                as="p" 
+                className="text-text-secondary mb-6"
+                text="Detailed earnings charts and analytics coming soon. Track your income trends, seasonal patterns, and growth metrics."
+              />
               <Button
                 variant="outline"
                 iconName="BarChart3"
                 iconPosition="left"
                 iconSize={16}
               >
-                View Analytics
+                <TranslatableText text="View Analytics" />
               </Button>
             </div>
           </div>

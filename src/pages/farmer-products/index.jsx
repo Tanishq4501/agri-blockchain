@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import RoleBasedSidebar from '../../components/ui/RoleBasedSidebar';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import NotificationIndicator from '../../components/ui/NotificationIndicator';
+import TranslateToggle from '../../components/ui/TranslateToggle';
+import TranslatableText from '../../components/ui/TranslatableText';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
@@ -167,10 +169,11 @@ const FarmerProducts = () => {
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center space-x-4">
-                <h1 className="text-2xl font-bold text-text-primary">My Products</h1>
+                <TranslatableText as="h1" className="text-2xl font-bold text-text-primary" text="My Products" />
               </div>
 
               <div className="flex items-center space-x-4">
+                <TranslateToggle />
                 <NotificationIndicator
                   notifications={notifications}
                   unreadCount={notifications?.filter(n => !n?.read)?.length}
@@ -198,7 +201,7 @@ const FarmerProducts = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-primary/5 to-success/5 border border-primary/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Total Products</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="Total Products" />
                     <p className="text-3xl font-bold text-primary">{products.length}</p>
                   </div>
                   <Icon name="Package" size={24} className="text-primary" />
@@ -208,7 +211,7 @@ const FarmerProducts = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-success/5 to-primary/5 border border-success/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Verified</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="Verified" />
                     <p className="text-3xl font-bold text-success">
                       {products.filter(p => p.status === 'verified').length}
                     </p>
@@ -220,7 +223,7 @@ const FarmerProducts = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-secondary/5 to-accent/5 border border-secondary/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Shipped</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="Shipped" />
                     <p className="text-3xl font-bold text-secondary">
                       {products.filter(p => p.status === 'shipped').length}
                     </p>
@@ -232,7 +235,7 @@ const FarmerProducts = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-warning/5 to-accent/5 border border-warning/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Pending</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="Pending" />
                     <p className="text-3xl font-bold text-warning">
                       {products.filter(p => p.status === 'pending').length}
                     </p>
@@ -257,11 +260,16 @@ const FarmerProducts = () => {
                   <Select
                     value={statusFilter}
                     onValueChange={setStatusFilter}
-                    options={statusOptions}
-                  />
+                  >
+                    {statusOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </Select>
                 </div>
                 <Button iconName="Plus" iconPosition="left">
-                  Add Product
+                  <TranslatableText text="Add Product" />
                 </Button>
               </div>
             </div>
@@ -282,20 +290,20 @@ const FarmerProducts = () => {
                         <Icon name="Leaf" size={24} color="white" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold text-text-primary">{product.name}</h3>
+                        <TranslatableText as="h3" className="text-xl font-semibold text-text-primary" text={product.name} />
                         <p className="text-text-secondary">{product.category} • {product.quantity} {product.unit}</p>
-                        <p className="text-sm text-text-secondary">Batch: {product.batchNumber}</p>
+                        <p className="text-sm text-text-secondary"><TranslatableText text="Batch:" /> {product.batchNumber}</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(product.status)}`}>
                         <Icon name={getStatusIcon(product.status)} size={12} className="mr-1" />
-                        {product.status}
+                        <TranslatableText text={product.status} />
                       </span>
                       {product.qrGenerated && (
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
                           <Icon name="QrCode" size={12} className="mr-1" />
-                          QR Ready
+                          <TranslatableText text="QR Ready" />
                         </span>
                       )}
                     </div>
@@ -303,25 +311,25 @@ const FarmerProducts = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Harvest Date</label>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Harvest Date" />
                       <p className="text-text-primary">{product.harvestDate}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Expiry Date</label>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Expiry Date" />
                       <p className="text-text-primary">{product.expiryDate}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Price per {product.unit}</label>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text={`Price per ${product.unit}`} />
                       <p className="text-text-primary">${product.price}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Location</label>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Location" />
                       <p className="text-text-primary">{product.location}</p>
                     </div>
                   </div>
 
                   <div className="mb-4">
-                    <label className="text-sm font-medium text-text-secondary mb-2 block">Certifications</label>
+                    <TranslatableText as="label" className="text-sm font-medium text-text-secondary mb-2 block" text="Certifications" />
                     <div className="flex flex-wrap gap-2">
                       {product.certifications.map((cert, index) => (
                         <span 
@@ -329,7 +337,7 @@ const FarmerProducts = () => {
                           className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20"
                         >
                           <Icon name="Award" size={12} className="mr-1" />
-                          {cert}
+                          <TranslatableText text={cert} />
                         </span>
                       ))}
                     </div>
@@ -342,14 +350,14 @@ const FarmerProducts = () => {
                     </div>
                     <div className="flex space-x-2">
                       <Button variant="outline" size="sm" iconName="Eye" iconPosition="left">
-                        View Details
+                        <TranslatableText text="View Details" />
                       </Button>
                       <Button variant="outline" size="sm" iconName="Edit" iconPosition="left">
-                        Edit
+                        <TranslatableText text="Edit" />
                       </Button>
                       {!product.qrGenerated && (
                         <Button size="sm" iconName="QrCode" iconPosition="left">
-                          Generate QR
+                          <TranslatableText text="Generate QR" />
                         </Button>
                       )}
                     </div>

@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import RoleBasedSidebar from '../../components/ui/RoleBasedSidebar';
 import ProfileDropdown from '../../components/ui/ProfileDropdown';
 import NotificationIndicator from '../../components/ui/NotificationIndicator';
+import TranslateToggle from '../../components/ui/TranslateToggle';
+import TranslatableText from '../../components/ui/TranslatableText';
 import Icon from '../../components/AppIcon';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
@@ -145,10 +147,11 @@ const FarmerHarvest = () => {
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center space-x-4">
-                <h1 className="text-2xl font-bold text-text-primary">Harvest Records</h1>
+                <TranslatableText as="h1" className="text-2xl font-bold text-text-primary" text="Harvest Records" />
               </div>
 
               <div className="flex items-center space-x-4">
+                <TranslateToggle />
                 <NotificationIndicator
                   notifications={notifications}
                   unreadCount={notifications?.filter(n => !n?.read)?.length}
@@ -175,7 +178,7 @@ const FarmerHarvest = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-primary/5 to-success/5 border border-primary/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Total Harvests</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="Total Harvests" />
                     <p className="text-3xl font-bold text-primary">{harvestRecords.length}</p>
                   </div>
                   <Icon name="Calendar" size={24} className="text-primary" />
@@ -185,7 +188,7 @@ const FarmerHarvest = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-success/5 to-primary/5 border border-success/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Total Quantity</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="Total Quantity" />
                     <p className="text-3xl font-bold text-success">{totalQuantity} kg</p>
                   </div>
                   <Icon name="Package" size={24} className="text-success" />
@@ -195,7 +198,7 @@ const FarmerHarvest = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-secondary/5 to-accent/5 border border-secondary/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">Premium Quality</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="Premium Quality" />
                     <p className="text-3xl font-bold text-secondary">{Math.round(averageQuality)}%</p>
                   </div>
                   <Icon name="Award" size={24} className="text-secondary" />
@@ -205,7 +208,7 @@ const FarmerHarvest = () => {
               <div className="glass-card p-6 bg-gradient-to-br from-accent/5 to-warning/5 border border-accent/10">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-text-secondary">This Month</p>
+                    <TranslatableText as="p" className="text-sm font-medium text-text-secondary" text="This Month" />
                     <p className="text-3xl font-bold text-accent">{harvestRecords.length}</p>
                   </div>
                   <Icon name="TrendingUp" size={24} className="text-accent" />
@@ -225,10 +228,10 @@ const FarmerHarvest = () => {
                   />
                 </div>
                 <Button iconName="Plus" iconPosition="left">
-                  New Harvest Record
+                  <TranslatableText text="New Harvest Record" />
                 </Button>
                 <Button variant="outline" iconName="Download" iconPosition="left">
-                  Export Records
+                  <TranslatableText text="Export Records" />
                 </Button>
               </div>
             </div>
@@ -249,44 +252,44 @@ const FarmerHarvest = () => {
                         <Icon name="Sprout" size={24} color="white" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold text-text-primary">{record.cropName}</h3>
+                        <TranslatableText as="h3" className="text-xl font-semibold text-text-primary" text={record.cropName} />
                         <p className="text-text-secondary">{record.fieldLocation} • {record.harvestDate}</p>
-                        <p className="text-sm text-text-secondary">Batch: {record.batchNumber}</p>
+                        <p className="text-sm text-text-secondary"><TranslatableText text="Batch:" /> {record.batchNumber}</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getQualityColor(record.quality)}`}>
                         <Icon name="Star" size={12} className="mr-1" />
-                        {record.quality}
+                        <TranslatableText text={record.quality} />
                       </span>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Quantity</label>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Quantity" />
                       <p className="text-text-primary font-semibold">{record.quantity} {record.unit}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Weather</label>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Weather" />
                       <p className="text-text-primary">{record.weather}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Labor Hours</label>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Labor Hours" />
                       <p className="text-text-primary">{record.laborHours}h</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Inspector</label>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Inspector" />
                       <p className="text-text-primary">{record.inspector}</p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-text-secondary">Certification</label>
+                      <TranslatableText as="label" className="text-sm font-medium text-text-secondary" text="Certification" />
                       <p className="text-text-primary text-sm">{record.certificationStatus}</p>
                     </div>
                   </div>
 
                   <div className="mb-4">
-                    <label className="text-sm font-medium text-text-secondary mb-2 block">Equipment Used</label>
+                    <TranslatableText as="label" className="text-sm font-medium text-text-secondary mb-2 block" text="Equipment Used" />
                     <div className="flex flex-wrap gap-2">
                       {record.equipment.map((item, index) => (
                         <span 
@@ -294,14 +297,14 @@ const FarmerHarvest = () => {
                           className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary border border-secondary/20"
                         >
                           <Icon name="Tool" size={12} className="mr-1" />
-                          {item}
+                          <TranslatableText text={item} />
                         </span>
                       ))}
                     </div>
                   </div>
 
                   <div className="mb-4">
-                    <label className="text-sm font-medium text-text-secondary mb-2 block">Harvest Notes</label>
+                    <TranslatableText as="label" className="text-sm font-medium text-text-secondary mb-2 block" text="Harvest Notes" />
                     <p className="text-sm text-text-primary bg-muted/50 p-3 rounded-lg">{record.notes}</p>
                   </div>
 
@@ -312,13 +315,13 @@ const FarmerHarvest = () => {
                     </div>
                     <div className="flex space-x-2">
                       <Button variant="outline" size="sm" iconName="Eye" iconPosition="left">
-                        View Details
+                        <TranslatableText text="View Details" />
                       </Button>
                       <Button variant="outline" size="sm" iconName="Edit" iconPosition="left">
-                        Edit Record
+                        <TranslatableText text="Edit Record" />
                       </Button>
                       <Button variant="outline" size="sm" iconName="FileText" iconPosition="left">
-                        Generate Report
+                        <TranslatableText text="Generate Report" />
                       </Button>
                     </div>
                   </div>
