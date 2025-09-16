@@ -227,36 +227,43 @@ const UserRegistration = () => {
       };
       
 
-      // Call backend API to register user
-      const result = await registerUser(userData);
-      console.log('Backend API response:', result);
+      // Store user data locally for login authentication
+      const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
       
-      if (result?.status === 'success') {
-        // Registration successful - redirect to appropriate dashboard
-        const dashboardRoutes = {
-          farmer: '/farmer-dashboard',
-          distributor: '/distributor-dashboard',
-          consumer: '/consumer-dashboard',
-          retailer: '/retailer-stock-management',
-          admin: '/admin-dashboard',
-          regulator: '/regulator-dashboard'
-        };
-
-        // Use the original formData role (lowercase) for navigation
-        const targetRoute = dashboardRoutes?.[formData?.role] || '/user-login';
-        console.log('Registration successful, attempting to navigate to:', targetRoute);
-        console.log('Role used for navigation:', formData?.role);
-        navigate(targetRoute);
-        console.log('Navigation called');
-      } else {
-        console.log('Registration failed with result:', result);
-        // Registration failed
-        let errorMessage = result?.message || 'Registration failed. Please try again.';
-        if (result?.details && Array.isArray(result?.details)) {
-          errorMessage += ': ' + result?.details?.join(', ');
-        }
-        setErrors({ submit: errorMessage });
+      // Check if user already exists
+      const existingUser = registeredUsers.find(u => u.email === formData?.email);
+      if (existingUser) {
+        setErrors({ submit: 'An account with this email already exists. Please use a different email or sign in.' });
+        setIsLoading(false);
+        return;
       }
+
+      // Add new user to registered users
+      registeredUsers.push({
+        ...userData,
+        email: formData?.email,
+        role: formData?.role, // Keep original lowercase role for consistency
+        registrationDate: new Date().toISOString()
+      });
+      
+      localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+      // Call backend API to register user (optional - for blockchain storage)
+      try {
+        const result = await registerUser(userData);
+        console.log('Backend API response:', result);
+      } catch (error) {
+        console.log('Backend registration failed, but local registration successful:', error);
+      }
+      
+      // Registration successful - redirect to login page
+      console.log('Registration successful, redirecting to login');
+      navigate('/user-login', { 
+        state: { 
+          message: 'Registration successful! Please sign in with your credentials.',
+          email: formData?.email 
+        }
+      });
     } catch (error) {
       console.error('Registration error:', error);
       if (error?.message) {

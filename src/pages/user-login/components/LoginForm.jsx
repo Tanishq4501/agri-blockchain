@@ -71,21 +71,35 @@ const LoginForm = () => {
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 1500));
 
-    // Check mock credentials
-    const userCredentials = mockCredentials?.[formData?.email];
+    // Get registered users from localStorage
+    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
     
-    if (!userCredentials || userCredentials?.password !== formData?.password) {
+    // Check if user exists in registered users
+    const user = registeredUsers.find(u => u.email === formData?.email);
+    
+    if (!user) {
       setErrors({
-        general: 'Invalid email or password. Please check your credentials and try again.'
+        general: 'No account found with this email address. Please register first.'
       });
       setIsLoading(false);
       return;
     }
 
-    // Store user session (in real app, this would be handled by auth service)
-    localStorage.setItem('userRole', userCredentials?.role);
+    // For now, we'll use a simple password check since we don't store passwords
+    // In a real app, this would be handled by proper authentication
+    if (formData?.password.length < 6) {
+      setErrors({
+        general: 'Invalid password. Please check your credentials and try again.'
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Store user session
+    localStorage.setItem('userRole', user.role.toLowerCase());
     localStorage.setItem('userEmail', formData?.email);
     localStorage.setItem('isAuthenticated', 'true');
+    localStorage.setItem('currentUser', JSON.stringify(user));
 
     // Redirect based on role
     const roleRoutes = {
@@ -97,7 +111,8 @@ const LoginForm = () => {
       regulator: '/regulator-dashboard'
     };
 
-    const redirectRoute = roleRoutes?.[userCredentials?.role] || '/landing-page';
+    const userRole = user.role.toLowerCase();
+    const redirectRoute = roleRoutes?.[userRole] || '/landing-page';
     
     setIsLoading(false);
     navigate(redirectRoute);

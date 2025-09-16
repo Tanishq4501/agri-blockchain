@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import Icon from '../../components/AppIcon';
 import PublicHeader from '../../components/ui/PublicHeader';
 import LoginForm from './components/LoginForm';
@@ -7,6 +7,17 @@ import SecurityIndicators from './components/SecurityIndicators';
 import MockCredentialsInfo from './components/MockCredentialsInfo';
 
 const UserLogin = () => {
+  const location = useLocation();
+  const [successMessage, setSuccessMessage] = useState('');
+
+  useEffect(() => {
+    if (location.state?.message) {
+      setSuccessMessage(location.state.message);
+      // Clear the message after 5 seconds
+      setTimeout(() => setSuccessMessage(''), 5000);
+    }
+  }, [location.state]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50">
       <PublicHeader />
@@ -14,6 +25,17 @@ const UserLogin = () => {
       {/* Main Content */}
       <main className="pt-16 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md">
+          {/* Success Message */}
+          {successMessage && (
+            <div className="mb-6 p-4 bg-success/10 border border-success/20 rounded-lg flex items-start space-x-3">
+              <Icon name="CheckCircle" size={20} className="text-success mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-success">Registration Successful!</p>
+                <p className="text-sm text-success/80 mt-1">{successMessage}</p>
+              </div>
+            </div>
+          )}
+
           {/* Header Section */}
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
