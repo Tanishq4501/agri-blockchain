@@ -15,13 +15,32 @@ const ConsumerDashboard = () => {
   const [scannedProducts, setScannedProducts] = useState([]);
   const [isScanning, setIsScanning] = useState(false);
 
-  // Mock user data
-  const userData = {
-    name: 'Sarah Johnson',
-    email: 'sarah.johnson@email.com',
-    role: 'consumer',
-    avatar: null
-  };
+  // Get actual logged-in user data
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const userEmail = localStorage.getItem('userEmail');
+    const userRole = localStorage.getItem('userRole');
+    
+    if (currentUser && Object.keys(currentUser).length > 0) {
+      setUserData({
+        name: currentUser.name || currentUser.fullName || 'User',
+        email: currentUser.email || userEmail,
+        role: currentUser.role || userRole,
+        avatar: currentUser.avatar || null
+      });
+    } else {
+      // Fallback if no user data found
+      setUserData({
+        name: 'Consumer User',
+        email: userEmail || 'consumer@agritrace.com',
+        role: userRole || 'consumer',
+        avatar: null
+      });
+    }
+  }, []);
 
   // Mock notifications
   const notifications = [
@@ -174,9 +193,12 @@ const ConsumerDashboard = () => {
             <div className="flex items-center justify-between h-16">
               {/* Page Title */}
               <div className="flex items-center space-x-4">
-                <h1 className="text-2xl font-bold text-text-primary">
-                  Consumer Dashboard
-                </h1>
+                <div>
+                  <h1 className="text-2xl font-bold text-text-primary">
+                    Consumer Dashboard
+                  </h1>
+                  <p className="text-text-secondary">Welcome back, {userData?.name || 'Consumer'}!</p>
+                </div>
                 <div className="hidden sm:block">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary border border-secondary/20">
                     <Icon name="Shield" size={12} className="mr-1" strokeWidth={2} />

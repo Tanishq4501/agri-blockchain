@@ -393,7 +393,7 @@ const UserRegistration = () => {
                 <Input
                   label="Phone Number"
                   type="tel"
-                  placeholder="+1 (555) 123-4567"
+                  placeholder="+91 84688 29368"
                   value={formData?.phone}
                   onChange={(e) => handleInputChange('phone', e?.target?.value)}
                   error={errors?.phone}

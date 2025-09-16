@@ -45,7 +45,7 @@ const DistributorProfile = () => {
       firstName: 'Mike',
       lastName: 'Rodriguez',
       email: 'mike.rodriguez@fastlogistics.com',
-      phone: '+1 (555) 234-5678',
+      phone: '+91 84688 29368',
       dateOfBirth: '1985-09-12',
       address: '789 Logistics Way, Oakland, CA 94607'
     },
@@ -129,9 +129,32 @@ const DistributorProfile = () => {
   };
 
   useEffect(() => {
-    setProfileData(mockProfileData);
+    // Use actual user data for profile
+    if (userData) {
+      setProfileData({
+        firstName: userData.name?.split(' ')[0] || 'Michael',
+        lastName: userData.name?.split(' ')[1] || 'Chen',
+        email: userData.email || 'distributor@agritrace.com',
+        phone: userData.phone || '+91 84688 29368',
+        address: userData.address || '789 Distribution Center Blvd',
+        city: userData.city || 'Los Angeles',
+        state: userData.state || 'California',
+        zipCode: userData.zipCode || '90210',
+        country: userData.country || 'United States',
+        companyName: userData.companyName || 'Fresh Logistics Co.',
+        companySize: userData.companySize || '50-100 employees',
+        serviceArea: userData.serviceArea || 'West Coast',
+        yearsInBusiness: userData.yearsInBusiness || '8',
+        specializations: userData.specializations || ['Cold Chain', 'Organic Products', 'Last-Mile Delivery'],
+        certifications: userData.certifications || ['ISO 9001', 'HACCP', 'Organic Handling'],
+        bio: userData.bio || 'Experienced logistics professional specializing in fresh produce distribution...'
+      });
+    } else {
+      // Fallback to mock data if no user data
+      setProfileData(mockProfileData);
+    }
     document.title = 'Profile - AgriTrace';
-  }, []);
+  }, [userData]);
 
   const handleSidebarToggle = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);

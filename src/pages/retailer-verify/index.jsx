@@ -34,13 +34,31 @@ const RetailerVerify = () => {
   const [scannedCode, setScannedCode] = useState('');
   const [isScanning, setIsScanning] = useState(false);
 
-  // Mock user data
-  const userData = {
-    name: "Sarah Johnson",
-    email: "sarah@freshmart.com",
-    role: "retailer",
-    avatar: "/api/placeholder/40/40"
-  };
+  // Get actual logged-in user data
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const userEmail = localStorage.getItem('userEmail');
+    const userRole = localStorage.getItem('userRole');
+    
+    if (currentUser && Object.keys(currentUser).length > 0) {
+      setUserData({
+        name: currentUser.name || currentUser.fullName || 'User',
+        email: currentUser.email || userEmail,
+        role: currentUser.role || userRole,
+        avatar: currentUser.avatar || null
+      });
+    } else {
+      setUserData({
+        name: 'Retailer User',
+        email: userEmail || 'retailer@agritrace.com',
+        role: userRole || 'retailer',
+        avatar: null
+      });
+    }
+  }, []);
 
   // Mock verification data
   useEffect(() => {

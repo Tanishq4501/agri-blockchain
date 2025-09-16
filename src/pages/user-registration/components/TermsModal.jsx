@@ -83,7 +83,7 @@ const TermsModal = ({ isOpen, onClose }) => {
             <h3 className="text-lg font-semibold text-text-primary mb-3">7. Contact Information</h3>
             <p className="text-text-secondary leading-relaxed">
               For questions about these terms, please contact us at legal@agritrace.com or 
-              call our support team at +1 (555) 123-4567.
+              call our support team at +91 84688 29368.
             </p>
           </section>
         </div>

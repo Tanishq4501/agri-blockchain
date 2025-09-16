@@ -15,13 +15,7 @@ const FarmerProfile = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({});
-
-  const userData = {
-    name: 'John Mitchell',
-    email: 'john.mitchell@greenfarm.com',
-    role: 'farmer',
-    avatar: null
-  };
+  const [userData, setUserData] = useState(null);
 
   const notifications = [];
 
@@ -30,7 +24,7 @@ const FarmerProfile = () => {
       firstName: 'John',
       lastName: 'Mitchell',
       email: 'john.mitchell@greenfarm.com',
-      phone: '+1 (555) 123-4567',
+      phone: '+91 84688 29368',
       dateOfBirth: '1985-03-15',
       address: '123 Green Valley Road, California, USA'
     },
@@ -81,9 +75,49 @@ const FarmerProfile = () => {
   };
 
   useEffect(() => {
-    setProfileData(mockProfileData);
+    // Get user data from localStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const userEmail = localStorage.getItem('userEmail');
+    const userRole = localStorage.getItem('userRole');
+    
+    if (currentUser && Object.keys(currentUser).length > 0) {
+      setUserData({
+        name: currentUser.name || currentUser.fullName || 'User',
+        email: currentUser.email || userEmail,
+        role: currentUser.role || userRole,
+        avatar: currentUser.avatar || null
+      });
+    } else {
+      // Fallback if no user data found
+      setUserData({
+        name: 'Farmer User',
+        email: userEmail || 'farmer@agritrace.com',
+        role: userRole || 'farmer',
+        avatar: null
+      });
+    }
     document.title = 'Profile - AgriTrace';
   }, []);
+
+  useEffect(() => {
+    // Use actual user data for profile
+    if (userData) {
+      const nameParts = userData.name?.split(' ') || ['John', 'Mitchell'];
+      setProfileData({
+        ...mockProfileData,
+        personalInfo: {
+          ...mockProfileData.personalInfo,
+          firstName: nameParts[0] || 'John',
+          lastName: nameParts[1] || 'Mitchell',
+          email: userData.email || 'farmer@agritrace.com'
+        },
+        bankingInfo: {
+          ...mockProfileData.bankingInfo,
+          accountHolder: userData.name || 'Farmer User'
+        }
+      });
+    }
+  }, [userData]);
 
   const handleSidebarToggle = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);

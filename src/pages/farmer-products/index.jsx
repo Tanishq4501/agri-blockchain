@@ -18,13 +18,32 @@ const FarmerProducts = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [products, setProducts] = useState([]);
 
-  // Mock user data
-  const userData = {
-    name: 'John Mitchell',
-    email: 'john.mitchell@greenfarm.com',
-    role: 'farmer',
-    avatar: null
-  };
+  // Get actual logged-in user data
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const userEmail = localStorage.getItem('userEmail');
+    const userRole = localStorage.getItem('userRole');
+    
+    if (currentUser && Object.keys(currentUser).length > 0) {
+      setUserData({
+        name: currentUser.name || currentUser.fullName || 'User',
+        email: currentUser.email || userEmail,
+        role: currentUser.role || userRole,
+        avatar: currentUser.avatar || null
+      });
+    } else {
+      // Fallback if no user data found
+      setUserData({
+        name: 'Farmer User',
+        email: userEmail || 'farmer@agritrace.com',
+        role: userRole || 'farmer',
+        avatar: null
+      });
+    }
+  }, []);
 
   // Mock notifications
   const notifications = [
@@ -259,14 +278,9 @@ const FarmerProducts = () => {
                 <div className="w-full sm:w-48">
                   <Select
                     value={statusFilter}
-                    onValueChange={setStatusFilter}
-                  >
-                    {statusOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </Select>
+                    onChange={setStatusFilter}
+                    options={statusOptions}
+                  />
                 </div>
                 <Button iconName="Plus" iconPosition="left">
                   <TranslatableText text="Add Product" />

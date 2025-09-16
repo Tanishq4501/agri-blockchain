@@ -202,7 +202,7 @@ const FooterSection = () => {
               </div>
               <div>
                 <p className="text-sm font-medium">Call Us</p>
-                <p className="text-sm text-gray-300">+1 (555) 123-4567</p>
+                <p className="text-sm text-gray-300">+91 84688 29368</p>
               </div>
             </div>
 

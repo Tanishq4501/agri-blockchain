@@ -15,13 +15,32 @@ const AdminControl = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
 
-  // Mock user data
-  const userData = {
-    name: 'Admin User',
-    email: 'admin@agritrace.com',
-    role: 'admin',
-    avatar: null
-  };
+  // Get actual logged-in user data
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const userEmail = localStorage.getItem('userEmail');
+    const userRole = localStorage.getItem('userRole');
+    
+    if (currentUser && Object.keys(currentUser).length > 0) {
+      setUserData({
+        name: currentUser.name || currentUser.fullName || 'User',
+        email: currentUser.email || userEmail,
+        role: currentUser.role || userRole,
+        avatar: currentUser.avatar || null
+      });
+    } else {
+      // Fallback if no user data found
+      setUserData({
+        name: 'Admin User',
+        email: userEmail || 'admin@agritrace.com',
+        role: userRole || 'admin',
+        avatar: null
+      });
+    }
+  }, []);
 
   // Mock notifications
   const notifications = [

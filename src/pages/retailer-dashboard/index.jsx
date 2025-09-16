@@ -33,16 +33,30 @@ const RetailerDashboard = () => {
   const [recentOrders, setRecentOrders] = useState([]);
   const [lowStockItems, setLowStockItems] = useState([]);
   const [recentActivity, setRecentActivity] = useState([]);
+  const [userData, setUserData] = useState(null);
 
-  // Mock user data
-  const userData = {
-    name: "Sarah Johnson",
-    email: "sarah@freshmart.com",
-    role: "retailer",
-    avatar: "/api/placeholder/40/40"
-  };
+  useEffect(() => {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const userEmail = localStorage.getItem('userEmail');
+    const userRole = localStorage.getItem('userRole');
+    
+    if (currentUser && Object.keys(currentUser).length > 0) {
+      setUserData({
+        name: currentUser.name || currentUser.fullName || 'User',
+        email: currentUser.email || userEmail,
+        role: currentUser.role || userRole,
+        avatar: currentUser.avatar || null
+      });
+    } else {
+      setUserData({
+        name: 'Retailer User',
+        email: userEmail || 'retailer@agritrace.com',
+        role: userRole || 'retailer',
+        avatar: null
+      });
+    }
+  }, []);
 
-  // Mock dashboard data
   useEffect(() => {
     setDashboardStats({
       totalRevenue: 125400,
@@ -272,7 +286,7 @@ const RetailerDashboard = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Retailer Dashboard</h1>
-              <p className="text-gray-600">Welcome back, {userData.name}! Here's your store overview.</p>
+              <p className="text-gray-600">Welcome back, {userData?.name || 'Retailer'}! Here's your store overview.</p>
             </div>
             <div className="flex items-center space-x-4">
               <NotificationIndicator count={5} />

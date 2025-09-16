@@ -38,7 +38,7 @@ const ConsumerProfile = () => {
       firstName: 'Sarah',
       lastName: 'Johnson',
       email: 'sarah.johnson@email.com',
-      phone: '+1 (555) 987-6543',
+      phone: '+91 84688 29368',
       dateOfBirth: '1990-07-22',
       address: '456 Wellness Avenue, San Francisco, CA 94102'
     },
@@ -100,9 +100,29 @@ const ConsumerProfile = () => {
   };
 
   useEffect(() => {
-    setProfileData(mockProfileData);
+    // Use actual user data for profile
+    if (userData) {
+      setProfileData({
+        firstName: userData.name?.split(' ')[0] || 'Sarah',
+        lastName: userData.name?.split(' ')[1] || 'Johnson',
+        email: userData.email || 'consumer@agritrace.com',
+        phone: userData.phone || '+91 84688 29368',
+        address: userData.address || '456 Oak Street',
+        city: userData.city || 'San Francisco',
+        state: userData.state || 'California',
+        zipCode: userData.zipCode || '94102',
+        country: userData.country || 'United States',
+        dateOfBirth: userData.dateOfBirth || '1990-05-15',
+        interests: userData.interests || ['Organic Food', 'Sustainable Living', 'Local Produce'],
+        dietaryPreferences: userData.dietaryPreferences || ['Organic', 'Non-GMO'],
+        bio: userData.bio || 'Health-conscious consumer passionate about organic and locally sourced food...'
+      });
+    } else {
+      // Fallback to mock data if no user data
+      setProfileData(mockProfileData);
+    }
     document.title = 'Profile - AgriTrace';
-  }, []);
+  }, [userData]);
 
   const handleSidebarToggle = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);

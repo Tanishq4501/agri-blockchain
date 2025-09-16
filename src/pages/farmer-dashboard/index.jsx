@@ -21,13 +21,32 @@ const FarmerDashboard = () => {
   const [selectedProductData, setSelectedProductData] = useState(null);
   const [isSubmittingForm, setIsSubmittingForm] = useState(false);
 
-  // Mock user data
-  const userData = {
-    name: 'John Mitchell',
-    email: 'john.mitchell@greenfarm.com',
-    role: 'farmer',
-    avatar: null
-  };
+  // Get actual logged-in user data
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const userEmail = localStorage.getItem('userEmail');
+    const userRole = localStorage.getItem('userRole');
+    
+    if (currentUser && Object.keys(currentUser).length > 0) {
+      setUserData({
+        name: currentUser.name || currentUser.fullName || 'User',
+        email: currentUser.email || userEmail,
+        role: currentUser.role || userRole,
+        avatar: currentUser.avatar || null
+      });
+    } else {
+      // Fallback if no user data found
+      setUserData({
+        name: 'Farmer User',
+        email: userEmail || 'farmer@agritrace.com',
+        role: userRole || 'farmer',
+        avatar: null
+      });
+    }
+  }, []);
 
   // Mock notifications
   const notifications = [
@@ -156,26 +175,17 @@ const FarmerDashboard = () => {
             <div className="flex items-center justify-between h-16">
               {/* Page Title */}
               <div className="flex items-center space-x-4">
-                <TranslatableText 
-                  as="h1" 
-                  className="text-2xl font-bold text-text-primary"
-                  text="Farmer Dashboard"
-                />
-                <div className="hidden sm:block">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success border border-success/20">
-                    <Icon name="CheckCircle" size={12} className="mr-1" strokeWidth={2} />
-                    <TranslatableText text="Verified Farmer" />
-                  </span>
+                <div>
+                  <TranslatableText as="h1" className="text-xl font-semibold text-text-primary" text="Farmer Dashboard" />
+                  <TranslatableText as="p" className="text-sm text-text-secondary" text={`Welcome back, ${userData?.name || 'Farmer'}!`} />
                 </div>
               </div>
-
+              
               {/* Header Actions */}
               <div className="flex items-center space-x-4">
                 <TranslateToggle />
                 <NotificationIndicator
                   notifications={notifications}
-                  unreadCount={notifications?.filter(n => !n?.read)?.length}
-                  onNotificationClick={handleNotificationClick}
                   onMarkAsRead={handleMarkAsRead}
                   onMarkAllAsRead={handleMarkAllAsRead}
                 />

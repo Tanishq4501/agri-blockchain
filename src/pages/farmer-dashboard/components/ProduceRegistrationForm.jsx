@@ -170,8 +170,28 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
     if (validateForm()) {
       setIsSubmitting(true);
       try {
-        // Register crop on blockchain (without document hashes initially)
-        const blockchainResult = await registerCrop(formData);
+        // Prepare blockchain data with required fields
+        const blockchainData = {
+          name: `${formData.cropType}${formData.variety ? ` - ${formData.variety}` : ''}`,
+          farmerID: 'FARMER-001', // Default farmer ID
+          quantity: parseFloat(formData.quantity),
+          price: parseFloat(formData.expectedPrice),
+          // Additional metadata for MongoDB
+          cropType: formData.cropType,
+          variety: formData.variety,
+          unit: formData.unit,
+          harvestDate: formData.harvestDate,
+          location: formData.location,
+          farmSize: formData.farmSize,
+          organicCertified: formData.organicCertified,
+          qualityCertifications: formData.qualityCertifications,
+          description: formData.description
+        };
+        
+        console.log('Registering crop with blockchain data:', blockchainData);
+        
+        // Register crop on blockchain with properly formatted data
+        const blockchainResult = await registerCrop(blockchainData);
         
         if (blockchainResult.success) {
           // Attach documents to the registered crop
@@ -205,9 +225,10 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
           // Call the original onSubmit with the blockchain result
           onSubmit({ ...formData, blockchainData: blockchainResult.data });
         } else {
-          // Handle error
+          // Handle blockchain registration failure
           console.error('Blockchain registration failed:', blockchainResult.error);
-          // You might want to show an error message to the user
+          alert(`Blockchain registration failed: ${blockchainResult.error}`);
+          return; // Don't proceed if blockchain registration fails
         }
       } catch (error) {
         console.error('Error during blockchain registration:', error);
