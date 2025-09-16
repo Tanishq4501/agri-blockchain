@@ -3,6 +3,8 @@ import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/Input';
 import Select from '../../../components/ui/Select';
+import { registerCrop } from '../../../services/blockchainService';
+import { addCropPrice } from '../../../services/backendService';
 
 const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
   const [formData, setFormData] = useState({
@@ -20,6 +22,7 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
   });
 
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const cropOptions = [
     { value: 'tomatoes', label: 'Tomatoes' },
@@ -86,10 +89,43 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
     return Object.keys(newErrors)?.length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e?.preventDefault();
+    
     if (validateForm()) {
-      onSubmit(formData);
+      setIsSubmitting(true);
+      try {
+        // Register crop on blockchain
+        const blockchainResult = await registerCrop(formData);
+        
+        if (blockchainResult.success) {
+          // Store price history in backend database
+          try {
+            const priceResult = await addCropPrice(blockchainResult.data.cropID, {
+              price: parseFloat(formData.expectedPrice),
+              notes: `Initial price for ${formData.cropType} ${formData.variety || ''}`.trim()
+            });
+            
+            if (!priceResult.success) {
+              console.warn('Failed to store price history in backend:', priceResult.error);
+            }
+          } catch (priceError) {
+            console.warn('Error storing price history in backend:', priceError);
+          }
+          
+          // Call the original onSubmit with the blockchain result
+          onSubmit({ ...formData, blockchainData: blockchainResult.data });
+        } else {
+          // Handle error
+          console.error('Blockchain registration failed:', blockchainResult.error);
+          // You might want to show an error message to the user
+        }
+      } catch (error) {
+        console.error('Error during blockchain registration:', error);
+        // Handle error
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -235,13 +271,14 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
             type="submit"
             variant="default"
             size="lg"
-            loading={isLoading}
+            loading={isSubmitting}
             iconName="QrCode"
             iconPosition="left"
             iconSize={18}
             className="min-w-48"
+            disabled={isSubmitting}
           >
-            {isLoading ? 'Generating QR Code...' : 'Register & Generate QR'}
+            {isSubmitting ? 'Registering on Blockchain...' : 'Register & Generate QR'}
           </Button>
         </div>
       </form>

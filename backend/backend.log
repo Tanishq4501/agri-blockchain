@@ -1,0 +1,45 @@
+IPFS client initialized
+Initializing Fabric connection...
+Server running in development mode on port 3001
+Wallet created at: /home/vansh-talyani/agri-blockchain/backend/config/fabric/wallet
+Gateway connected with identity: admin
+Connected to network: mychannel, contract: supplychain
+Fabric connection initialized successfully
+MongoDB Connected: aiinterviewplatform-shard-00-00.g0ppk.mongodb.net
+Database: agri_supplychain
+::1 - - [16/Sep/2025:07:44:03 +0000] "GET /api/users/health HTTP/1.1" 404 69 "-" "curl/8.5.0"
+Document attached on blockchain
+::1 - - [16/Sep/2025:07:44:19 +0000] "POST /api/crops/CROP-001/document HTTP/1.1" 200 80 "-" "curl/8.5.0"
+::1 - - [16/Sep/2025:07:45:05 +0000] "GET /api/crops/CROP-001 HTTP/1.1" 404 46 "-" "curl/8.5.0"
+::1 - - [16/Sep/2025:07:45:39 +0000] "GET /api/crops/CROP-001/history HTTP/1.1" 200 134 "-" "curl/8.5.0"
+2025-09-16T07:45:51.189Z - [31merror[39m: [DiscoveryHandler]: compareProposalResponseResults[undefined] - read/writes result sets do not match index=1
+2025-09-16T07:45:51.190Z - [31merror[39m: [Transaction]: Error: No valid responses from any peers. Errors:
+    peer=undefined, status=grpc, message=Peer endorsements do not match
+    at newEndorsementError (/home/vansh-talyani/agri-blockchain/backend/node_modules/fabric-network/lib/transaction.js:77:12)
+    at getResponsePayload (/home/vansh-talyani/agri-blockchain/backend/node_modules/fabric-network/lib/transaction.js:45:23)
+    at Transaction.submit (/home/vansh-talyani/agri-blockchain/backend/node_modules/fabric-network/lib/transaction.js:258:28)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async attachDoc (/home/vansh-talyani/agri-blockchain/backend/services/fabricService.js:312:20)
+    at async /home/vansh-talyani/agri-blockchain/backend/routes/cropRoutes.js:362:20
+Error attaching document: Error: No valid responses from any peers. Errors:
+    peer=undefined, status=grpc, message=Peer endorsements do not match
+    at newEndorsementError (/home/vansh-talyani/agri-blockchain/backend/node_modules/fabric-network/lib/transaction.js:77:12)
+    at getResponsePayload (/home/vansh-talyani/agri-blockchain/backend/node_modules/fabric-network/lib/transaction.js:45:23)
+    at Transaction.submit (/home/vansh-talyani/agri-blockchain/backend/node_modules/fabric-network/lib/transaction.js:258:28)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async attachDoc (/home/vansh-talyani/agri-blockchain/backend/services/fabricService.js:312:20)
+    at async /home/vansh-talyani/agri-blockchain/backend/routes/cropRoutes.js:362:20 {
+  responses: [],
+  errors: [
+    Error: Peer endorsements do not match
+        at DiscoveryHandler._endorse (/home/vansh-talyani/agri-blockchain/backend/node_modules/fabric-common/lib/DiscoveryHandler.js:295:14)
+        at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+        at async Endorsement.send (/home/vansh-talyani/agri-blockchain/backend/node_modules/fabric-common/lib/Proposal.js:415:15)
+        at async Transaction.submit (/home/vansh-talyani/agri-blockchain/backend/node_modules/fabric-network/lib/transaction.js:256:34)
+        at async attachDoc (/home/vansh-talyani/agri-blockchain/backend/services/fabricService.js:312:20)
+        at async /home/vansh-talyani/agri-blockchain/backend/routes/cropRoutes.js:362:20 {
+      endorsements: [Array]
+    }
+  ]
+}
+::1 - - [16/Sep/2025:07:45:51 +0000] "POST /api/crops/CROP-001/document HTTP/1.1" 400 172 "-" "curl/8.5.0"

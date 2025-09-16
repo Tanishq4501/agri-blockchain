@@ -67,17 +67,23 @@ const FarmerDashboard = () => {
   };
 
   const handleProduceSubmit = async (formData) => {
-    setIsSubmittingForm(true);
+    // The form now handles blockchain registration internally
+    // We just need to handle the UI updates here
     
-    // Simulate API call
-    setTimeout(() => {
-      setSelectedProductData(formData);
-      setIsQRModalOpen(true);
-      setIsSubmittingForm(false);
-      
-      // Switch to overview tab after successful submission
-      setActiveTab('overview');
-    }, 2000);
+    console.log('Form submitted with data:', formData);
+    
+    // Set the selected product data for QR code generation
+    setSelectedProductData(formData);
+    setIsQRModalOpen(true);
+    
+    // Switch to overview tab after successful submission
+    setActiveTab('overview');
+    
+    // Show success notification
+    if (formData.blockchainData) {
+      console.log('✅ Crop registered on blockchain:', formData.blockchainData.cropID);
+      console.log('✅ Price history stored in database for crop:', formData.blockchainData.cropID);
+    }
   };
 
   const handleNewProduceClick = () => {

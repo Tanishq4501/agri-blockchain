@@ -8,6 +8,7 @@ import RoleSelector from './components/RoleSelector';
 import DynamicFormFields from './components/DynamicFormFields';
 import PasswordStrengthIndicator from './components/PasswordStrengthIndicator';
 import TermsModal from './components/TermsModal';
+import { registerUser } from '../../services/backendService';
 
 const UserRegistration = () => {
   const navigate = useNavigate();
@@ -182,22 +183,87 @@ const UserRegistration = () => {
     setIsLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Prepare user data for backend API
+      // Format phone number to match backend validation
+      let formattedPhone = formData?.phone || '';
+      // Remove all non-digit characters except + at the beginning
+      if (formattedPhone) {
+        if (formattedPhone.startsWith('+')) {
+          formattedPhone = '+' + formattedPhone.replace(/\D/g, '');
+        } else {
+          formattedPhone = formattedPhone.replace(/\D/g, '');
+        }
+        // Ensure it starts with + if not already
+        if (!formattedPhone.startsWith('+') && formattedPhone.length > 0) {
+          formattedPhone = '+' + formattedPhone;
+        }
+      }
       
-      // Mock success - redirect to appropriate dashboard
-      const dashboardRoutes = {
-        farmer: '/farmer-dashboard',
-        distributor: '/distributor-dashboard',
-        consumer: '/consumer-verification',
-        retailer: '/retailer-stock-management',
-        admin: '/admin-dashboard',
-        regulator: '/regulator-dashboard'
+      // Map frontend role IDs to backend role names
+      const roleMap = {
+        'farmer': 'Farmer',
+        'distributor': 'Distributor',
+        'retailer': 'Retailer',
+        'consumer': 'Consumer',
+        'admin': 'Admin',
+        'regulator': 'Regulator'
       };
+      
+      const userData = {
+        userID: `${formData?.role}-${Date.now()}`, // Generate unique userID
+        role: roleMap[formData?.role] || formData?.role, // Map to backend role name
+        name: `${formData?.firstName} ${formData?.lastName}`,
+        contactInfo: {
+          email: formData?.email,
+          phone: formattedPhone,
+          address: {
+            street: formData?.address,
+            city: formData?.city,
+            state: formData?.state,
+            country: formData?.country,
+            zipCode: formData?.zipCode
+          }
+        }
+      };
+      
 
-      navigate(dashboardRoutes?.[formData?.role] || '/user-login');
+      // Call backend API to register user
+      const result = await registerUser(userData);
+      console.log('Backend API response:', result);
+      
+      if (result?.status === 'success') {
+        // Registration successful - redirect to appropriate dashboard
+        const dashboardRoutes = {
+          farmer: '/farmer-dashboard',
+          distributor: '/distributor-dashboard',
+          consumer: '/consumer-verification',
+          retailer: '/retailer-stock-management',
+          admin: '/admin-dashboard',
+          regulator: '/regulator-dashboard'
+        };
+
+        // Use the original formData role (lowercase) for navigation
+        const targetRoute = dashboardRoutes?.[formData?.role] || '/user-login';
+        console.log('Registration successful, attempting to navigate to:', targetRoute);
+        console.log('Role used for navigation:', formData?.role);
+        navigate(targetRoute);
+        console.log('Navigation called');
+      } else {
+        console.log('Registration failed with result:', result);
+        // Registration failed
+        let errorMessage = result?.message || 'Registration failed. Please try again.';
+        if (result?.details && Array.isArray(result?.details)) {
+          errorMessage += ': ' + result?.details?.join(', ');
+        }
+        setErrors({ submit: errorMessage });
+      }
     } catch (error) {
-      setErrors({ submit: 'Registration failed. Please try again.' });
+      console.error('Registration error:', error);
+      if (error?.message) {
+        setErrors({ submit: `Registration failed: ${error?.message}` });
+      } else {
+        setErrors({ submit: 'Registration failed. Please try again.' });
+      }
     } finally {
       setIsLoading(false);
     }
