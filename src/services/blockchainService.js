@@ -35,9 +35,10 @@ export const registerCrop = async (cropData) => {
     const result = await handleResponse(response);
     
     return {
-      success: true,
+      success: result.data.blockchainData ? true : false,
       data: result.data.blockchainData,
-      message: result.message
+      message: result.message,
+      error: result.data.blockchainError
     };
   } catch (error) {
     console.error('Error registering crop:', error);

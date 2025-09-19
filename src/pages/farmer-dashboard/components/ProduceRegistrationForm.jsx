@@ -193,7 +193,9 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
         // Register crop on blockchain with properly formatted data
         const blockchainResult = await registerCrop(blockchainData);
         
-        if (blockchainResult.success) {
+        console.log('Blockchain result:', blockchainResult);
+        
+        if (blockchainResult.success && blockchainResult.data && blockchainResult.data.cropID) {
           // Attach documents to the registered crop
           if (formData.documents && formData.documents.length > 0) {
             try {
@@ -224,6 +226,11 @@ const ProduceRegistrationForm = ({ onSubmit, isLoading = false }) => {
           
           // Call the original onSubmit with the blockchain result
           onSubmit({ ...formData, blockchainData: blockchainResult.data });
+        } else if (!blockchainResult.success) {
+          // Blockchain registration failed
+          console.error('Blockchain registration failed:', blockchainResult.error);
+          alert(`Blockchain registration failed: ${blockchainResult.error}`);
+          onSubmit({ ...formData, blockchainData: null });
         } else {
           // Handle blockchain registration failure
           console.error('Blockchain registration failed:', blockchainResult.error);

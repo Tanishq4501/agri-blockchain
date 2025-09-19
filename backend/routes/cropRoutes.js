@@ -39,10 +39,11 @@ router.post('/register', async (req, res) => {
     
     res.status(201).json({
       status: 'success',
-      message: 'Crop metadata created in database',
+      message: result.success ? 'Crop registered on blockchain and database' : 'Crop registered in database only (blockchain failed)',
       data: {
         blockchainData: result.success ? result.data : null,
-        metadata: metadataResult.data
+        metadata: metadataResult.data,
+        blockchainError: result.success ? null : result.error
       }
     });
   } catch (error) {
